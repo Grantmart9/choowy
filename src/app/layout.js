@@ -13,9 +13,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import CardMembershipIcon from '@mui/icons-material/CardMembership';
-import QrCodeIcon from '@mui/icons-material/QrCode';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LoginIcon from '@mui/icons-material/Login';
 import Divider from '@mui/material/Divider';
@@ -69,22 +68,17 @@ export default function RootLayout({ children }) {
 
   const MenuList = [
     {
-      "name": 'Services', "path": "/rent-a-service", "icon": <VolunteerActivismIcon />,
+      "name": 'Products', "path": "/rent-a-service", "icon": <ShoppingBagIcon />,
       "submenu":
-        [{ "name": 'My Services', "path": "/my-services" },
-        { "name": 'Rent A Service', "path": "/rent-a-service" }]
-    },
-    {
-      "name": 'Loyalty Points', "path": "/loyalty", "icon": <CardMembershipIcon />,
-      "submenu": []
-    },
-    {
-      "name": 'Tokens', "path": "/tokens", "icon": <QrCodeIcon />,
-      "submenu":
-        [{ "name": 'My tokens', "path": "/my-tokens" },
-        { "name": 'Token History', "path": "/token-history" },
-        { "name": 'Scan Token', "path": "/scan-token" },
-        ]
+        [{ "name": 'Food', "path": "/my-services" },
+        { "name": 'Treats', "path": "/rent-a-service" },
+        { "name": 'Nutrition', "path": "/rent-a-service" },
+        { "name": 'Toys', "path": "/rent-a-service" }]
+    }, {
+      "name": 'Orders', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "submenu":
+        [{ "name": "Single Orders", "path": "/rent-a-service" },
+        { "name": "Recuring Orders", "path": "/rent-a-service" },
+        { "name": "Order History", "path": "/rent-a-service" }]
     }]
 
   const SubMenuList = [
@@ -92,18 +86,20 @@ export default function RootLayout({ children }) {
     { "name": 'Login / Sign Up', "path": "/login", "icon": <LoginIcon /> },
   ]
 
+  const textColor = "text-pink-500"
+
 
   const DrawerList = (
     <Box
       sx={{ width: 250, height: "100vh" }}
-      className="bg-linear-to-br from-cyan-900 to-red-600  bg-repeat-y"
+      className="bg-linear-to-br from-lime-400 to-cyan-400  bg-repeat-y"
       role="presentation"
       onClick={toggleDrawer(false)}>
       <Button
         className="flex align-center justify-center"
         sx={{ textTransform: "none" }} href="/">
-        <div style={{ fontFamily: "Pacifico, serif" }} className="p-1 text-3xl font-semibold text-center justify-center text-cyan-50 mt-2">
-          TemoServe
+        <div style={{ fontFamily: "Pacifico, serif" }} className='p-1 text-3xl font-semibold text-center justify-center text-pink-500 mt-2'>
+          Choowy
         </div>
       </Button>
       <List className="mt-4 mb-3">
@@ -112,6 +108,7 @@ export default function RootLayout({ children }) {
             <ListItemButton
               divider={true}
               disabled={true}
+              className="text-pink-500"
               sx={{
                 minWidth: 250,
                 color: "whitesmoke",
@@ -131,13 +128,14 @@ export default function RootLayout({ children }) {
                     backgroundColor: '#80cae8',
                     color: 'white',
                   }
-                }} className=" font-sans">
+                }} className="text-pink-500">
                 {menuItem.icon}
               </ListItemIcon>
             </ListItemButton>
             <List className="grid grid-flow-row gap-0">
               {menuItem.submenu.map((submenubutton, index) =>
                 <ListItemButton
+                  className="text-pink-500"
                   sx={{
                     minWidth: 250,
                     color: "whitesmoke",
@@ -160,6 +158,7 @@ export default function RootLayout({ children }) {
         {SubMenuList.map((menuItem, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
+              className="text-pink-500"
               sx={{
                 minWidth: 250,
                 color: "whitesmoke",
