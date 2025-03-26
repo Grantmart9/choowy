@@ -1,8 +1,8 @@
 {
-  "name": "temoserve",
+  "name": "choowy",
   "description": "Service provider app",
   "author": "Grant Marthinus",
-  "homepage": "http://temoserve.co.za",
+  "homepage": "http://choowy.co.za",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -109,9 +109,9 @@
     "typescript": "^5.7.3"
   },
   "scripts": {
-    "dev": "next dev -p 3015",
+    "dev": "next dev -p 3016",
     "build": "next build",
-    "start": "next start -p 3015",
+    "start": "next start -p 3016",
     "lint": "next lint"
   },
   "eslintConfig": {
