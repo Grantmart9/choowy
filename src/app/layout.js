@@ -57,8 +57,9 @@ export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
+    setTimeout(() => setOpen(newOpen), newOpen ? 0 : 300); // Delay state update for closing
   };
+
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -158,22 +159,33 @@ export default function RootLayout({ children }) {
 
   const DrawerList = (
     <Box
-      sx={{ width: 250, height: "100vh" }}
-      className="bg-linear-to-br from-cyan-600 to-yellow-200  bg-repeat-y"
-      role="presentation"
-      onClick={toggleDrawer(false)}>
+      sx={{
+        width: 250,
+        height: "100vh", // Full viewport height
+        position: "fixed", // Ensure it doesn't scroll
+        overflowY: "auto", // Allow scrolling if content overflows
+      
+      }}
+      className="bg-linear-to-br from-cyan-600 to-yellow-200"
+      role="presentation">
       <Button
-        className="flex align-center justify-center"
-        sx={{ textTransform: "none" }} href="/">
-        <div style={{ fontFamily: "Pacifico, serif" }} className='p-1 text-3xl font-semibold text-center justify-center text-cyan-200 mt-2'>
+        className="flex align-center justify-center mb-7"
+        sx={{ textTransform: "none" }}
+        href="/"
+      >
+        <div
+          style={{ fontFamily: "Pacifico, serif" }}
+          className="p-1 text-3xl font-semibold text-center justify-center text-cyan-200 mt-2"
+        >
           {AppName}
         </div>
       </Button>
-      {MenuList.map((list, index) =>
+      {MenuList.map((list, index) => (
         <Accordion
           key={index}
           elevation={0}
-          className="bg-transparent">
+          className="bg-transparent"
+        >
           <AccordionSummary
             expandIcon={<ArrowDownwardIcon className="text-cyan-200" />}
             aria-controls="panel1-content"
@@ -184,7 +196,7 @@ export default function RootLayout({ children }) {
           <AccordionDetails>
             <Typography>
               <List className="grid grid-flow-row gap-0">
-                {list.menu.map((submenubutton, index) =>
+                {list.menu.map((submenubutton, subIndex) => (
                   <ListItemButton
                     className="text-cyan-200"
                     sx={{
@@ -194,15 +206,18 @@ export default function RootLayout({ children }) {
                         color: '#68D2E8',
                       }
                     }}
-                    key={index}
-                    href={submenubutton.path}>
+                    key={subIndex}
+                    href={submenubutton.path}
+                    onClick={toggleDrawer(false)} // Close drawer on click
+                  >
                     <ListItemText className="font-sans text-sm" primary={submenubutton.name} />
                   </ListItemButton>
-                )}
+                ))}
               </List>
             </Typography>
           </AccordionDetails>
-        </Accordion>)}
+        </Accordion>
+      ))}
       <Divider />
       <List className="mt-10">
         {SubMenuList.map((menuItem, index) => (
@@ -216,7 +231,9 @@ export default function RootLayout({ children }) {
                   backgroundColor: '#FEEFAD',
                   color: '#68D2E8',
                 }
-              }} href={menuItem.path}>
+              }}
+              href={menuItem.path}
+            >
               <ListItemText className="text-cyan-200 font-sans" primary={menuItem.name} />
             </ListItemButton>
           </ListItem>
@@ -239,6 +256,8 @@ export default function RootLayout({ children }) {
     </Box>
   );
 
+
+
   return (
     <html lang="en" className="flex h-full items-center justify-center">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -251,14 +270,15 @@ export default function RootLayout({ children }) {
           <MenuIconButton toggleDrawer={toggleDrawer(true)} />
         </div>
         <Drawer
-          transitionDuration={800}
+          transitionDuration={800} // Matches the toggleDrawer delay
           disableScrollLock={true}
-          variant="permanent"
           elevation={20}
           open={open}
-          onClose={toggleDrawer(false)}>
+          onClose={toggleDrawer(false)}
+        >
           {DrawerList}
         </Drawer>
+
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>
     </html>
