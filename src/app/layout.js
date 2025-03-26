@@ -23,7 +23,15 @@ import Button from "@mui/material/Button";
 import { createClient } from "@supabase/supabase-js";
 import { SUPABASE_URL, API_KEY } from "./supabase";
 
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 const supabase = createClient(SUPABASE_URL, API_KEY);
+const AppName = "Petopia";
 
 const MenuIconButton = ({ toggleDrawer }) => {
   return (
@@ -65,20 +73,82 @@ export default function RootLayout({ children }) {
     }
   };
 
-
   const MenuList = [
     {
       "name": 'Products', "path": "/rent-a-service", "icon": <ShoppingBagIcon />,
-      "submenu":
-        [{ "name": 'Food', "path": "/my-services" },
+      "menu":
+        [{ "name": 'Dry Food', "path": "/my-services" },
+        { "name": 'Wet Food', "path": "/rent-a-service" },
         { "name": 'Treats', "path": "/rent-a-service" },
-        { "name": 'Nutrition', "path": "/rent-a-service" },
-        { "name": 'Toys', "path": "/rent-a-service" }]
+        { "name": 'Specialized Diets', "path": "/rent-a-service" }]
+    },
+    {
+      "name": 'Accessories', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Collars and Leashes", "path": "/rent-a-service" },
+        { "name": "Toys", "path": "/rent-a-service" },
+        { "name": "Beds and Crates", "path": "/rent-a-service" },
+        { "name": "Bowls and Feeders", "path": "/rent-a-service" }]
+    },
+    {
+      "name": 'Health & Wellness', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Supplements", "path": "/rent-a-service" },
+        { "name": "Medications", "path": "/rent-a-service" },
+        { "name": "Grooming Products", "path": "/rent-a-service" },
+        { "name": "Dental Care", "path": "/rent-a-service" }]
     }, {
-      "name": 'Orders', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "submenu":
-        [{ "name": "Single Orders", "path": "/rent-a-service" },
-        { "name": "Recuring Orders", "path": "/rent-a-service" },
-        { "name": "Order History", "path": "/rent-a-service" }]
+      "name": 'Apparel', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Clothing", "path": "/rent-a-service" },
+        { "name": "Shoes and Booties", "path": "/rent-a-service" },
+        { "name": "Seasonal Wear", "path": "/rent-a-service" }]
+    },
+    {
+      "name": 'Travel & Outdoor', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Carriers", "path": "/rent-a-service" },
+        { "name": "Travel Bowls", "path": "/rent-a-service" },
+        { "name": "Outdoor Toys", "path": "/rent-a-service" },
+        { "name": "Harnesses", "path": "/rent-a-service" },
+        ]
+    },
+    {
+      "name": 'Pet Tech', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "GPS Trackers", "path": "/rent-a-service" },
+        { "name": "Smart Feeders", "path": "/rent-a-service" },
+        { "name": "Interactive Toys", "path": "/rent-a-service" },
+        ]
+    },
+    {
+      "name": 'Cleaning & Hygiene', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Litter & Accessories", "path": "/rent-a-service" },
+        { "name": "Waste Bags", "path": "/rent-a-service" },
+        { "name": "Odor Control", "path": "/rent-a-service" },
+        ]
+    },
+    {
+      "name": 'Training Supplies', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Clickers", "path": "/rent-a-service" },
+        { "name": "Training Pads", "path": "/rent-a-service" },
+        { "name": "Training Treats", "path": "/rent-a-service" },
+        ]
+    },
+    {
+      "name": 'Small Pets & Exotics', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Birds", "path": "/rent-a-service" },
+        { "name": "Reptile Care", "path": "/rent-a-service" },
+        { "name": "Small Mammals", "path": "/rent-a-service" },
+        ]
+    },
+    {
+      "name": 'New Arrivals', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Recently Added Products", "path": "/rent-a-service" },
+
+        ]
+    },
+    {
+      "name": 'Deals & Discounts', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
+        [{ "name": "Sale Items", "path": "/rent-a-service" },
+        { "name": "Bulk Discounts", "path": "/rent-a-service" }
+
+        ]
     }]
 
   const SubMenuList = [
@@ -86,124 +156,85 @@ export default function RootLayout({ children }) {
     { "name": 'Login / Sign Up', "path": "/login", "icon": <LoginIcon /> },
   ]
 
-  const textColor = "text-pink-500"
-
-
   const DrawerList = (
     <Box
       sx={{ width: 250, height: "100vh" }}
-      className="bg-linear-to-br from-lime-400 to-cyan-400  bg-repeat-y"
+      className="bg-linear-to-br from-cyan-600 to-yellow-200  bg-repeat-y"
       role="presentation"
       onClick={toggleDrawer(false)}>
       <Button
         className="flex align-center justify-center"
         sx={{ textTransform: "none" }} href="/">
-        <div style={{ fontFamily: "Pacifico, serif" }} className='p-1 text-3xl font-semibold text-center justify-center text-pink-500 mt-2'>
-          Choowy
+        <div style={{ fontFamily: "Pacifico, serif" }} className='p-1 text-3xl font-semibold text-center justify-center text-cyan-200 mt-2'>
+          {AppName}
         </div>
       </Button>
-      <List className="mt-4 mb-3">
-        {MenuList.map((menuItem, index) => (
-          <ListItem className="grid grid-flow-row gap-0 w-full" key={index} disablePadding>
-            <ListItemButton
-              divider={true}
-              disabled={true}
-              className="text-pink-500"
-              sx={{
-                minWidth: 250,
-                color: "whitesmoke",
-                '&:hover': {
-                  backgroundColor: '#80cae8',
-                  color: 'white',
-                }
-              }}
-            >
-              <ListItemText
-                className="font-sans text-md"
-                primary={menuItem.name} />
-              <ListItemIcon
-                sx={{
-                  color: "whitesmoke",
-                  '&:hover': {
-                    backgroundColor: '#80cae8',
-                    color: 'white',
-                  }
-                }} className="text-pink-500">
-                {menuItem.icon}
-              </ListItemIcon>
-            </ListItemButton>
-            <List className="grid grid-flow-row gap-0">
-              {menuItem.submenu.map((submenubutton, index) =>
-                <ListItemButton
-                  className="text-pink-500"
-                  sx={{
-                    minWidth: 250,
-                    color: "whitesmoke",
-                    '&:hover': {
-                      backgroundColor: '#80cae8',
-                      color: 'white',
-                    }
-                  }}
-                  key={index}
-                  href={submenubutton.path}>
-                  <ListItemText className="font-sans text-sm" primary={submenubutton.name} />
-                </ListItemButton>
-              )}
-            </List>
-          </ListItem>
-        ))}
-      </List>
+      {MenuList.map((list, index) =>
+        <Accordion
+          key={index}
+          elevation={0}
+          className="bg-transparent">
+          <AccordionSummary
+            expandIcon={<ArrowDownwardIcon className="text-cyan-200" />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            <Typography className="text-cyan-200" component="span">{list.name}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              <List className="grid grid-flow-row gap-0">
+                {list.menu.map((submenubutton, index) =>
+                  <ListItemButton
+                    className="text-cyan-200"
+                    sx={{
+                      color: "whitesmoke",
+                      '&:hover': {
+                        backgroundColor: '#FEEFAD',
+                        color: '#68D2E8',
+                      }
+                    }}
+                    key={index}
+                    href={submenubutton.path}>
+                    <ListItemText className="font-sans text-sm" primary={submenubutton.name} />
+                  </ListItemButton>
+                )}
+              </List>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>)}
       <Divider />
       <List className="mt-10">
         {SubMenuList.map((menuItem, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
-              className="text-pink-500"
+              className="text-cyan-200"
               sx={{
                 minWidth: 250,
                 color: "whitesmoke",
                 '&:hover': {
-                  backgroundColor: '#80cae8',
-                  color: 'white',
+                  backgroundColor: '#FEEFAD',
+                  color: '#68D2E8',
                 }
               }} href={menuItem.path}>
-              <ListItemText className="text-cyan-50 font-sans" primary={menuItem.name} />
-              <ListItemIcon
-                sx={{
-                  color: "whitesmoke",
-                  '&:hover': {
-                    backgroundColor: '#80cae8',
-                    color: 'white',
-                  }
-                }} className="text-cyan-50 font-sans">
-                {menuItem.icon}
-              </ListItemIcon>
-
+              <ListItemText className="text-cyan-200 font-sans" primary={menuItem.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <ListItemButton
         onClick={handleLogout}
+        className="text-cyan-200"
         sx={{
           minWidth: 250,
           color: "whitesmoke",
           '&:hover': {
-            backgroundColor: '#80cae8',
-            color: 'white',
+            backgroundColor: '#FEEFAD',
+            color: '#68D2E8',
           }
         }}
-      > <ListItemText className="font-sans" primary={"Logout"} />
-        <ListItemIcon
-          sx={{
-            color: "whitesmoke",
-            '&:hover': {
-              backgroundColor: '#80cae8',
-              color: 'white',
-            }
-          }} className="text-cyan-50 font-sans">
-          <LogoutIcon />
-        </ListItemIcon>
+      >
+        <ListItemText className="font-sans" primary={"Logout"} />
       </ListItemButton>
     </Box>
   );
@@ -222,7 +253,7 @@ export default function RootLayout({ children }) {
         <Drawer
           transitionDuration={800}
           disableScrollLock={true}
-          variant="temporary"
+          variant="permanent"
           elevation={20}
           open={open}
           onClose={toggleDrawer(false)}>
