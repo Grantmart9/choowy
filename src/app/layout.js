@@ -135,7 +135,7 @@ export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
-    setTimeout(() => setOpen(newOpen), newOpen ? 0 : 300); // Delay state update for closing
+    setOpen(newOpen);
   };
 
 
@@ -246,8 +246,6 @@ export default function RootLayout({ children }) {
       </ListItemButton>
     </Box>
   );
-
-
 
   return (
     <html lang="en" className="flex h-full items-center justify-center">
