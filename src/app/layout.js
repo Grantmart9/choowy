@@ -161,10 +161,8 @@ export default function RootLayout({ children }) {
     <Box
       sx={{
         width: 250,
-        height: "100vh", // Full viewport height
-        position: "fixed", // Ensure it doesn't scroll
-        overflowY: "auto", // Allow scrolling if content overflows
-      
+
+
       }}
       className="bg-linear-to-br from-cyan-600 to-yellow-200"
       role="presentation">
