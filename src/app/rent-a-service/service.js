@@ -16,20 +16,6 @@ import { SUPABASE_URL, API_KEY } from "../supabase";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
-///<ListItem sx={{ minWidth: "200pt" }}>
-///<Typography className="text-gray-900 whitespace-nowrap">Distance </Typography>
-///<Slider
-///    className="text-gray-800 ml-4"
-///    value={value2}
-///    onChange={handleChange2}
-///    valueLabelDisplay="auto"
-///    getAriaValueText={() => `${value2} Km`}
-///    max={100}
-///    step={5}
-///    min={1}
-////>
-///</ListItem>
-
 const ServiceSearchBar = ({
     handleFilter,
     handleClose,
@@ -95,12 +81,12 @@ const ServiceSearchBar = ({
                         size="small"
                         fullWidth={true}
                         value={searchQuery}
-                        color="success"
+                        color="error"
                         style={{
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         onChange={handleSearchChange}
-                        sx={{ input: { color: 'lime' } }}
+                        sx={{ input: { color: '#00224D' } }}
                     />
                 </div>
                 <Button
@@ -318,7 +304,7 @@ const Service = () => {
                                 <Circles
                                     height="200"
                                     width="200"
-                                    color="#b1fa07"
+                                    color="#00224D"
                                     ariaLabel="circles-loading"
                                     wrapperStyle={{}}
                                     wrapperClass=""

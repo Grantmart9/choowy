@@ -24,6 +24,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { text } from "d3";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 const AppName = "Choowy";
@@ -181,7 +182,14 @@ export default function RootLayout({ children }) {
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <Typography className="text-sky-900" component="span">{list.name}</Typography>
+            <Typography
+              sx={{
+                '&:hover': {
+                  backgroundColor: '#A0153E',
+                  color: '#FF204E',
+                }
+              }}
+              className="text-sky-900" component="span">{list.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
@@ -254,13 +262,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-fixed`}
       >
-        <div className="z-50 fixed mt-1 ml-1">
-          <MenuIconButton toggleDrawer={toggleDrawer(true)} />
+        <div className="z-50 fixed mt-1 ml-1 ">
+          <MenuIconButton
+            toggleDrawer={toggleDrawer(true)} />
         </div>
         <Drawer
           transitionDuration={800} // Matches the toggleDrawer delay
           disableScrollLock={true}
-          elevation={20}
           open={open}
           onClose={toggleDrawer(false)}
         >
