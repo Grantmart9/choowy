@@ -13,7 +13,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LoginIcon from '@mui/icons-material/Login';
 import Divider from '@mui/material/Divider';
@@ -157,7 +156,7 @@ export default function RootLayout({ children }) {
       sx={{
         width: 250,
       }}
-      className="bg-linear-to-br from-cyan-600 to-yellow-200"
+      className="bg-linear-to-br from-rose-500 to-pink-900"
       role="presentation">
       <Button
         className="flex align-center justify-center mb-7"
@@ -166,7 +165,7 @@ export default function RootLayout({ children }) {
       >
         <div
           style={{ fontFamily: "Pacifico, serif" }}
-          className="p-1 text-3xl font-semibold text-center justify-center text-cyan-200 mt-2"
+          className="p-1 text-3xl font-semibold text-center justify-center text-sky-900 mt-2"
         >
           {AppName}
         </div>
@@ -178,23 +177,23 @@ export default function RootLayout({ children }) {
           className="bg-transparent"
         >
           <AccordionSummary
-            expandIcon={<ArrowDownwardIcon className="text-cyan-200" />}
+            expandIcon={<ArrowDownwardIcon className="text-sky-900" />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
-            <Typography className="text-cyan-200" component="span">{list.name}</Typography>
+            <Typography className="text-sky-900" component="span">{list.name}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <List className="grid grid-flow-row gap-0">
                 {list.menu.map((submenubutton, subIndex) => (
                   <ListItemButton
-                    className="text-cyan-200"
+                    className="text-sky-900"
                     sx={{
                       color: "whitesmoke",
                       '&:hover': {
-                        backgroundColor: '#FEEFAD',
-                        color: '#68D2E8',
+                        backgroundColor: '#A0153E',
+                        color: '#FF204E',
                       }
                     }}
                     key={subIndex}
@@ -214,31 +213,31 @@ export default function RootLayout({ children }) {
         {SubMenuList.map((menuItem, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
-              className="text-cyan-200"
+              className="text-sky-900"
               sx={{
                 minWidth: 250,
                 color: "whitesmoke",
                 '&:hover': {
-                  backgroundColor: '#FEEFAD',
-                  color: '#68D2E8',
+                  backgroundColor: '#A0153E',
+                  color: '#FF204E',
                 }
               }}
               href={menuItem.path}
             >
-              <ListItemText className="text-cyan-200 font-sans" primary={menuItem.name} />
+              <ListItemText className="text-sky-900 font-sans" primary={menuItem.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <ListItemButton
         onClick={handleLogout}
-        className="text-cyan-200"
+        className="text-sky-900"
         sx={{
           minWidth: 250,
           color: "whitesmoke",
           '&:hover': {
-            backgroundColor: '#FEEFAD',
-            color: '#68D2E8',
+            backgroundColor: '#A0153E',
+            color: '#FF204E',
           }
         }}
       >
