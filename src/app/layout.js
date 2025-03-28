@@ -26,7 +26,13 @@ import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
+
 const AppName = "Choowy";
+const BackgroundColor = "#04b9c9"
+const TextColorHover = "#0A4D68"
+const TextColor = "text-sky-900"
+const NavigationBackgroundColor = "to-teal-600 from-emerald-200"
+
 
 const MenuList = [
   {
@@ -107,6 +113,7 @@ const MenuList = [
   }]
 
 const SubMenuList = [
+  { "name": 'Orders', "path": "/login", "icon": <LoginIcon /> },
   { "name": 'Account', "path": "/account", "icon": <AccountBoxIcon /> },
   { "name": 'Login / Sign Up', "path": "/login", "icon": <LoginIcon /> },
 ]
@@ -153,9 +160,14 @@ export default function RootLayout({ children }) {
 
   const DrawerList = (
     <Box
-      sx={{ width: 250, height: "100%", overflow: "auto", minHeight: "100vh" }}
+      sx={{
+        width: 250,
+        height: "100%",
+        overflow: "auto",
+        minHeight: "100vh"
+      }}
       role="presentation"
-      className="bg-linear-to-br from-rose-500 to-pink-900">
+      className={`bg-linear-to-br ${NavigationBackgroundColor}`}>
       <Button
         className="flex align-center justify-center mb-7"
         sx={{ textTransform: "none" }}
@@ -163,7 +175,7 @@ export default function RootLayout({ children }) {
       >
         <div
           style={{ fontFamily: "Pacifico, serif" }}
-          className="p-1 text-3xl font-semibold text-center justify-center text-sky-900 mt-2"
+          className={`p-1 text-3xl font-semibold text-center justify-center ${TextColor} mt-2`}
         >
           {AppName}
         </div>
@@ -175,30 +187,31 @@ export default function RootLayout({ children }) {
           className="bg-transparent"
         >
           <AccordionSummary
-            expandIcon={<ArrowDownwardIcon className="text-sky-900" />}
+            sx={{
+              '&:hover': {
+                backgroundColor: BackgroundColor,
+                color: TextColorHover,
+              }
+            }}
+            expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
             <Typography
-              sx={{
-                '&:hover': {
-                  backgroundColor: '#A0153E',
-                  color: '#FF204E',
-                }
-              }}
-              className="text-sky-900" component="span">{list.name}</Typography>
+              className={`${TextColor}`}
+              component="span">{list.name}
+            </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <List className="grid grid-flow-row gap-0">
                 {list.menu.map((submenubutton, subIndex) => (
                   <ListItemButton
-                    className="text-sky-900"
+                    className={`${TextColor}`}
                     sx={{
-                      color: "whitesmoke",
                       '&:hover': {
-                        backgroundColor: '#A0153E',
-                        color: '#FF204E',
+                        backgroundColor: BackgroundColor,
+                        color: TextColorHover,
                       }
                     }}
                     key={subIndex}
@@ -218,35 +231,33 @@ export default function RootLayout({ children }) {
         {SubMenuList.map((menuItem, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton
-              className="text-sky-900"
+              className={`${TextColor}`}
               sx={{
                 minWidth: 250,
-                color: "whitesmoke",
                 '&:hover': {
-                  backgroundColor: '#A0153E',
-                  color: '#FF204E',
+                  backgroundColor: BackgroundColor,
+                  color: TextColorHover,
                 }
               }}
               href={menuItem.path}
             >
-              <ListItemText className="text-sky-900 font-sans" primary={menuItem.name} />
+              <ListItemText className={`font-sans ${TextColor}`} primary={menuItem.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <ListItemButton
         onClick={handleLogout}
-        className="text-sky-900"
+        className={`${TextColor}`}
         sx={{
           minWidth: 250,
-          color: "whitesmoke",
           '&:hover': {
-            backgroundColor: '#A0153E',
-            color: '#FF204E',
+            backgroundColor: BackgroundColor,
+            color: TextColorHover,
           }
         }}
       >
-        <ListItemText className="font-sans" primary={"Logout"} />
+        <ListItemText className={`font-sans ${TextColor}`} primary={"Logout"} />
       </ListItemButton>
     </Box>
   );
