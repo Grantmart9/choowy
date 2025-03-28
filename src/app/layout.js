@@ -24,7 +24,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { text } from "d3";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 const AppName = "Choowy";
@@ -154,11 +153,9 @@ export default function RootLayout({ children }) {
 
   const DrawerList = (
     <Box
-      sx={{
-        width: 250,
-      }}
-      className="bg-linear-to-br from-rose-500 to-pink-900"
-      role="presentation">
+      sx={{ width: 250, height: "100%", overflow: "auto", minHeight: "100vh" }}
+      role="presentation"
+      className="bg-linear-to-br from-rose-500 to-pink-900">
       <Button
         className="flex align-center justify-center mb-7"
         sx={{ textTransform: "none" }}
