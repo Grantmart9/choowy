@@ -36,7 +36,7 @@ const NavigationBackgroundColor = "to-teal-600 from-emerald-200"
 
 const MenuList = [
   {
-    "name": 'Food and Treats', "path": "/rent-a-service","data":"",
+    "name": 'Food and Treats', "path": "/rent-a-service", "data": "",
     "menu":
       [{ "name": 'Dry Food', "path": "/my-services" },
       { "name": 'Wet Food', "path": "/rent-a-service" },
@@ -268,7 +268,7 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       <body
-        className={`${montserrat.className} h-full w-full`}
+        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat`}
       >
         <div className="z-50 fixed mt-1 ml-1 ">
           <MenuIconButton

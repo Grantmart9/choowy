@@ -16,6 +16,12 @@ import { SUPABASE_URL, API_KEY } from "../supabase";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
+const video_url = [{ "name": "dog", "url": "https://videos.pexels.com/video-files/4107001/4107001-uhd_3840_2160_30fps.mp4" },
+{ "name": "cat", "url": "https://videos.pexels.com/video-files/854840/854840-hd_1920_1080_30fps.mp4" },
+{ "name": "hamster", "url": "https://videos.pexels.com/video-files/855499/855499-hd_1920_1080_30fps.mp4" },
+{ "name": "bird eating", "url": "https://videos.pexels.com/video-files/4982611/4982611-hd_1920_1080_25fps.mp4" }
+]
+
 const ServiceSearchBar = ({
     handleFilter,
     handleClose,
@@ -147,7 +153,7 @@ const ServiceSearchBar = ({
 
 const ServiceMap = ({ Data }) => {
     return (
-        <div className="grid lg:grid-cols-5 grid-flow-row gap-4 mt-10 mx-4 pb-5">
+        <div className="grid lg:grid-cols-5 grid-cols-3 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
                     key={Service.id} // assuming each service has a unique id
@@ -168,26 +174,18 @@ const ServiceMap = ({ Data }) => {
                             style={{ maxHeight: "150pt", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex align-center justify-center my-2">
-                            <Rating
-                                name="Avg rating"
-                                value={Service.rating ? Service.rating : 0}
-                                size="medium"
-                                sx={{ alignItems: "center", justifyItems: "center" }}
-                            />
-                        </div>
-                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-center">
-                            R {Service.price} / {Service.rate_unit}
-                        </div>
-                        <div className="text-gray-700 text-2xl font-serif text-center justify-center font-bold">
-                            <div className="ml-5">{Service.service_title.toUpperCase()}</div>
-                            <div className="w-full h-0.5 bg-linear-to-r from-cyan-950 to-cyan-950 via-cyan-600 px-2"></div>
-                        </div>
-                        <div className="flex p-4 text-center align-center justify-center">
-                            <div className="text-gray-700 text-md font-serif text-center justify-center">
-                                {Service.service_description}
+                        <div className="grid grid-flow-col">
+                            <div className="flex align-center justify-center my-2">
+                                <Rating
+                                    name="Avg rating"
+                                    value={Service.rating ? Service.rating : 0}
+                                    size="medium"
+                                    sx={{ alignItems: "center", justifyItems: "center" }}
+                                />
                             </div>
-                        </div>
+                            <div className="flex text-gray-700 text-xs font-serif my-auto justify-center">
+                                R {Service.price} / {Service.rate_unit}
+                            </div></div>
                     </Stack>
                 </motion.div>
             ))}
@@ -300,15 +298,46 @@ const Service = () => {
                                 className="flex align-center justify-center mb-2"
                             />
                         </div>
-                        <div style={{ minWidth: "100vw" }}>
-                            <video autoPlay muted loop id="video" style={{ maxHeight: "200px" }}>
-                                <source src={'https://videos.pexels.com/video-files/5794699/5794699-uhd_4096_2160_25fps.mp4'} type="video/mp4" />
-                            </video></div>
-                        <div >
+                        <div className="px-2.5">
+                            <div>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{
+                                        delay: 2, // Add staggered delay based on index
+                                        type: "keyframes",
+                                        stiffness: 400,
+                                        damping: 10,
+                                        mass: 10,
+                                        duration: 0.3,
+                                    }}
+                                    style={{
+                                        background: "rgba(128, 128, 128, 0.30)", minWidth: "100%" // Set the background with 15% opacity
+                                    }} className="grid grid-flow-col gap-2 rounded-md p-2.5 mt-7 mx-auto" >
+                                    {video_url.map((video, index) =>
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{
+                                                delay: index * 0.1, // Add staggered delay based on index
+                                                type: "keyframes",
+                                                stiffness: 400,
+                                                damping: 10,
+                                                mass: 10,
+                                                duration: 0.3,
+                                            }}>
+                                            <video key={index} autoPlay muted loop id="video" className="mx-auto" style={{ maxHeight: "200px" }}>
+                                                <source src={video.url} type="video/mp4" />
+                                            </video>
+                                        </motion.div>)}
+                                </motion.div>
+                            </div>
+                        </div>
+                        <div>
                             {Data.length === 0 ?
                                 <div style={{ minWidth: "100vw" }} className="flex">
                                     <div
-                                        className="mt-10">
+                                        className="mt-5 mx-auto">
                                         <Circles
                                             height="200"
                                             width="200"
@@ -321,9 +350,11 @@ const Service = () => {
                                     </div>
                                 </div>
                                 :
-                                <div style={{ minWidth: "100vw" }} className="flex">
-                                    <ServiceMap
-                                        Data={Data} />
+                                <div className="px-2.5">
+                                    <div style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%" }} className="flex mt-2 rounded-md py-2.5">
+                                        <ServiceMap
+                                            Data={Data} />
+                                    </div>
                                 </div>
                             }
                         </div>
