@@ -134,7 +134,7 @@ const ServiceSearchBar = ({
                     size="large"
                     className="bg-transparent"
                     onClick={handleFilter} >
-                    <AddCircleOutlineIcon sx={{ fontSize: "50pt", color: "limegreen" }} />
+                    <AddCircleOutlineIcon sx={{ fontSize: "50pt", color: "steelblue" }} />
                 </IconButton>
             </motion.div>
             <AddServiceDialog

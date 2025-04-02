@@ -86,7 +86,7 @@ const ServiceSearchBar = ({
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         onChange={handleSearchChange}
-                        sx={{ input: { color: '#00224D' } }}
+                        sx={{ input: { color: '#00224D', maxHeight: "11px" } }}
                     />
                 </div>
                 <Button
@@ -147,7 +147,7 @@ const ServiceSearchBar = ({
 
 const ServiceMap = ({ Data }) => {
     return (
-        <div className="grid lg:grid-cols-5 grid-flow-row gap-4 mt-20 mx-4 pb-5">
+        <div className="grid lg:grid-cols-5 grid-flow-row gap-4 mt-10 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
                     key={Service.id} // assuming each service has a unique id
@@ -277,8 +277,9 @@ const Service = () => {
 
     return (
         <React.Fragment>
-            <div className="mt-14">
-                <div className="block align-center justify-center">
+            <div>
+                <div style={{ position: "absolute", top: 0, left: 0 }}
+                    className="fixed block align-center justify-center mt-14">
                     <div>
                         <div className="flex align-center justify-center">
                             <ServiceSearchBar
@@ -299,20 +300,33 @@ const Service = () => {
                                 className="flex align-center justify-center mb-2"
                             />
                         </div>
-                        {Data.length === 0 ?
-                            <div style={{ marginTop: "30vh" }} className="flex align-center justify-center">
-                                <Circles
-                                    height="200"
-                                    width="200"
-                                    color="#00224D"
-                                    ariaLabel="circles-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass=""
-                                    visible={true}
-                                />
-                            </div>
-                            : <ServiceMap Data={Data} />
-                        }
+                        <div style={{ minWidth: "100vw" }}>
+                            <video autoPlay muted loop id="video" style={{ maxHeight: "200px" }}>
+                                <source src={'https://videos.pexels.com/video-files/5794699/5794699-uhd_4096_2160_25fps.mp4'} type="video/mp4" />
+                            </video></div>
+                        <div >
+                            {Data.length === 0 ?
+                                <div style={{ minWidth: "100vw" }} className="flex">
+                                    <div
+                                        className="mt-10">
+                                        <Circles
+                                            height="200"
+                                            width="200"
+                                            color="#00224D"
+                                            ariaLabel="circles-loading"
+                                            wrapperStyle={{}}
+                                            wrapperClass=""
+                                            visible={true}
+                                        />
+                                    </div>
+                                </div>
+                                :
+                                <div style={{ minWidth: "100vw" }} className="flex">
+                                    <ServiceMap
+                                        Data={Data} />
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
