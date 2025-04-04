@@ -39,7 +39,7 @@ const ServiceSearchBar = ({
     handleClearSearch
 }) => {
     return (
-        <div>
+        <div className="mx-auto">
             <motion.div
                 initial={{ opacity: 1, y: 0 }}
                 animate={{ opacity: 1, y: 10 }}
@@ -51,7 +51,7 @@ const ServiceSearchBar = ({
                     mass: 20,
                     duration: 0.5,
                 }}
-                className="inline-flex mx-2"
+                className="inline-flex ml-12 sm:ml-2 mr-2"
             >
                 <Button
                     size="small"
@@ -164,7 +164,7 @@ const CustomerRating = () => {
 
 const ServiceMap = ({ Data }) => {
     return (
-        <div className="grid lg:grid-cols-5 grid-cols-2 gap-4 mx-4 pb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
                     key={Service.id} // assuming each service has a unique id
@@ -182,12 +182,13 @@ const ServiceMap = ({ Data }) => {
                     <Stack className="block bg-linear-to-r from-gray-100 to-gray-100 via-gray-300 shadow-md shadow-gray-800 h-full">
                         <img
                             alt="test"
-                            style={{ maxHeight: "150pt", width: "100%" }}
+                            style={{ maxHeight: "120px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
+
 
                         />
                         <div className="flex text-gray-700 text-xs font-serif my-auto justify-center p-2">
-                            R {Service.price} / {Service.rate_unit}
+                            R {Service.price}
                         </div>
                     </Stack>
                 </motion.div>
@@ -312,7 +313,7 @@ const Service = () => {
 
     return (
         <React.Fragment>
-            <div className="fixed w-full mx-auto flex justify-center">
+            <div className="fixed w-full mx-auto flex justify-cente z-10">
                 <ServiceSearchBar
                     handleFilter={handleFilter}
                     handleClose={handleClose}
@@ -351,8 +352,10 @@ const Service = () => {
                                     </div>
                                 </div>
                                 :
-                                <div className="px-2.5">
-                                    <div style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%" }} className="flex mt-2 rounded-md py-2.5">
+                                <div className="px-2.5 z-0">
+                                    <div
+                                        style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%" }}
+                                        className="sticky align-center justify-center rounded-md py-2.5">
                                         <ServiceMap
                                             Data={Data} />
                                     </div>

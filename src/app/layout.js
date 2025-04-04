@@ -268,7 +268,7 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       <body
-        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat`}
+        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-fixed`}
       >
         <div className="z-50 fixed mt-1 ml-1 ">
           <MenuIconButton
