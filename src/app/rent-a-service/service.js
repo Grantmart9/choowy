@@ -51,7 +51,7 @@ const ServiceSearchBar = ({
                     mass: 20,
                     duration: 0.5,
                 }}
-                className="inline-flex ml-12 sm:ml-2 mr-2"
+                className="inline-flex ml-14 sm:ml-2 mr-2"
             >
                 <Button
                     size="small"
@@ -92,7 +92,7 @@ const ServiceSearchBar = ({
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         onChange={handleSearchChange}
-                        sx={{ input: { color: '#00224D', maxHeight: "11px" } }}
+                        sx={{ input: { color: '#00224D', maxHeight: "7px" } }}
                     />
                 </div>
                 <Button
@@ -164,7 +164,7 @@ const CustomerRating = () => {
 
 const ServiceMap = ({ Data }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-8 gap-4 mx-4 pb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
                     key={Service.id} // assuming each service has a unique id
@@ -182,13 +182,16 @@ const ServiceMap = ({ Data }) => {
                     <Stack className="block bg-linear-to-r from-gray-100 to-gray-100 via-gray-300 shadow-md shadow-gray-800 h-full">
                         <img
                             alt="test"
-                            style={{ maxHeight: "120px", width: "100%" }}
+                            style={{ maxHeight: "110px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
 
 
                         />
-                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-center p-2">
+                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
                             R {Service.price}
+                        </div>
+                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
+                            {Service.service_description}
                         </div>
                     </Stack>
                 </motion.div>
@@ -337,8 +340,18 @@ const Service = () => {
                     <div>
                         <div>
                             {Data.length === 0 ?
-                                <div style={{ minWidth: "100vw" }} className="flex">
-                                    <div
+                                <div style={{ minWidth: "100vw",marginTop:"30vh" }} className="flex">
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1  }}
+                                        transition={{
+                                            delay: 0,
+                                            type: "spring",
+                                            stiffness: 100,
+                                            damping: 10,
+                                            mass: 30,
+                                            duration: 3,
+                                        }}
                                         className="mt-5 mx-auto">
                                         <Circles
                                             height="200"
@@ -349,7 +362,7 @@ const Service = () => {
                                             wrapperClass=""
                                             visible={true}
                                         />
-                                    </div>
+                                    </motion.div>
                                 </div>
                                 :
                                 <div className="px-2.5 z-0">

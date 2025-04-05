@@ -186,22 +186,24 @@ export default function RootLayout({ children }) {
           elevation={0}
           className="bg-transparent"
         >
-          <AccordionSummary
-            sx={{
-              '&:hover': {
-                backgroundColor: BackgroundColor,
-                color: TextColorHover,
-              }
-            }}
-            expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
-            aria-controls="panel1-content"
-            id="panel1-header"
-          >
-            <Typography
-              className={`${TextColor}`}
-              component="span">{list.name}
-            </Typography>
-          </AccordionSummary>
+          <div >
+            <AccordionSummary
+              sx={{
+                '&:hover': {
+                  backgroundColor: BackgroundColor,
+                  color: TextColorHover,
+                },
+              }}
+              expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              <Typography
+                className={`${TextColor}`}
+                component="span">{list.name}
+              </Typography>
+            </AccordionSummary>
+          </div>
           <AccordionDetails>
             <Typography>
               <List className="grid grid-flow-row gap-0">
