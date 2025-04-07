@@ -185,11 +185,21 @@ const SupDataMap = ({ Data }) => {
                             style={{ maxHeight: "110px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
-                            R {Service.price}
+                        <div className="grid grid-cols-2 gap-1">
+                            <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
+                                R {Service.price}
+                            </div>
+                            <div className="flex text-gray-700 text-xs font-serif my-auto p-2">
+                                <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2 w-3.5">
+                                    <Rating
+                                        name="Avg rating"
+                                        value={Service.rating ? Service.rating : 0}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
-                            {Service.service_description}
+                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-center p-2">
+                            Cool Beans
                         </div>
                     </Stack>
                 </motion.div>
@@ -326,7 +336,7 @@ const Service = () => {
                                 :
                                 <div className="px-2.5 z-50">
                                     <div
-                                        style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%",position:"static" }}
+                                        style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%", position: "static" }}
                                         className="align-center justify-center rounded-md py-2.5">
                                         <SupDataMap
                                             Data={Data} />
