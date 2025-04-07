@@ -51,7 +51,7 @@ const ServiceSearchBar = ({
                     mass: 20,
                     duration: 0.5,
                 }}
-                className="inline-flex ml-14 sm:ml-2 mr-2"
+                className="inline-flex ml-14 sm:ml-2 sm:mr-2 mr-14"
             >
                 <Button
                     size="small"
@@ -184,8 +184,6 @@ const ServiceMap = ({ Data }) => {
                             alt="test"
                             style={{ maxHeight: "110px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
-
-
                         />
                         <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
                             R {Service.price}
@@ -340,10 +338,10 @@ const Service = () => {
                     <div>
                         <div>
                             {Data.length === 0 ?
-                                <div style={{ minWidth: "100vw",marginTop:"30vh" }} className="flex">
+                                <div style={{ minWidth: "100vw", marginTop: "30vh" }} className="flex">
                                     <motion.div
                                         initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1  }}
+                                        animate={{ opacity: 1 }}
                                         transition={{
                                             delay: 0,
                                             type: "spring",

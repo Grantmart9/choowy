@@ -24,21 +24,22 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
 const AppName = "Choowy";
-const BackgroundColor = "#04b9c9"
+const BackgroundColor = "#57c2e6"
 const TextColorHover = "#0A4D68"
-const TextColor = "text-sky-900"
-const NavigationBackgroundColor = "to-teal-600 from-emerald-200"
+const TextColor = "text-sky-700"
+const NavigationBackgroundColor = "from-cyan-400 to-cyan-400 via-cyan-300"
 
 
 const MenuList = [
   {
     "name": 'Food and Treats', "path": "/rent-a-service", "data": "",
     "menu":
-      [{ "name": 'Dry Food', "path": "/my-services" },
+      [{ "name": 'Dry Food', "path": "/rent-a-service" },
       { "name": 'Wet Food', "path": "/rent-a-service" },
       { "name": 'Treats', "path": "/rent-a-service" },
       { "name": 'Specialized Diets', "path": "/rent-a-service" }]
@@ -167,7 +168,7 @@ export default function RootLayout({ children }) {
         minHeight: "100vh"
       }}
       role="presentation"
-      className={`bg-linear-to-br ${NavigationBackgroundColor}`}>
+      className={`bg-gradient-to-r ${NavigationBackgroundColor}`}>
       <Button
         className="flex align-center justify-center mb-7"
         sx={{ textTransform: "none" }}
@@ -186,24 +187,22 @@ export default function RootLayout({ children }) {
           elevation={0}
           className="bg-transparent"
         >
-          <div >
-            <AccordionSummary
-              sx={{
-                '&:hover': {
-                  backgroundColor: BackgroundColor,
-                  color: TextColorHover,
-                },
-              }}
-              expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
-              aria-controls="panel1-content"
-              id="panel1-header"
-            >
-              <Typography
-                className={`${TextColor}`}
-                component="span">{list.name}
-              </Typography>
-            </AccordionSummary>
-          </div>
+          <AccordionSummary
+            sx={{
+              '&:hover': {
+                backgroundColor: BackgroundColor,
+                color: TextColorHover,
+              }
+            }}
+            expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+          >
+            <Typography
+              className={`${TextColor}`}
+              component="span">{list.name}
+            </Typography>
+          </AccordionSummary>
           <AccordionDetails>
             <Typography>
               <List className="grid grid-flow-row gap-0">
@@ -270,7 +269,7 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       <body
-        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-fixed`}
+        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat`}
       >
         <div className="z-50 fixed mt-1 ml-1 ">
           <MenuIconButton
@@ -284,6 +283,13 @@ export default function RootLayout({ children }) {
         >
           {DrawerList}
         </Drawer>
+        <div className="z-50 fixed right-2 mt-1">
+          <IconButton>
+            <ShoppingCartIcon
+              sx={{ color: "whitesmoke" }}
+              toggleDrawer={toggleDrawer(true)} />
+          </IconButton>
+        </div>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>
     </html>
