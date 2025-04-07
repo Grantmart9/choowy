@@ -168,40 +168,30 @@ const SupDataMap = ({ Data }) => {
             {Data.map((Service, index) => (
                 <motion.div
                     key={Service.id} // assuming each service has a unique id
-                    initial={{ opacity: 0, height: "0%" }}
-                    animate={{ opacity: 1, height: "100%" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{
-                        delay: index * 0.1, // Add staggered delay based on index
-                        type: "keyframes",
-                        stiffness: 400,
-                        damping: 10,
+                        delay: index * 0.15, // Add staggered delay based on index
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 55,
                         mass: 10,
-                        duration: 0.3,
+                        duration: 0.4,
                     }}
                 >
-                    <Stack className="block bg-linear-to-r from-gray-100 to-gray-100 via-gray-300 shadow-md shadow-gray-800 h-full">
+                    <Button className="block bg-linear-to-r from-gray-100 to-gray-100 via-gray-300 P-0 shadow-md shadow-gray-800 h-full w-full">
                         <img
                             alt="test"
-                            style={{ maxHeight: "110px", width: "100%" }}
+                            style={{ maxHeight: "100px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="grid grid-cols-2 gap-1">
-                            <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2">
-                                R {Service.price}
-                            </div>
-                            <div className="flex text-gray-700 text-xs font-serif my-auto p-2">
-                                <div className="flex text-gray-700 text-xs font-serif my-auto justify-start p-2 w-3.5">
-                                    <Rating
-                                        name="Avg rating"
-                                        value={Service.rating ? Service.rating : 0}
-                                    />
-                                </div>
-                            </div>
+                        <div className="flex text-gray-700 text-md font-serif my-auto justify-start p-2">
+                            R {Service.price}
                         </div>
                         <div className="flex text-gray-700 text-xs font-serif my-auto justify-center p-2">
                             Cool Beans
                         </div>
-                    </Stack>
+                    </Button>
                 </motion.div>
             ))}
         </div>
