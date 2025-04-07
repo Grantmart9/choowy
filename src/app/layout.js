@@ -25,6 +25,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Flex } from "@adobe/react-spectrum";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
@@ -269,11 +270,16 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       <body
-        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat`}
+        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-fixed`}
       >
-        <div className="z-50 fixed mt-1 ml-1 ">
+        <div
+          style={{ height: "43px" }}
+          className="fixed bg-black opacity-50 w-full z-30">
+        </div>
+        <div className="z-50 fixed my-auto left-1 ">
           <MenuIconButton
-            toggleDrawer={toggleDrawer(true)} />
+            toggleDrawer={toggleDrawer(true)}
+          />
         </div>
         <Drawer
           transitionDuration={800} // Matches the toggleDrawer delay
@@ -283,11 +289,13 @@ export default function RootLayout({ children }) {
         >
           {DrawerList}
         </Drawer>
-        <div className="z-50 fixed right-2 mt-1">
-          <IconButton>
+        <div className="z-50 fixed my-auto right-1">
+          <IconButton
+            toggleDrawer={() => toggleDrawer(true)}
+            size="medium">
             <ShoppingCartIcon
               sx={{ color: "whitesmoke" }}
-              toggleDrawer={toggleDrawer(true)} />
+            />
           </IconButton>
         </div>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
