@@ -195,12 +195,12 @@ export default function RootLayout({ children }) {
                 color: TextColorHover,
               }
             }}
-            expandIcon={<ArrowDownwardIcon className={`${TextColor}`} />}
+            expandIcon={<ArrowDownwardIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
             aria-controls="panel1-content"
             id="panel1-header"
           >
             <Typography
-              className={`${TextColor}`}
+              className={`${TextColor} text-md`}
               component="span">{list.name}
             </Typography>
           </AccordionSummary>
@@ -243,7 +243,7 @@ export default function RootLayout({ children }) {
               }}
               href={menuItem.path}
             >
-              <ListItemText className={`font-sans ${TextColor}`} primary={menuItem.name} />
+              <ListItemText className={`font-sans ${TextColor} text-xs`} primary={menuItem.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -278,6 +278,8 @@ export default function RootLayout({ children }) {
         </div>
         <div className="z-50 fixed my-auto left-1 ">
           <MenuIconButton
+            edge="end"
+            size="small"
             toggleDrawer={toggleDrawer(true)}
           />
         </div>

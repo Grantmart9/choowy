@@ -179,16 +179,17 @@ const SupDataMap = ({ Data }) => {
                         duration: 0.4,
                     }}
                 >
-                    <Button className="block bg-linear-to-r from-gray-100 to-gray-100 via-gray-300 P-0 shadow-md shadow-gray-800 h-full w-full">
+                    <Button className="block rounded-none bg-gradient-to-br from-cyan-600 to-cyan-600 via-transparent P-0 shadow-md shadow-gray-800 h-full w-full">
                         <img
                             alt="test"
                             style={{ maxHeight: "100px", width: "100%" }}
+                            className="shadow-cyan-100 shadow-md"
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex text-gray-700 text-md font-serif my-auto justify-start p-2">
+                        <div className="flex text-cyan-100 text-lg font-serif my-auto justify-start p-2">
                             R {Service.price}
                         </div>
-                        <div className="flex text-gray-700 text-xs font-serif my-auto justify-center p-2">
+                        <div className="flex text-cyan-100 text-xs font-serif my-auto justify-center p-2">
                             Cool Beans
                         </div>
                     </Button>
