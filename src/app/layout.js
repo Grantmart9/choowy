@@ -278,8 +278,6 @@ export default function RootLayout({ children }) {
         </div>
         <div className="z-50 fixed my-auto left-1 ">
           <MenuIconButton
-            edge="end"
-            size="small"
             toggleDrawer={toggleDrawer(true)}
           />
         </div>
@@ -296,7 +294,7 @@ export default function RootLayout({ children }) {
             toggleDrawer={() => toggleDrawer(true)}
             size="medium">
             <ShoppingCartIcon
-              sx={{ color: "whitesmoke" }}
+              sx={{ color: "#b1fbfc" }}
             />
           </IconButton>
         </div>

@@ -44,6 +44,7 @@ const SearchBar = ({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 5 }}
                 transition={{
+                    delay:1,
                     type: "spring",
                     bounce: 0.02,
                     stiffness: 100,
@@ -63,20 +64,7 @@ const SearchBar = ({
                     }}
                     onClick={handleFilter}
                 >
-                    <span style={{ opacity: 1 }}>Filter</span> {/* Ensure text is fully opaque */}
-                </Button>
-                <Button
-                    size="small"
-                    sx={{ textTransform: "none" }}
-                    variant="text"
-                    onClick={handleClearFilter}
-                    style={{
-                        background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
-                    }}
-                    className="rounded-r-none rounded-l-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100">
-                    <span style={{ opacity: 1 }} >
-                        <ClearIcon />
-                    </span>
+                    <span style={{ opacity: 1, color: "#b1fbfc" }}>Filter</span> {/* Ensure text is fully opaque */}
                 </Button>
                 <div
                     style={{
@@ -104,8 +92,8 @@ const SearchBar = ({
                         background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                     }}
                     className="rounded-l-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100">
-                    <span style={{ opacity: 1 }} >
-                        <ClearIcon />
+                    <span style={{ opacity: 1, color: "#b1fbfc" }} >
+                        <ClearIcon size="small" />
                     </span>
                 </Button>
             </motion.div>
@@ -171,25 +159,24 @@ const SupDataMap = ({ Data }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{
-                        delay: index * 0.15, // Add staggered delay based on index
+                        delay: index * 0.12, // Add staggered delay based on index
                         type: "spring",
                         stiffness: 300,
                         damping: 55,
                         mass: 10,
-                        duration: 0.4,
+                        duration: 0.3,
                     }}
                 >
-                    <Button className="block rounded-none bg-gradient-to-br from-cyan-600 to-cyan-600 via-transparent P-0 shadow-md shadow-gray-800 h-full w-full">
+                    <Button className="block rounded-none bg-gradient-to-br from-cyan-500 to-cyan-500 via-transparent transform-none P-0 shadow-sm shadow-gray-800 h-full w-full">
                         <img
                             alt="test"
-                            style={{ maxHeight: "100px", width: "100%" }}
-                            className="shadow-cyan-100 shadow-md"
+                            style={{ maxHeight: "80px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex text-cyan-100 text-lg font-serif my-auto justify-start p-2">
+                        <div className="flex text-cyan-100 text-md  font-bold my-auto justify-start p-2">
                             R {Service.price}
                         </div>
-                        <div className="flex text-cyan-100 text-xs font-serif my-auto justify-center p-2">
+                        <div style={{ fontFamily: "cursive" }} className="flex transform-none text-cyan-100 text-xs my-auto justify-center p-2">
                             Cool Beans
                         </div>
                     </Button>
@@ -312,11 +299,11 @@ const Service = () => {
                                             mass: 30,
                                             duration: 3,
                                         }}
-                                        className="mt-5 mx-auto">
+                                        className="mx-auto">
                                         <Circles
-                                            height="200"
-                                            width="200"
-                                            color="#00224D"
+                                            height="150"
+                                            width="150"
+                                            color="#0A4D68"
                                             ariaLabel="circles-loading"
                                             wrapperStyle={{}}
                                             wrapperClass=""
