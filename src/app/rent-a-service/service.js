@@ -44,7 +44,7 @@ const SearchBar = ({
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 5 }}
                 transition={{
-                    delay:1,
+                    delay: 1,
                     type: "spring",
                     bounce: 0.02,
                     stiffness: 100,
@@ -167,16 +167,16 @@ const SupDataMap = ({ Data }) => {
                         duration: 0.3,
                     }}
                 >
-                    <Button className="block rounded-none bg-gradient-to-br from-cyan-500 to-cyan-500 via-transparent transform-none P-0 shadow-sm shadow-gray-800 h-full w-full">
+                    <Button className="block rounded-none bg-gradient-to-b from-transparent to-cyan-800 via-cyan-500 transform-none P-0 shadow-sm shadow-gray-600 h-full w-full">
                         <img
                             alt="test"
                             style={{ maxHeight: "80px", width: "100%" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex text-cyan-100 text-md  font-bold my-auto justify-start p-2">
+                        <div className="flex text-cyan-100 text-md font-bold my-auto justify-start p-2">
                             R {Service.price}
                         </div>
-                        <div style={{ fontFamily: "cursive" }} className="flex transform-none text-cyan-100 text-xs my-auto justify-center p-2">
+                        <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
                             Cool Beans
                         </div>
                     </Button>
@@ -312,9 +312,9 @@ const Service = () => {
                                     </motion.div>
                                 </div>
                                 :
-                                <div className="px-2.5 z-50">
+                                <div className="z-50">
                                     <div
-                                        style={{ background: "rgba(128, 128, 128, 0.30)", minWidth: "100%", position: "static" }}
+                                        style={{ minWidth: "100%", position: "static" }}
                                         className="align-center justify-center rounded-md py-2.5">
                                         <SupDataMap
                                             Data={Data} />
