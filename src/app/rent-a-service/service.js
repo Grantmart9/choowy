@@ -5,7 +5,6 @@ import { ListItem, TextField, Typography } from "@mui/material";
 import * as motion from "motion/react-client";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-import Button from "@mui/material/Button";
 import { createClient } from "@supabase/supabase-js";
 import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
@@ -13,14 +12,10 @@ import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Circles } from 'react-loader-spinner'
 import { SUPABASE_URL, API_KEY } from "../supabase";
+import Button from "@mui/material/Button";
+import Ripple from "./components/Ripple";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
-
-const video_url = [{ "name": "dog", "url": "https://videos.pexels.com/video-files/4107001/4107001-uhd_3840_2160_30fps.mp4" },
-{ "name": "cat", "url": "https://videos.pexels.com/video-files/854840/854840-hd_1920_1080_30fps.mp4" },
-{ "name": "hamster", "url": "https://videos.pexels.com/video-files/855499/855499-hd_1920_1080_30fps.mp4" },
-{ "name": "bird eating", "url": "https://videos.pexels.com/video-files/4982611/4982611-hd_1920_1080_25fps.mp4" }
-]
 
 const SearchBar = ({
     handleFilter,
@@ -60,11 +55,11 @@ const SearchBar = ({
                     variant="text"
                     className="rounded-r-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100 md:w-28"
                     style={{
-                        background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
+                        background: "rgba(128, 128, 128, 0.25)", padding: "3px" // Set the background with 15% opacity
                     }}
                     onClick={handleFilter}
                 >
-                    <span style={{ opacity: 1, color: "#b1fbfc" }}>Filter</span> {/* Ensure text is fully opaque */}
+                    <span style={{ opacity: 1, color: "#b1fbfc" }}>Filter<Ripple color={"#1fecf9"} duration={2000}></Ripple></span> {/* Ensure text is fully opaque */}
                 </Button>
                 <div
                     style={{
@@ -94,7 +89,9 @@ const SearchBar = ({
                     className="rounded-l-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100">
                     <span style={{ opacity: 1, color: "#b1fbfc" }} >
                         <ClearIcon size="small" />
+                        <Ripple color={"#1fecf9"} duration={2000}></Ripple>
                     </span>
+
                 </Button>
             </motion.div>
             <Dialog
@@ -179,6 +176,7 @@ const SupDataMap = ({ Data }) => {
                         <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
                             Cool Beans
                         </div>
+                        <Ripple color={"#1fecf9"} duration={2000}></Ripple>
                     </Button>
                 </motion.div>
             ))}
