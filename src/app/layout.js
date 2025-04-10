@@ -270,7 +270,7 @@ export default function RootLayout({ children }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
       <body
-        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-no-repeat bg-cover`}
+        className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-cover bg-fixed`}
       >
         <div
           style={{ height: "44px" }}

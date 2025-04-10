@@ -164,7 +164,7 @@ const SupDataMap = ({ Data }) => {
                         duration: 0.3,
                     }}
                 >
-                    <Button className="block rounded-none bg-gradient-to-b from-transparent to-cyan-800 via-cyan-500 transform-none P-0 shadow-sm shadow-gray-600 h-full w-full">
+                    <Button className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent P-0 shadow-sm shadow-gray-600 h-full w-full">
                         <img
                             alt="test"
                             style={{ maxHeight: "80px", width: "100%" }}
@@ -176,7 +176,6 @@ const SupDataMap = ({ Data }) => {
                         <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
                             Cool Beans
                         </div>
-                        <Ripple color={"#1fecf9"} duration={2000}></Ripple>
                     </Button>
                 </motion.div>
             ))}
@@ -279,49 +278,39 @@ const Service = () => {
                     handleClearSearch={handleClearSearch}
                 />
             </div>
-            <div style={{ width: "100vw" }}>
-                <div
-                    className="block align-center justify-center mt-14">
-                    <div>
-                        <div>
-                            {Data.length === 0 ?
-                                <div style={{ minWidth: "100vw", marginTop: "30vh" }} className="flex">
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{
-                                            delay: 0,
-                                            type: "spring",
-                                            stiffness: 100,
-                                            damping: 10,
-                                            mass: 30,
-                                            duration: 3,
-                                        }}
-                                        className="mx-auto">
-                                        <Circles
-                                            height="150"
-                                            width="150"
-                                            color="#0A4D68"
-                                            ariaLabel="circles-loading"
-                                            wrapperStyle={{}}
-                                            wrapperClass=""
-                                            visible={true}
-                                        />
-                                    </motion.div>
-                                </div>
-                                :
-                                <div className="z-50">
-                                    <div
-                                        style={{ minWidth: "100%", position: "static" }}
-                                        className="align-center justify-center rounded-md py-2.5">
-                                        <SupDataMap
-                                            Data={Data} />
-                                    </div>
-                                </div>
-                            }
-                        </div>
+            <div className="block align-center justify-center mt-14" style={{ width: "100vw" }}>
+                {Data.length === 0 ?
+                    <div style={{ minWidth: "100vw", marginTop: "30vh" }} className="flex">
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{
+                                delay: 0,
+                                type: "spring",
+                                stiffness: 100,
+                                damping: 10,
+                                mass: 30,
+                                duration: 3,
+                            }}
+                            className="mx-auto">
+                            <Circles
+                                height="150"
+                                width="150"
+                                color="#0A4D68"
+                                ariaLabel="circles-loading"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                                visible={true}
+                            />
+                        </motion.div>
                     </div>
-                </div>
+                    :
+                    <div
+                        className="sticky align-center justify-center rounded-md py-2.5 z-20 min-w-full">
+                        <SupDataMap
+                            Data={Data} />
+                    </div>
+                }
             </div>
         </React.Fragment >
     );
