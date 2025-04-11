@@ -25,7 +25,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Flex } from "@adobe/react-spectrum";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
@@ -200,7 +200,7 @@ export default function RootLayout({ children }) {
             id="panel1-header"
           >
             <Typography
-              className={`${TextColor} text-md`}
+              className={`${TextColor} text-xs`}
               component="span">{list.name}
             </Typography>
           </AccordionSummary>
@@ -220,7 +220,7 @@ export default function RootLayout({ children }) {
                     href={submenubutton.path}
                     onClick={toggleDrawer(false)} // Close drawer on click
                   >
-                    <ListItemText className="font-sans text-sm" primary={submenubutton.name} />
+                    <ListItemText className="font-sans text-xs" primary={submenubutton.name} />
                   </ListItemButton>
                 ))}
               </List>
@@ -259,7 +259,7 @@ export default function RootLayout({ children }) {
           }
         }}
       >
-        <ListItemText className={`font-sans ${TextColor}`} primary={"Logout"} />
+        <ListItemText className={`font-sans ${TextColor} text-xs`} primary={"Logout"} />
       </ListItemButton>
     </Box>
   );
@@ -276,10 +276,14 @@ export default function RootLayout({ children }) {
           style={{ height: "44px" }}
           className="fixed bg-black opacity-50 w-full z-30">
         </div>
-        <div className="z-50 fixed my-auto left-1 ">
-          <MenuIconButton
-            toggleDrawer={toggleDrawer(true)}
-          />
+        <div className="z-50 fixed my-auto left-1" >
+          <IconButton
+            onClick={toggleDrawer(true)}
+            size="medium">
+            <MenuRoundedIcon
+              sx={{ color: "#b1fbfc" }}
+            />
+          </IconButton>
         </div>
         <Drawer
           transitionDuration={800} // Matches the toggleDrawer delay
@@ -291,7 +295,6 @@ export default function RootLayout({ children }) {
         </Drawer>
         <div className="z-50 fixed my-auto right-1">
           <IconButton
-            toggleDrawer={() => toggleDrawer(true)}
             size="medium">
             <ShoppingCartIcon
               sx={{ color: "#b1fbfc" }}

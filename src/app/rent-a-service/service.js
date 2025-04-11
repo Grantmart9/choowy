@@ -75,7 +75,7 @@ const SearchBar = ({
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         onChange={handleSearchChange}
-                        sx={{ input: { color: '#00224D', maxHeight: "7px" } }}
+                        sx={{ input: { color: 'whitesmoke', maxHeight: "7px" } }}
                     />
                 </div>
                 <Button
