@@ -174,7 +174,7 @@ const SupDataMap = ({ Data }) => {
                             R {Service.price}
                         </div>
                         <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
-                            Cool Beans
+                            {Service.service_title}
                         </div>
                     </Button>
                 </motion.div>
@@ -309,6 +309,7 @@ const Service = () => {
                         className="sticky align-center justify-center rounded-md py-2.5 z-20 min-w-full">
                         <SupDataMap
                             Data={Data} />
+                        {console.log(Data)}
                     </div>
                 }
             </div>
