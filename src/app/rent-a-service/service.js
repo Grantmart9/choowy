@@ -130,7 +130,6 @@ const SearchBar = ({
                         />
                     </ListItem>
                 </List>
-
             </Dialog>
         </div>
     );
@@ -147,12 +146,12 @@ const CustomerRating = () => {
 }
 
 
-const SupDataMap = ({ Data }) => {
+const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productIndex }) => {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
-                    key={Service.id} // assuming each service has a unique id
+                    key={index} // assuming each service has a unique id
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{
@@ -164,7 +163,7 @@ const SupDataMap = ({ Data }) => {
                         duration: 0.3,
                     }}
                 >
-                    <Button className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent P-0 shadow-sm shadow-gray-600 h-full w-full">
+                    <Button onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent P-0 shadow-sm shadow-gray-600 h-full w-full">
                         <img
                             alt="test"
                             style={{ maxHeight: "80px", width: "100%" }}
@@ -177,8 +176,17 @@ const SupDataMap = ({ Data }) => {
                             {Service.service_title}
                         </div>
                     </Button>
+                    <Dialog
+                        onClose={handleCloseProduct}
+                        open={product}
+                        sx={{ backgroundColor: "aqua" }}
+                    >
+                        <div style={{ padding: "10px" }}>I am a dialog, hello there....{productIndex}</div>
+                    </Dialog>
                 </motion.div>
+
             ))}
+
         </div>
     );
 };
@@ -191,13 +199,25 @@ const Service = () => {
     const [value1, setValue1] = useState([100, 3000]); // Price range
     const [value2, setValue2] = useState([1, 100]); // Distance range
     const [searchQuery, setSearchQuery] = useState("");
+    const [product, setProduct] = useState(false);
+    const [productIndex, setProductIndex] = useState();
 
     const handleFilter = () => {
         setOpen(true);
     };
 
+    const handleProduct = (e, index) => {
+        setProductIndex(index);
+        setProduct(true);
+    };
+
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleCloseProduct = () => {
+        setProduct(false);
+
     };
 
     const handleChange = (event, newValue) => {
@@ -308,8 +328,13 @@ const Service = () => {
                     <div
                         className="sticky align-center justify-center rounded-md py-2.5 z-20 min-w-full">
                         <SupDataMap
-                            Data={Data} />
-                        {console.log(Data)}
+                            Data={Data}
+                            handleProduct={handleProduct}
+                            handleCloseProduct={handleCloseProduct}
+                            product={product}
+                            productIndex={productIndex}
+
+                        />
                     </div>
                 }
             </div>

@@ -11,7 +11,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LoginIcon from '@mui/icons-material/Login';
@@ -33,7 +32,9 @@ const AppName = "Choowy";
 const BackgroundColor = "#57c2e6"
 const TextColorHover = "#0A4D68"
 const TextColor = "text-sky-700"
-const NavigationBackgroundColor = "from-cyan-400 to-cyan-400 via-cyan-300"
+const FontType = "Pacifico, serif"
+const NavigationBackgroundColor = "from-cyan-500 to-cyan-300 via-cyan-400"
+const NavigationTextSize = "sm";
 
 
 const MenuList = [
@@ -115,26 +116,10 @@ const MenuList = [
   }]
 
 const SubMenuList = [
-  { "name": 'Orders', "path": "/login", "icon": <LoginIcon /> },
+  { "name": 'Orders', "path": "/orders", "icon": <LoginIcon /> },
   { "name": 'Account', "path": "/account", "icon": <AccountBoxIcon /> },
   { "name": 'Login / Sign Up', "path": "/login", "icon": <LoginIcon /> },
 ]
-
-const MenuIconButton = ({ toggleDrawer }) => {
-  return (
-    <IconButton size="large"
-      fullWidth={false}
-      className="rounded-full"
-      onClick={toggleDrawer}
-      sx={{
-        backgroundColor: "transparent",
-        color: 'whitesmoke',
-      }}
-    >
-      <MenuIcon />
-    </IconButton>
-  )
-}
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -166,17 +151,17 @@ export default function RootLayout({ children }) {
         width: 250,
         height: "100%",
         overflow: "auto",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
-      role="presentation"
-      className={`bg-gradient-to-r ${NavigationBackgroundColor}`}>
+      className={`bg-gradient-to-bl bg-${NavigationBackgroundColor}`}
+      role="presentation">
       <Button
         className="flex align-center justify-center mb-7"
         sx={{ textTransform: "none" }}
         href="/"
       >
         <div
-          style={{ fontFamily: "Pacifico, serif" }}
+          style={{ fontFamily: FontType }}
           className={`p-1 text-3xl font-semibold text-center justify-center ${TextColor} mt-2`}
         >
           {AppName}
@@ -200,7 +185,7 @@ export default function RootLayout({ children }) {
             id="panel1-header"
           >
             <Typography
-              className={`${TextColor} text-xs`}
+              style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}
               component="span">{list.name}
             </Typography>
           </AccordionSummary>
@@ -220,7 +205,7 @@ export default function RootLayout({ children }) {
                     href={submenubutton.path}
                     onClick={toggleDrawer(false)} // Close drawer on click
                   >
-                    <ListItemText className="font-sans text-xs" primary={submenubutton.name} />
+                    <div style={{ fontFamily: FontType }} className={`text-${NavigationTextSize}`}>{submenubutton.name}</div>
                   </ListItemButton>
                 ))}
               </List>
@@ -243,7 +228,7 @@ export default function RootLayout({ children }) {
               }}
               href={menuItem.path}
             >
-              <ListItemText className={`font-sans ${TextColor} text-xs`} primary={menuItem.name} />
+              <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>{menuItem.name}</div>
             </ListItemButton>
           </ListItem>
         ))}
@@ -259,7 +244,7 @@ export default function RootLayout({ children }) {
           }
         }}
       >
-        <ListItemText className={`font-sans ${TextColor} text-xs`} primary={"Logout"} />
+        <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>Logout</div>
       </ListItemButton>
     </Box>
   );

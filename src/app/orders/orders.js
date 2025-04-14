@@ -11,7 +11,7 @@ const text = {
 
 const Points = 2000;
 
-const History = () => {
+const Orders = () => {
     const count = useMotionValue(0)
     const rounded = useTransform(() => Math.round(count.get()))
 
@@ -23,10 +23,10 @@ const History = () => {
     return (
         <React.Fragment>
             <div className=" mt-20 m-4 text-center text-white justify-center">
-                This is the service history page
+                This is the service Orders page
             </div>
         </React.Fragment>
     );
 };
 
-export default History;
+export default Orders;

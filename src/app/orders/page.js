@@ -1,6 +1,6 @@
-import History from "./history";
+import Orders from "./orders";
 export const metadata = {
-    title: "Temoserv|History",
+    title: "Temoserv|Orders",
     description:
         "Our calculator will help you work out the cost of your child's pre-primary, primary, secondary and tertiary education. You will also get a comprehensive report.",
     alternates: {
@@ -8,8 +8,8 @@ export const metadata = {
     },
 };
 
-const HistoryPage = () => {
-    return <History />;
+const OrdersPage = () => {
+    return <Orders />;
 };
 
-export default HistoryPage;
+export default OrdersPage;
