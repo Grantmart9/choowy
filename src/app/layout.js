@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
         overflow: "auto",
         minHeight: "100vh",
       }}
-      className={`bg-gradient-to-bl bg-${NavigationBackgroundColor}`}
+      className={` bg-[url(./background.svg)] `}
       role="presentation">
       <Button
         className="flex align-center justify-center mb-7"
@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
       >
         <div
           style={{ fontFamily: FontType }}
-          className={`p-1 text-3xl font-semibold text-center justify-center ${TextColor} mt-2`}
+          className={`p-1 text-3xl font-semibold text-center  justify-center ${TextColor} mt-2`}
         >
           {AppName}
         </div>
