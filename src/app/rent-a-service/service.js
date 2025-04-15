@@ -1,6 +1,6 @@
 
 "use client"; // Add this line at the top of your component file
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { ListItem, TextField, Typography } from "@mui/material";
 import * as motion from "motion/react-client";
 import Rating from '@mui/material/Rating';
@@ -15,7 +15,6 @@ import { Circles } from 'react-loader-spinner'
 import { SUPABASE_URL, API_KEY } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
-import zIndex from "@mui/material/styles/zIndex";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
@@ -141,8 +140,6 @@ const SearchBar = ({
 
 
 const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productIndex }) => {
-
-
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
@@ -162,7 +159,7 @@ const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productI
                     <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
                         <Image
                             alt="test"
-                            style={{ maxHeight:"100px",width: "100%",top:0 }}
+                            style={{ maxHeight: "100px", width: "100%", top: 0 }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
                         <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
@@ -172,40 +169,52 @@ const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productI
                             R {Service.price}
                         </div>
                     </Button>
-                    <Dialog
-                        onClose={handleCloseProduct}
-                        open={product}
-                        sx={{ bgcolor: "darkcyan" }}
-                    >
-                        <Box style={{ maxWidth: "400px", maxHeight: "1000px" }}>
-                            <Image
-                                alt="test"
-                                style={{ maxHeight: "300px", minWidth: "100%" }}
-                                src={`data:image/jpeg;base64,${Data[productIndex].person_logo}`}
-                            />
-                            <Rating
-                                style={{ color: "gold" }}
-                                name="Avg rating"
-                                value={Data[productIndex].rating}
-                                size="medium"
-                                sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
-                            />
-                            <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
-                                {Data[productIndex].service_title}
-                            </div>
-                            <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].service_description}</div>
-                            <div className="grid grid-cols-3">
-                                <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            delay: 1, // Add staggered delay based on index
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 55,
+                            mass: 10,
+                            duration: 1,
+                        }}>
+                        <Dialog
+                            onClose={handleCloseProduct}
+                            open={product}
+                            sx={{ bgcolor: "darkcyan" }}
+                        >
+                            <Box style={{ maxWidth: "400px", maxHeight: "1000px" }}>
+                                <Image
+                                    alt="test"
+                                    style={{ maxHeight: "300px", minWidth: "100%" }}
+                                    src={`data:image/jpeg;base64,${Data[productIndex].person_logo}`}
+                                />
+                                <Rating
+                                    style={{ color: "gold" }}
+                                    name="Avg rating"
+                                    value={Data[productIndex].rating}
+                                    size="medium"
+                                    sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
+                                />
+                                <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
+                                    {Data[productIndex].service_title}
                                 </div>
-                                <Button sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
-                                    add to cart +
-                                </Button>
-                                <div className="flex text-cyan-950 text-lg font-light align-center justify-end p-2">
-                                    R {Data[productIndex].price}
+                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].service_description}</div>
+                                <div className="grid grid-cols-3">
+                                    <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
+                                    </div>
+                                    <Button sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
+                                        add to cart +
+                                    </Button>
+                                    <div className="flex text-cyan-950 text-lg font-light align-center justify-end p-2">
+                                        R {Data[productIndex].price}
+                                    </div>
                                 </div>
-                            </div>
-                        </Box>
-                    </Dialog>
+                            </Box>
+                        </Dialog>
+                    </motion.div>
                 </motion.div>
 
             ))}
