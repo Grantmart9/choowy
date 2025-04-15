@@ -10,14 +10,8 @@ import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import LoginIcon from '@mui/icons-material/Login';
 import Divider from '@mui/material/Divider';
 import Button from "@mui/material/Button";
-import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL, API_KEY } from "./supabase";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -26,101 +20,22 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
+import {
+  SUPABASE_URL, API_KEY,
+  AppName,
+  BackgroundColor,
+  TextColorHover,
+  TextColor,
+  FontType,
+  NavigationBackgroundColor,
+  NavigationTextSize,
+  MainMenuList,
+  SubMenuList
+} from "./supabase";
+
+import { createClient } from "@supabase/supabase-js";
+
 const supabase = createClient(SUPABASE_URL, API_KEY);
-
-const AppName = "Choowy";
-const BackgroundColor = "#57c2e6"
-const TextColorHover = "#0A4D68"
-const TextColor = "text-sky-700"
-const FontType = "Pacifico, serif"
-const NavigationBackgroundColor = "from-cyan-500 to-cyan-300 via-cyan-400"
-const NavigationTextSize = "sm";
-
-
-const MenuList = [
-  {
-    "name": 'Food and Treats', "path": "/rent-a-service", "data": "",
-    "menu":
-      [{ "name": 'Dry Food', "path": "/rent-a-service" },
-      { "name": 'Wet Food', "path": "/rent-a-service" },
-      { "name": 'Treats', "path": "/rent-a-service" },
-      { "name": 'Specialized Diets', "path": "/rent-a-service" }]
-  },
-  {
-    "name": 'Accessories', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Collars and Leashes", "path": "/rent-a-service" },
-      { "name": "Toys", "path": "/rent-a-service" },
-      { "name": "Beds and Crates", "path": "/rent-a-service" },
-      { "name": "Bowls and Feeders", "path": "/rent-a-service" }]
-  },
-  {
-    "name": 'Health & Wellness', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Supplements", "path": "/rent-a-service" },
-      { "name": "Medications", "path": "/rent-a-service" },
-      { "name": "Grooming Products", "path": "/rent-a-service" },
-      { "name": "Dental Care", "path": "/rent-a-service" }]
-  }, {
-    "name": 'Apparel', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Clothing", "path": "/rent-a-service" },
-      { "name": "Shoes and Booties", "path": "/rent-a-service" },
-      { "name": "Seasonal Wear", "path": "/rent-a-service" }]
-  },
-  {
-    "name": 'Travel & Outdoor', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Carriers", "path": "/rent-a-service" },
-      { "name": "Travel Bowls", "path": "/rent-a-service" },
-      { "name": "Outdoor Toys", "path": "/rent-a-service" },
-      { "name": "Harnesses", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'Pet Tech', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "GPS Trackers", "path": "/rent-a-service" },
-      { "name": "Smart Feeders", "path": "/rent-a-service" },
-      { "name": "Interactive Toys", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'Cleaning & Hygiene', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Litter & Accessories", "path": "/rent-a-service" },
-      { "name": "Waste Bags", "path": "/rent-a-service" },
-      { "name": "Odor Control", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'Training Supplies', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Clickers", "path": "/rent-a-service" },
-      { "name": "Training Pads", "path": "/rent-a-service" },
-      { "name": "Training Treats", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'Small Pets & Exotics', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Birds", "path": "/rent-a-service" },
-      { "name": "Reptile Care", "path": "/rent-a-service" },
-      { "name": "Small Mammals", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'New Arrivals', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Recently Added Products", "path": "/rent-a-service" },
-
-      ]
-  },
-  {
-    "name": 'Deals & Discounts', "path": '/rent-a-service', "icon": <ShoppingBasketIcon />, "menu":
-      [{ "name": "Sale Items", "path": "/rent-a-service" },
-      { "name": "Bulk Discounts", "path": "/rent-a-service" }
-
-      ]
-  }]
-
-const SubMenuList = [
-  { "name": 'Orders', "path": "/orders", "icon": <LoginIcon /> },
-  { "name": 'Account', "path": "/account", "icon": <AccountBoxIcon /> },
-  { "name": 'Login / Sign Up', "path": "/login", "icon": <LoginIcon /> },
-]
-
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
@@ -167,7 +82,7 @@ export default function RootLayout({ children }) {
           {AppName}
         </div>
       </Button>
-      {MenuList.map((list, index) => (
+      {MainMenuList.map((list, index) => (
         <Accordion
           key={index}
           elevation={0}
@@ -271,7 +186,7 @@ export default function RootLayout({ children }) {
           </IconButton>
         </div>
         <Drawer
-          transitionDuration={800} // Matches the toggleDrawer delay
+          transitionDuration={900} // Matches the toggleDrawer delay
           disableScrollLock={true}
           open={open}
           onClose={toggleDrawer(false)}
@@ -280,7 +195,7 @@ export default function RootLayout({ children }) {
         </Drawer>
         <div className="z-50 fixed my-auto right-1">
           <IconButton
-            size="medium">
+            size="medium" href="/orders">
             <ShoppingCartIcon
               sx={{ color: "#b1fbfc" }}
             />

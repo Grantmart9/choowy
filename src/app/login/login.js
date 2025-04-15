@@ -101,7 +101,7 @@ const LoginDialog = ({
                             onClick={handleSignIn}
                             fullWidth={false}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.25)", color: "black", '&:hover': {
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "black", '&:hover': {
                                     backgroundColor: 'gray',
                                     color: 'whitesmoke',
                                 }
@@ -115,7 +115,7 @@ const LoginDialog = ({
                             fullWidth={false}
                             onClick={handleSignUp}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.25)", color: "black", '&:hover': {
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "black", '&:hover': {
                                     backgroundColor: 'gray',
                                     color: 'whitesmoke',
                                 }

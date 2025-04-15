@@ -4,8 +4,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { ListItem, TextField, Typography } from "@mui/material";
 import * as motion from "motion/react-client";
 import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
+import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
+import Box from "@mui/material/Box";
 import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
@@ -14,6 +15,7 @@ import { Circles } from 'react-loader-spinner'
 import { SUPABASE_URL, API_KEY } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
+import zIndex from "@mui/material/styles/zIndex";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
@@ -135,18 +137,12 @@ const SearchBar = ({
     );
 };
 
-const CustomerRating = () => {
-    <Rating
-        style={{ position: "relative", top: 5, left: 5 }}
-        name="Avg rating"
-        value={Service.rating ? Service.rating : 0}
-        size="medium"
-        sx={{ alignItems: "center", justifyItems: "center" }}
-    />
-}
+
 
 
 const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productIndex }) => {
+
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
@@ -163,25 +159,52 @@ const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productI
                         duration: 0.3,
                     }}
                 >
-                    <Button onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent P-0 shadow-sm shadow-gray-600 h-full w-full">
-                        <img
+                    <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
+                        <Image
                             alt="test"
-                            style={{ maxHeight: "80px", width: "100%" }}
+                            style={{ maxHeight:"100px",width: "100%",top:0 }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex text-cyan-100 text-md font-bold my-auto justify-start p-2">
-                            R {Service.price}
-                        </div>
                         <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
                             {Service.service_title}
+                        </div>
+                        <div className="flex text-cyan-100 text-md font-bold my-auto justify-end p-2">
+                            R {Service.price}
                         </div>
                     </Button>
                     <Dialog
                         onClose={handleCloseProduct}
                         open={product}
-                        sx={{ backgroundColor: "aqua" }}
+                        sx={{ bgcolor: "darkcyan" }}
                     >
-                        <div style={{ padding: "10px" }}>I am a dialog, hello there....{productIndex}</div>
+                        <Box style={{ maxWidth: "400px", maxHeight: "1000px" }}>
+                            <Image
+                                alt="test"
+                                style={{ maxHeight: "300px", minWidth: "100%" }}
+                                src={`data:image/jpeg;base64,${Data[productIndex].person_logo}`}
+                            />
+                            <Rating
+                                style={{ color: "gold" }}
+                                name="Avg rating"
+                                value={Data[productIndex].rating}
+                                size="medium"
+                                sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
+                            />
+                            <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
+                                {Data[productIndex].service_title}
+                            </div>
+                            <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].service_description}</div>
+                            <div className="grid grid-cols-3">
+                                <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
+                                </div>
+                                <Button sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
+                                    add to cart +
+                                </Button>
+                                <div className="flex text-cyan-950 text-lg font-light align-center justify-end p-2">
+                                    R {Data[productIndex].price}
+                                </div>
+                            </div>
+                        </Box>
                     </Dialog>
                 </motion.div>
 
@@ -200,7 +223,7 @@ const Service = () => {
     const [value2, setValue2] = useState([1, 100]); // Distance range
     const [searchQuery, setSearchQuery] = useState("");
     const [product, setProduct] = useState(false);
-    const [productIndex, setProductIndex] = useState();
+    const [productIndex, setProductIndex] = useState(0);
 
     const handleFilter = () => {
         setOpen(true);
