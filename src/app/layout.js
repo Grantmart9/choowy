@@ -76,8 +76,8 @@ export default function RootLayout({ children }) {
         href="/"
       >
         <div
-          style={{ fontFamily: FontType }}
-          className={`p-1 text-3xl font-semibold text-center  justify-center ${TextColor} mt-2`}
+          style={{ fontFamily: "cursive", fontWeight: "bold", fontStyle: "italic", fontSize: "50px" }}
+          className={`p-1 text-center justify-center ${TextColor} mt-0.5 mb-0.5`}
         >
           {AppName}
         </div>
@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
             id="panel1-header"
           >
             <Typography
-              style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}
+              style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize} font-bold`}
               component="span">{list.name}
             </Typography>
           </AccordionSummary>
@@ -168,7 +168,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="flex h-full items-center justify-center">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400..700&family=Faculty+Glyphic&family=Geist:wght@100..900&family=Nanum+Gothic&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       <body
         className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-cover bg-fixed`}
       >

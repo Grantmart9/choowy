@@ -79,6 +79,6 @@ export const AppName = "Choowy";
 export const BackgroundColor = "#53f559"
 export const TextColorHover = "#0A4D68"
 export const TextColor = "text-sky-700"
-export const FontType = "Pacifico, serif"
+export const FontType = "Bona Nova SC, serif"
 export const NavigationBackgroundColor = "to-lime-400 from-cyan-500 via-pink-500"
 export const NavigationTextSize = "sm";

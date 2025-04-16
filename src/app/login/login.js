@@ -220,20 +220,6 @@ const SignUpDialog = ({
                         <Button
                             size="small"
                             fullWidth={false}
-                            onClick={handleSignUpBack}
-                            sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
-                                '&:hover': {
-                                    backgroundColor: BackgroundColor,
-                                    color: 'white',
-                                }
-                            }}
-                        >
-                            Back
-                        </Button>
-                        <Button
-                            size="small"
-                            fullWidth={false}
                             onClick={handleSignUpSubmit}
                             sx={{
                                 textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
@@ -245,6 +231,21 @@ const SignUpDialog = ({
                         >
                             Sign Up
                         </Button>
+                        <Button
+                            size="small"
+                            fullWidth={false}
+                            onClick={handleSignUpBack}
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                '&:hover': {
+                                    backgroundColor: BackgroundColor,
+                                    color: 'white',
+                                }
+                            }}
+                        >
+                            Back
+                        </Button>
+
                     </div>
                 </div>
             </Box>
@@ -348,7 +349,6 @@ const Login = () => {
                     ErrorMessage={ErrorMessage}
                     password={password}
                     ConfirmPassword={ConfirmPassword}
-
                 />
             }
         </React.Fragment>

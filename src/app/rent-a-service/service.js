@@ -12,7 +12,7 @@ import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Circles } from 'react-loader-spinner'
-import { SUPABASE_URL, API_KEY, TextColor, BackgroundColor } from "../supabase";
+import { SUPABASE_URL, API_KEY, TextColor, BackgroundColor, FontType } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
@@ -147,9 +147,6 @@ const SupDataMap = ({
     product,
     productIndex,
     handleSnackbar }) => {
-
-
-
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
@@ -172,10 +169,10 @@ const SupDataMap = ({
                             style={{ maxHeight: "100px", width: "100%", top: 0 }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div className="flex transform-none text-cyan-100 font-sans text-xs my-auto justify-center p-2">
+                        <div style={{ fontFamily: FontType, color: "whitesmoke",textTransform:"none" }} className="flex text-lg font-bold my-auto justify-center p-2">
                             {Service.service_title}
                         </div>
-                        <div className="flex text-cyan-100 text-md font-bold my-auto justify-end p-2">
+                        <div style={{ fontFamily: FontType, color: "whitesmoke",textTransform:"none" }} className="flex text-xl font-bold my-auto justify-end p-2">
                             R {Service.price}
                         </div>
                     </Button>
@@ -220,7 +217,7 @@ const SupDataMap = ({
                                         sx={{
                                             textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
                                             '&:hover': {
-                                                backgroundColor:BackgroundColor,
+                                                backgroundColor: BackgroundColor,
                                                 color: 'white',
                                             }
                                         }}
