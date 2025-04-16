@@ -12,7 +12,7 @@ import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Circles } from 'react-loader-spinner'
-import { SUPABASE_URL, API_KEY, TextColor } from "../supabase";
+import { SUPABASE_URL, API_KEY, TextColor, BackgroundColor } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
@@ -215,7 +215,17 @@ const SupDataMap = ({
                                 <div className="grid grid-cols-3">
                                     <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
                                     </div>
-                                    <Button onClick={handleSnackbar} sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
+                                    <Button
+                                        onClick={handleSnackbar}
+                                        sx={{
+                                            textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                            '&:hover': {
+                                                backgroundColor:BackgroundColor,
+                                                color: 'white',
+                                            }
+                                        }}
+                                        className="text-cyan-950 justify-center my-auto text-sm"
+                                        size="small">
                                         add to cart +
                                     </Button>
                                     <div className="flex text-cyan-950 text-lg font-medium align-center justify-end p-2">
