@@ -1,15 +1,15 @@
-import Login from "./login";
+import Cart from "./cart";
 export const metadata = {
-    title: "Choowy|Login",
+    title: "Choowy|Cart",
     description:
         "Our calculator will help you work out the cost of your child's pre-primary, primary, secondary and tertiary education. You will also get a comprehensive report.",
     alternates: {
-        canonical: `https://choowy.co.za/login/`,
+        canonical: `https://choowy.co.za/cart/`,
     },
 };
 
-const LoginPage = () => {
-    return <Login />;
+const CartPage = () => {
+    return <Cart />;
 };
 
-export default LoginPage;
+export default CartPage;

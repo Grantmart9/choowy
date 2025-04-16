@@ -20,6 +20,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
+
 import {
   SUPABASE_URL, API_KEY,
   AppName,
@@ -45,7 +46,6 @@ export default function RootLayout({ children }) {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -195,7 +195,7 @@ export default function RootLayout({ children }) {
         </Drawer>
         <div className="z-50 fixed my-auto right-1">
           <IconButton
-            size="medium" href="/orders">
+            size="medium" href="/cart">
             <ShoppingCartIcon
               sx={{ color: "#b1fbfc" }}
             />

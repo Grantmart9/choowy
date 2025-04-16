@@ -1,6 +1,6 @@
 
 "use client"; // Add this line at the top of your component file
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ListItem, TextField, Typography } from "@mui/material";
 import * as motion from "motion/react-client";
 import Rating from '@mui/material/Rating';
@@ -12,9 +12,11 @@ import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Circles } from 'react-loader-spinner'
-import { SUPABASE_URL, API_KEY } from "../supabase";
+import { SUPABASE_URL, API_KEY, TextColor } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
+import Snackbar from "@mui/material/Snackbar";
+import SnackbarContent from "@mui/material/SnackbarContent";
 
 const supabase = createClient(SUPABASE_URL, API_KEY);
 
@@ -32,8 +34,10 @@ const SearchBar = ({
     searchQuery,
     handleSearchChange,
     handleClearFilter,
-    handleClearSearch
+    handleClearSearch,
+
 }) => {
+
     return (
         <div className="mx-auto">
             <motion.div
@@ -136,10 +140,16 @@ const SearchBar = ({
     );
 };
 
+const SupDataMap = ({
+    Data,
+    handleProduct,
+    handleCloseProduct,
+    product,
+    productIndex,
+    handleSnackbar }) => {
 
 
 
-const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productIndex }) => {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
@@ -205,10 +215,10 @@ const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productI
                                 <div className="grid grid-cols-3">
                                     <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
                                     </div>
-                                    <Button sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
+                                    <Button onClick={handleSnackbar} sx={{ bgcolor: "rgba(87, 194, 230, 0.40)", maxHeight: "30px", textTransform: "none" }} className="text-cyan-950 justify-center my-auto text-sm" size="small">
                                         add to cart +
                                     </Button>
-                                    <div className="flex text-cyan-950 text-lg font-light align-center justify-end p-2">
+                                    <div className="flex text-cyan-950 text-lg font-medium align-center justify-end p-2">
                                         R {Data[productIndex].price}
                                     </div>
                                 </div>
@@ -216,9 +226,7 @@ const SupDataMap = ({ Data, handleProduct, handleCloseProduct, product, productI
                         </Dialog>
                     </motion.div>
                 </motion.div>
-
             ))}
-
         </div>
     );
 };
@@ -233,6 +241,7 @@ const Service = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [product, setProduct] = useState(false);
     const [productIndex, setProductIndex] = useState(0);
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
     const handleFilter = () => {
         setOpen(true);
@@ -283,6 +292,17 @@ const Service = () => {
         setValue2([1, 100]);
     };
 
+    const handleSnackBar = () => {
+        setOpenSnackbar(true) && setOpen(false);
+    };
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+        setProduct(false);
+    };
+
     // Memoized getInstruments function
     const getInstruments = useCallback(async () => {
         let query = supabase.from("nextjs_services").select();
@@ -328,6 +348,7 @@ const Service = () => {
                     handleSearchChange={handleSearchChange}
                     handleClearFilter={handleClearFilter}
                     handleClearSearch={handleClearSearch}
+
                 />
             </div>
             <div className="block align-center justify-center mt-14" style={{ width: "100vw" }}>
@@ -365,13 +386,28 @@ const Service = () => {
                             handleCloseProduct={handleCloseProduct}
                             product={product}
                             productIndex={productIndex}
+                            handleSnackbar={handleSnackBar}
 
                         />
                     </div>
                 }
             </div>
+            <Snackbar
+                open={openSnackbar}
+                anchorOrigin={{ "vertical": 'bottom', "horizontal": 'right' }}
+                autoHideDuration={3000}
+                onClose={handleCloseSnackbar}
+            >
+                <SnackbarContent
+                    className={"flex justify-center align-center mx-auto bg-lime-600"}
+                    message={
+                        <div style={{ color: TextColor }} className="text-center ">Added to your cart</div>
+                    }
+                />
+            </Snackbar>
         </React.Fragment >
     );
 };
+
 
 export default Service;

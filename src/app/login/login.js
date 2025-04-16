@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'; // Change this to `next/navigation`
 import KeyIcon from '@mui/icons-material/Key';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/Visibilityoff';
-import { SUPABASE_URL, API_KEY } from "../supabase";
+import { SUPABASE_URL, API_KEY, BackgroundColor } from "../supabase";
 import * as motion from "motion/react-client"
 import validator from "validator";
 
@@ -83,11 +83,11 @@ const LoginDialog = ({
                                     <div>
                                         {open ? (
                                             <InputAdornment position="end">
-                                                <Button onClick={showPassword}><VisibilityIcon sx={{ color: "black", bgcolor: "transparent" }} /></Button>
+                                                <Button onClick={showPassword}><VisibilityIcon sx={{ color: "whitesmoke", bgcolor: "transparent" }} /></Button>
                                             </InputAdornment>
                                         ) : (
                                             <InputAdornment position="end">
-                                                <Button onClick={showPassword}><VisibilityOffIcon sx={{ color: "black", bgcolor: "transparent" }} /></Button>
+                                                <Button onClick={showPassword}><VisibilityOffIcon sx={{ color: "whitesmoke", bgcolor: "transparent" }} /></Button>
                                             </InputAdornment>
                                         )}
                                     </div>
@@ -101,9 +101,10 @@ const LoginDialog = ({
                             onClick={handleSignIn}
                             fullWidth={false}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "black", '&:hover': {
-                                    backgroundColor: 'gray',
-                                    color: 'whitesmoke',
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                '&:hover': {
+                                    backgroundColor: BackgroundColor,
+                                    color: 'white',
                                 }
                             }}
 
@@ -115,9 +116,10 @@ const LoginDialog = ({
                             fullWidth={false}
                             onClick={handleSignUp}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "black", '&:hover': {
-                                    backgroundColor: 'gray',
-                                    color: 'whitesmoke',
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                '&:hover': {
+                                    backgroundColor: BackgroundColor,
+                                    color: 'white',
                                 }
                             }}
                         >
@@ -156,8 +158,8 @@ const SignUpDialog = ({
                 duration: 2,
             }}
             className="flex align-center justify-center" style={{ marginTop: "25vh" }}>
-            <Box sx={{ minWidth: 400 }}>
-                <div className="grid grid-flow-row gap-2 bg-gradient-to-r from-white to-white via-cyan-50 rounded-lg shadow-md shadow-cyan-950 p-4">
+            <Box sx={{ minWidth: 400, backgroundColor: "rgba(128, 128, 128, 0.25)" }}>
+                <div className="grid grid-flow-row gap-2 rounded-lg shadow-md shadow-cyan-950 p-4">
                     <TextField
                         id="input-with-icon-textfield"
                         label="First Name"
@@ -171,6 +173,20 @@ const SignUpDialog = ({
                         label="Last Name"
                         size="small"
                         onChange={handleLastName}
+                        sx={{ borderColor: "116d80" }}
+                        variant="standard"
+                    />
+                    <TextField
+                        id="input-with-icon-textfield"
+                        label="Cell"
+                        size="small"
+                        sx={{ borderColor: "116d80" }}
+                        variant="standard"
+                    />
+                    <TextField
+                        id="input-with-icon-textfield"
+                        label="Address"
+                        size="small"
                         sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
@@ -205,7 +221,13 @@ const SignUpDialog = ({
                             size="small"
                             fullWidth={false}
                             onClick={handleSignUpBack}
-                            sx={{ textTransform: "none", bgcolor: "#116d80", color: "whitesmoke" }}
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                '&:hover': {
+                                    backgroundColor: BackgroundColor,
+                                    color: 'white',
+                                }
+                            }}
                         >
                             Back
                         </Button>
@@ -213,7 +235,13 @@ const SignUpDialog = ({
                             size="small"
                             fullWidth={false}
                             onClick={handleSignUpSubmit}
-                            sx={{ textTransform: "none", bgcolor: "#116d80", color: "whitesmoke" }}
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                '&:hover': {
+                                    backgroundColor: BackgroundColor,
+                                    color: 'white',
+                                }
+                            }}
                         >
                             Sign Up
                         </Button>
@@ -231,10 +259,11 @@ const Login = () => {
     const [SignUpPassword, setSignUpPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
     const [Email, setEmail] = useState("");
-    const [FirstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [auth, setAuth] = useState(true);
     const [ErrorMessage, setErrorMessage] = useState("");
+    const [FirstName, setFirstName] = useState("");
+    const [LastName, setLastName] = useState("");
+
 
     const router = useRouter(); // Use useRouter from next/navigation for client-side routing
 
