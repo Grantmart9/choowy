@@ -166,7 +166,7 @@ const SupDataMap = ({
                     <Button sx={{ padding: 0, textTransform: "none" }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
                         <Image
                             alt="test"
-                            style={{ maxHeight: "180px", minHeight: "180px", width: "100%" }}
+                            style={{ maxHeight: "180px", minHeight: "180px", width: "100%",display:"flex" }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
                         <div style={{ maxHeight: "100px" }}>
