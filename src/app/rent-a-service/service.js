@@ -25,15 +25,12 @@ const SearchBar = ({
     handleClose,
     handleChange,
     handleChange1,
-    handleChange2,
     valuetext,
     open,
     value,
     value1,
-    value2,
     searchQuery,
     handleSearchChange,
-    handleClearFilter,
     handleClearSearch,
 
 }) => {
@@ -148,7 +145,7 @@ const SupDataMap = ({
     productIndex,
     handleSnackbar }) => {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-7 gap-4 mx-4 pb-5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Service, index) => (
                 <motion.div
                     key={index} // assuming each service has a unique id
@@ -163,19 +160,17 @@ const SupDataMap = ({
                         duration: 0.3,
                     }}
                 >
-                    <Button sx={{ padding: 0, textTransform: "none" }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-cyan-500 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
+                    <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-red-500 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
                         <Image
                             alt="test"
-                            style={{ maxHeight: "180px", minHeight: "180px", width: "100%",display:"flex" }}
+                            style={{ maxHeight: "100px", width: "100%", top: 0 }}
                             src={`data:image/jpeg;base64,${Service.person_logo}`}
                         />
-                        <div style={{ maxHeight: "100px" }}>
-                            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="flex text-md text-center my-auto justify-center p-2">
-                                {Service.service_title}
-                            </div>
-                            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="flex text-xl my-auto justify-end p-2">
-                                R {Service.price}
-                            </div>
+                        <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-lg font- my-auto justify-center p-2">
+                            {Service.service_title}
+                        </div>
+                        <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-xl font-bold my-auto justify-end p-2">
+                            R {Service.price}
                         </div>
                     </Button>
                     <motion.div
@@ -378,7 +373,7 @@ const Service = () => {
                             <Circles
                                 height="150"
                                 width="150"
-                                color="#0A4D68"
+                                color="#f59247"
                                 ariaLabel="circles-loading"
                                 wrapperStyle={{}}
                                 wrapperClass=""

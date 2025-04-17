@@ -20,15 +20,12 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
-
 import {
   SUPABASE_URL, API_KEY,
   AppName,
   BackgroundColor,
-  TextColorHover,
   TextColor,
   FontType,
-  NavigationBackgroundColor,
   NavigationTextSize,
   MainMenuList,
   SubMenuList
@@ -76,8 +73,8 @@ export default function RootLayout({ children }) {
         href="/"
       >
         <div
-          style={{ fontFamily: "cursive", fontWeight: "bold", fontStyle: "italic", fontSize: "50px" }}
-          className={`p-1 text-center justify-center ${TextColor} mt-0.5 mb-0.5`}
+          style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "60px", rotate: "-7deg" }}
+          className={`p-1 text-center justify-center mt-0.5 mb-0.5 ${TextColor}`}
         >
           {AppName}
         </div>
@@ -92,7 +89,7 @@ export default function RootLayout({ children }) {
             sx={{
               '&:hover': {
                 backgroundColor: BackgroundColor,
-                color: TextColorHover,
+
               }
             }}
             expandIcon={<ArrowDownwardIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
@@ -113,7 +110,7 @@ export default function RootLayout({ children }) {
                     sx={{
                       '&:hover': {
                         backgroundColor: BackgroundColor,
-                        color: TextColorHover,
+
                       }
                     }}
                     key={subIndex}
@@ -138,7 +135,7 @@ export default function RootLayout({ children }) {
                 minWidth: 250,
                 '&:hover': {
                   backgroundColor: BackgroundColor,
-                  color: TextColorHover,
+
                 }
               }}
               href={menuItem.path}
@@ -155,7 +152,7 @@ export default function RootLayout({ children }) {
           minWidth: 250,
           '&:hover': {
             backgroundColor: BackgroundColor,
-            color: TextColorHover,
+
           }
         }}
       >
@@ -168,7 +165,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="flex h-full items-center justify-center">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400..700&family=Faculty+Glyphic&family=Geist:wght@100..900&family=Nanum+Gothic&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Dancing+Script&family=Faculty+Glyphic&family=Geist:wght@100..900&family=Nanum+Gothic&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poetsen+One&display=swap" rel="stylesheet" />
       <body
         className={`${montserrat.className} h-full w-full bg-[url(./background.svg)] bg-repeat bg-cover bg-fixed`}
       >

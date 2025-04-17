@@ -285,7 +285,7 @@ const Login = () => {
                 supabase.auth.setAuth(session.access_token);
             }
             // Redirect to homepage after successful login
-            router.push("/rent-a-service");
+            router.push("/");
         } catch (err) {
             console.error("Error during sign-in:", err);
         }
