@@ -20,6 +20,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
+
 import {
   SUPABASE_URL, API_KEY,
   AppName,
@@ -60,7 +61,7 @@ export default function RootLayout({ children }) {
   const DrawerList = (
     <Box
       sx={{
-        width: 250,
+        width: 280,
         height: "100%",
         overflow: "auto",
         minHeight: "100vh",
@@ -68,96 +69,103 @@ export default function RootLayout({ children }) {
       className={` bg-[url(./background.svg)] `}
       role="presentation">
       <Button
+        fullWidth={true}
         className="flex align-center justify-center mb-7"
-        sx={{ textTransform: "none" }}
+        sx={{ textTransform: "none", padding: 0 }}
         href="/"
       >
-        <div
-          style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "60px", rotate: "-7deg" }}
-          className={`p-1 text-center justify-center mt-0.5 mb-0.5 ${TextColor}`}
-        >
-          {AppName}
+        <div style={{ backgroundColor: "rgba(245, 83, 2, 0.7)", width: "100%" }} >
+          <div
+            style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "55px", rotate: "-7deg" }}
+            className={`text-center justify-center ${TextColor}`}
+          >
+            {AppName}
+          </div>
         </div>
       </Button>
-      {MainMenuList.map((list, index) => (
-        <Accordion
-          key={index}
-          elevation={0}
-          className="bg-transparent"
-        >
-          <AccordionSummary
-            sx={{
-              '&:hover': {
-                backgroundColor: BackgroundColor,
-
-              }
-            }}
-            expandIcon={<ArrowDownwardIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
-            aria-controls="panel1-content"
-            id="panel1-header"
+      <div className="ml-1 mr-1" style={{ backgroundColor: "rgba(245, 83, 2, 0.45)" }} >
+        {MainMenuList.map((list, index) => (
+          <Accordion
+            key={index}
+            elevation={0}
+            className="bg-transparent"
           >
-            <Typography
-              style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize} font-bold`}
-              component="span">{list.name}
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <List className="grid grid-flow-row gap-0">
-                {list.menu.map((submenubutton, subIndex) => (
-                  <ListItemButton
-                    className={`${TextColor}`}
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: BackgroundColor,
-
-                      }
-                    }}
-                    key={subIndex}
-                    href={submenubutton.path}
-                    onClick={toggleDrawer(false)} // Close drawer on click
-                  >
-                    <div style={{ fontFamily: FontType }} className={`text-${NavigationTextSize}`}>{submenubutton.name}</div>
-                  </ListItemButton>
-                ))}
-              </List>
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-      <Divider />
-      <List className="mt-10">
-        {SubMenuList.map((menuItem, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton
-              className={`${TextColor}`}
+            <AccordionSummary
               sx={{
-                minWidth: 250,
                 '&:hover': {
                   backgroundColor: BackgroundColor,
 
                 }
               }}
-              href={menuItem.path}
+              expandIcon={<ArrowDownwardIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
+              aria-controls="panel1-content"
+              id="panel1-header"
             >
-              <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>{menuItem.name}</div>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <ListItemButton
-        onClick={handleLogout}
-        className={`${TextColor}`}
-        sx={{
-          minWidth: 250,
-          '&:hover': {
-            backgroundColor: BackgroundColor,
+              <Typography
+                style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}
+                component="span">{list.name}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                <List className="grid grid-flow-row gap-0">
+                  {list.menu.map((submenubutton, subIndex) => (
+                    <ListItemButton
+                      className={`${TextColor}`}
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: BackgroundColor,
 
-          }
-        }}
-      >
-        <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>Logout</div>
-      </ListItemButton>
+                        }
+                      }}
+                      key={subIndex}
+                      href={submenubutton.path}
+                      onClick={toggleDrawer(false)} // Close drawer on click
+                    >
+                      <div style={{ fontFamily: FontType }} className={`text-${NavigationTextSize}`}>{submenubutton.name}</div>
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </div>
+      <Divider />
+      <div className="ml-1 mr-1" style={{ backgroundColor: "rgba(245, 83, 2, 0.45)" }}>
+        <List className="mt-10">
+          {SubMenuList.map((menuItem, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                className={`${TextColor}`}
+                sx={{
+                  minWidth: 250,
+                  '&:hover': {
+                    backgroundColor: BackgroundColor,
+
+                  }
+                }}
+                href={menuItem.path}
+              >
+                <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>{menuItem.name}</div>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <ListItemButton
+          onClick={handleLogout}
+          className={`${TextColor}`}
+          sx={{
+            minWidth: 250,
+            '&:hover': {
+              backgroundColor: BackgroundColor,
+
+            }
+          }}
+        >
+          <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>Logout</div>
+        </ListItemButton>
+      </div>
     </Box>
   );
 

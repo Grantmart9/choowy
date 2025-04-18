@@ -7,64 +7,56 @@ export const SUPABASE_URL_CLOUDCRAFT = "https://dabwpyrrlkjtpohszrhr.supabase.co
 
 export const MainMenuList = [
   {
-    "name": 'Food and Treats', "path": "/rent-a-service", "data": "",
+    "name": 'Food and Treats', "path": "/products", "data": "",
     "menu":
-      [{ "name": 'Dry Food', "path": "/rent-a-service" },
+      [{ "name": 'Dry Food', "path": "/products" },
       { "name": 'Wet Food', "path": "/my-services" },
-      { "name": 'Treats', "path": "/rent-a-service" },
-      { "name": 'Specialized Diets', "path": "/rent-a-service" }]
+      { "name": 'Treats', "path": "/products" },
+      { "name": 'Specialized Diets', "path": "/products" }]
   },
   {
-    "name": 'Accessories', "path": '/rent-a-service', "menu":
-      [{ "name": "Collars and Leashes", "path": "/rent-a-service" },
-      { "name": "Toys", "path": "/rent-a-service" },
-      { "name": "Beds and Crates", "path": "/rent-a-service" },
-      { "name": "Bowls and Feeders", "path": "/rent-a-service" }]
+    "name": 'Accessories', "path": '/products', "menu":
+      [{ "name": "Collars and Leashes", "path": "/products" },
+      { "name": "Toys", "path": "/products" },
+      { "name": "Beds and Crates", "path": "/products" },
+      { "name": "Bowls and Feeders", "path": "/products" }]
   },
   {
-    "name": 'Health & Wellness', "path": '/rent-a-service', "menu":
-      [{ "name": "Supplements", "path": "/rent-a-service" },
-      { "name": "Medications", "path": "/rent-a-service" },
-      { "name": "Grooming Products", "path": "/rent-a-service" },
-      { "name": "Dental Care", "path": "/rent-a-service" }]
+    "name": 'Health & Wellness', "path": '/products', "menu":
+      [{ "name": "Supplements", "path": "/products" },
+      { "name": "Medications", "path": "/products" },
+      { "name": "Grooming productss", "path": "/products" },
+      { "name": "Dental Care", "path": "/products" }]
   }, {
-    "name": 'Apparel', "path": '/rent-a-service', "menu":
-      [{ "name": "Clothing", "path": "/rent-a-service" },
-      { "name": "Shoes and Booties", "path": "/rent-a-service" },
-      { "name": "Seasonal Wear", "path": "/rent-a-service" }]
+    "name": 'Apparel', "path": '/products', "menu":
+      [{ "name": "Clothing", "path": "/products" },
+      { "name": "Shoes and Booties", "path": "/products" },
+      { "name": "Seasonal Wear", "path": "/products" }]
   },
   {
-    "name": 'Travel & Outdoor', "path": '/rent-a-service', "menu":
-      [{ "name": "Carriers", "path": "/rent-a-service" },
-      { "name": "Travel Bowls", "path": "/rent-a-service" },
-      { "name": "Outdoor Toys", "path": "/rent-a-service" },
-      { "name": "Harnesses", "path": "/rent-a-service" },
+    "name": 'Travel & Outdoor', "path": '/products', "menu":
+      [
+        { "name": "Outdoor Toys", "path": "/products" },
+        { "name": "Harnesses", "path": "/products" },
       ]
   },
   {
-    "name": 'Pet Tech', "path": '/rent-a-service', "menu":
-      [{ "name": "GPS Trackers", "path": "/rent-a-service" },
-      { "name": "Smart Feeders", "path": "/rent-a-service" },
-      { "name": "Interactive Toys", "path": "/rent-a-service" },
+    "name": 'Cleaning & Hygiene', "path": '/products', "menu":
+      [{ "name": "Litter & Accessories", "path": "/products" },
+      { "name": "Waste Bags", "path": "/products" },
+      { "name": "Odor Control", "path": "/products" },
       ]
   },
   {
-    "name": 'Cleaning & Hygiene', "path": '/rent-a-service', "menu":
-      [{ "name": "Litter & Accessories", "path": "/rent-a-service" },
-      { "name": "Waste Bags", "path": "/rent-a-service" },
-      { "name": "Odor Control", "path": "/rent-a-service" },
-      ]
-  },
-  {
-    "name": 'New Arrivals', "path": '/rent-a-service', "menu":
-      [{ "name": "Recently Added Products", "path": "/rent-a-service" },
+    "name": 'New Arrivals', "path": '/products', "menu":
+      [{ "name": "Recently Added productss", "path": "/products" },
 
       ]
   },
   {
-    "name": 'Deals & Discounts', "path": '/rent-a-service', "menu":
-      [{ "name": "Sale Items", "path": "/rent-a-service" },
-      { "name": "Bulk Discounts", "path": "/rent-a-service" }
+    "name": 'Deals & Discounts', "path": '/products', "menu":
+      [{ "name": "Sale Items", "path": "/products" },
+      { "name": "Bulk Discounts", "path": "/products" }
 
       ]
   }]
@@ -76,7 +68,7 @@ export const SubMenuList = [
 ]
 
 export const AppName = "Choowy";
-export const BackgroundColor = "#a82c16"
+export const BackgroundColor = "rgba(7, 247, 179, 0.7)"
 export const TextColorHover = "#0A4D68"
 export const TextColor = "text-amber-50"
 export const FontType = "Poetsen One, serif"

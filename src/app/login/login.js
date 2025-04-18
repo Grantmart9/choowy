@@ -36,8 +36,8 @@ const LoginDialog = ({
             }}
             className="flex align-center justify-center" style={{ marginTop: "25vh" }}>
             <Box sx={{ maxWidth: 400 }}>
-                <div className="grid grid-flow-row gap-2 rounded-lg p-4" style={{
-                    background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
+                <div className="grid grid-flow-row gap-2 rounded-lg p-4 shadow-md shadow-cyan-950" style={{
+                    background: "rgba(128, 128, 128, 0.45)", // Set the background with 15% opacity
                 }}>
                     <TextField
                         id="input-with-icon-textfield"
@@ -101,7 +101,7 @@ const LoginDialog = ({
                             onClick={handleSignIn}
                             fullWidth={false}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -116,7 +116,7 @@ const LoginDialog = ({
                             fullWidth={false}
                             onClick={handleSignUp}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -158,7 +158,7 @@ const SignUpDialog = ({
                 duration: 2,
             }}
             className="flex align-center justify-center" style={{ marginTop: "25vh" }}>
-            <Box sx={{ minWidth: 400, backgroundColor: "rgba(128, 128, 128, 0.25)" }}>
+            <Box sx={{ minWidth: 400, backgroundColor: "rgba(128, 128, 128, 0.45)" }}>
                 <div className="grid grid-flow-row gap-2 rounded-lg shadow-md shadow-cyan-950 p-4">
                     <TextField
                         id="input-with-icon-textfield"
@@ -222,7 +222,7 @@ const SignUpDialog = ({
                             fullWidth={false}
                             onClick={handleSignUpSubmit}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "#9af5f5",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -236,7 +236,7 @@ const SignUpDialog = ({
                             fullWidth={false}
                             onClick={handleSignUpBack}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "#9af5f5",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',

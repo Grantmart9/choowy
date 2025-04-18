@@ -1,4 +1,4 @@
-import Service from "./service";
+import Products from "./products";
 export const metadata = {
   title: "Choowy|Products",
   description:
@@ -8,8 +8,8 @@ export const metadata = {
   },
 };
 
-const Services = () => {
-  return <Service />;
+const ProductPage = () => {
+  return <Products />;
 };
 
-export default Services;
+export default ProductPage;
