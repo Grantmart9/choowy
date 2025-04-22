@@ -18,7 +18,6 @@ export const MainMenuList = [
     "name": 'Accessories', "path": '/products', "menu":
       [{ "name": "Collars and Leashes", "path": "/products" },
       { "name": "Toys", "path": "/products" },
-      { "name": "Beds and Crates", "path": "/products" },
       { "name": "Bowls and Feeders", "path": "/products" }]
   },
   {
@@ -27,11 +26,6 @@ export const MainMenuList = [
       { "name": "Medications", "path": "/products" },
       { "name": "Grooming productss", "path": "/products" },
       { "name": "Dental Care", "path": "/products" }]
-  }, {
-    "name": 'Apparel', "path": '/products', "menu":
-      [{ "name": "Clothing", "path": "/products" },
-      { "name": "Shoes and Booties", "path": "/products" },
-      { "name": "Seasonal Wear", "path": "/products" }]
   },
   {
     "name": 'Travel & Outdoor', "path": '/products', "menu":
@@ -53,13 +47,7 @@ export const MainMenuList = [
 
       ]
   },
-  {
-    "name": 'Deals & Discounts', "path": '/products', "menu":
-      [{ "name": "Sale Items", "path": "/products" },
-      { "name": "Bulk Discounts", "path": "/products" }
-
-      ]
-  }]
+]
 
 export const SubMenuList = [
   { "name": 'Orders', "path": "/orders" },

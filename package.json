@@ -53,6 +53,7 @@
     "dayjs": "^1.11.12",
     "emailjs": "^4.0.3",
     "eslint-plugin-react": "^7.24.0",
+    "flubber": "^0.4.2",
     "fusioncharts": "^4.1.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.31",
