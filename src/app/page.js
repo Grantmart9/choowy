@@ -63,7 +63,7 @@ const hue = (h) => `hsl(${h}, 100%, 50%)`;
 
 const container = {
   margin: "0px auto",
-  maxWidth: 400,
+  maxWidth: 500,
   paddingBottom: 100,
   width: "100%",
 };
@@ -75,6 +75,8 @@ const cardContainer = {
   alignItems: "center",
   position: "relative",
   paddingTop: 20,
+  paddingLeft: 5,
+  paddingRight: 5,
   marginBottom: -120,
 };
 
@@ -124,6 +126,12 @@ function ScrollLinked2() {
   return (
     <div id="example">
       <motion.ul className="mx-auto" ref={ref} style={{ maskImage }}>
+        <li style={{ background: "#ff0088" }}></li>
+        <li style={{ background: "#dd00ee" }}></li>
+        <li style={{ background: "#9911ff" }}></li>
+        <li style={{ background: "#0d63f8" }}></li>
+        <li style={{ background: "#0cdcf7" }}></li>
+        <li style={{ background: "#8df0cc" }}></li>
         <li style={{ background: "#ff0088" }}></li>
         <li style={{ background: "#dd00ee" }}></li>
         <li style={{ background: "#9911ff" }}></li>
@@ -182,7 +190,7 @@ function StyleSheet() {
     <style>{`
           #example {
             width: 100vw;
-            max-width: 400px;
+            max-width: 100vw;
             position: relative;
           }
 
@@ -244,223 +252,13 @@ function StyleSheet() {
 }
 
 
-function ScrollLinked() {
-  const { scrollYProgress } = useScroll()
-
-  return (
-    <>
-      <motion.div
-        id="scroll-indicator"
-        style={{
-          scaleX: scrollYProgress,
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 20,
-          originX: 0,
-          backgroundColor: "rgba(7, 247, 179, 0.8)",
-        }}
-      />
-      <Content />
-    </>
-  )
-}
-
-/**
- * ==============   Utils   ================
- */
-
-function Content() {
-  return (
-    <>
-      <article
-        style={{
-          maxWidth: 500,
-          padding: "0px 20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: 20,
-        }}
-      >
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Aliquam ac rhoncus quam.
-        </p>
-        <p>
-          Fringilla quam urna. Cras turpis elit, euismod eget ligula
-          quis, imperdiet sagittis justo. In viverra fermentum ex ac
-          vestibulum. Aliquam eleifend nunc a luctus porta. Mauris
-          laoreet augue ut felis blandit, at iaculis odio ultrices.
-          Nulla facilisi. Vestibulum cursus ipsum tellus, eu tincidunt
-          neque tincidunt a.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          In eget sodales arcu, consectetur efficitur metus. Duis
-          efficitur tincidunt odio, sit amet laoreet massa fringilla
-          eu.
-        </p>
-        <p>
-          Pellentesque id lacus pulvinar elit pulvinar pretium ac non
-          urna. Mauris id mauris vel arcu commodo venenatis. Aliquam
-          eu risus arcu. Proin sit amet lacus mollis, semper massa ut,
-          rutrum mi.
-        </p>
-        <p>
-          Sed sem nisi, luctus consequat ligula in, congue sodales
-          nisl.
-        </p>
-        <p>
-          Vestibulum bibendum at erat sit amet pulvinar. Pellentesque
-          pharetra leo vitae tristique rutrum. Donec ut volutpat ante,
-          ut suscipit leo.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          Maecenas quis elementum nulla, in lacinia nisl. Ut rutrum
-          fringilla aliquet. Pellentesque auctor vehicula malesuada.
-          Aliquam id feugiat sem, sit amet tempor nulla. Quisque
-          fermentum felis faucibus, vehicula metus ac, interdum nibh.
-          Curabitur vitae convallis ligula. Integer ac enim vel felis
-          pharetra laoreet. Interdum et malesuada fames ac ante ipsum
-          primis in faucibus. Pellentesque hendrerit ac augue quis
-          pretium.
-        </p>
-        <p>
-          Morbi ut scelerisque nibh. Integer auctor, massa non dictum
-          tristique, elit metus efficitur elit, ac pretium sapien nisl
-          nec ante. In et ex ultricies, mollis mi in, euismod dolor.
-        </p>
-        <p>Quisque convallis ligula non magna efficitur tincidunt.</p>
-        <p>
-          Pellentesque id lacus pulvinar elit pulvinar pretium ac non
-          urna. Mauris id mauris vel arcu commodo venenatis. Aliquam
-          eu risus arcu. Proin sit amet lacus mollis, semper massa ut,
-          rutrum mi.
-        </p>
-        <p>
-          Sed sem nisi, luctus consequat ligula in, congue sodales
-          nisl.
-        </p>
-        <p>
-          Vestibulum bibendum at erat sit amet pulvinar. Pellentesque
-          pharetra leo vitae tristique rutrum. Donec ut volutpat ante,
-          ut suscipit leo.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          Maecenas quis elementum nulla, in lacinia nisl. Ut rutrum
-          fringilla aliquet. Pellentesque auctor vehicula malesuada.
-          Aliquam id feugiat sem, sit amet tempor nulla. Quisque
-          fermentum felis faucibus, vehicula metus ac, interdum nibh.
-          Curabitur vitae convallis ligula. Integer ac enim vel felis
-          pharetra laoreet. Interdum et malesuada fames ac ante ipsum
-          primis in faucibus. Pellentesque hendrerit ac augue quis
-          pretium.
-        </p>
-        <p>
-          Morbi ut scelerisque nibh. Integer auctor, massa non dictum
-          tristique, elit metus efficitur elit, ac pretium sapien nisl
-          nec ante. In et ex ultricies, mollis mi in, euismod dolor.
-        </p>
-        <p>Quisque convallis ligula non magna efficitur tincidunt.</p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Aliquam ac rhoncus quam.
-        </p>
-        <p>
-          Fringilla quam urna. Cras turpis elit, euismod eget ligula
-          quis, imperdiet sagittis justo. In viverra fermentum ex ac
-          vestibulum. Aliquam eleifend nunc a luctus porta. Mauris
-          laoreet augue ut felis blandit, at iaculis odio ultrices.
-          Nulla facilisi. Vestibulum cursus ipsum tellus, eu tincidunt
-          neque tincidunt a.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          In eget sodales arcu, consectetur efficitur metus. Duis
-          efficitur tincidunt odio, sit amet laoreet massa fringilla
-          eu.
-        </p>
-        <p>
-          Pellentesque id lacus pulvinar elit pulvinar pretium ac non
-          urna. Mauris id mauris vel arcu commodo venenatis. Aliquam
-          eu risus arcu. Proin sit amet lacus mollis, semper massa ut,
-          rutrum mi.
-        </p>
-        <p>
-          Sed sem nisi, luctus consequat ligula in, congue sodales
-          nisl.
-        </p>
-        <p>
-          Vestibulum bibendum at erat sit amet pulvinar. Pellentesque
-          pharetra leo vitae tristique rutrum. Donec ut volutpat ante,
-          ut suscipit leo.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          Maecenas quis elementum nulla, in lacinia nisl. Ut rutrum
-          fringilla aliquet. Pellentesque auctor vehicula malesuada.
-          Aliquam id feugiat sem, sit amet tempor nulla. Quisque
-          fermentum felis faucibus, vehicula metus ac, interdum nibh.
-          Curabitur vitae convallis ligula. Integer ac enim vel felis
-          pharetra laoreet. Interdum et malesuada fames ac ante ipsum
-          primis in faucibus. Pellentesque hendrerit ac augue quis
-          pretium.
-        </p>
-        <p>
-          Morbi ut scelerisque nibh. Integer auctor, massa non dictum
-          tristique, elit metus efficitur elit, ac pretium sapien nisl
-          nec ante. In et ex ultricies, mollis mi in, euismod dolor.
-        </p>
-        <p>Quisque convallis ligula non magna efficitur tincidunt.</p>
-        <p>
-          Pellentesque id lacus pulvinar elit pulvinar pretium ac non
-          urna. Mauris id mauris vel arcu commodo venenatis. Aliquam
-          eu risus arcu. Proin sit amet lacus mollis, semper massa ut,
-          rutrum mi.
-        </p>
-        <p>
-          Sed sem nisi, luctus consequat ligula in, congue sodales
-          nisl.
-        </p>
-        <p>
-          Vestibulum bibendum at erat sit amet pulvinar. Pellentesque
-          pharetra leo vitae tristique rutrum. Donec ut volutpat ante,
-          ut suscipit leo.
-        </p>
-        <h2>Sub-header</h2>
-        <p>
-          Maecenas quis elementum nulla, in lacinia nisl. Ut rutrum
-          fringilla aliquet. Pellentesque auctor vehicula malesuada.
-          Aliquam id feugiat sem, sit amet tempor nulla. Quisque
-          fermentum felis faucibus, vehicula metus ac, interdum nibh.
-          Curabitur vitae convallis ligula. Integer ac enim vel felis
-          pharetra laoreet. Interdum et malesuada fames ac ante ipsum
-          primis in faucibus. Pellentesque hendrerit ac augue quis
-          pretium.
-        </p>
-        <p>
-          Morbi ut scelerisque nibh. Integer auctor, massa non dictum
-          tristique, elit metus efficitur elit, ac pretium sapien nisl
-          nec ante. In et ex ultricies, mollis mi in, euismod dolor.
-        </p>
-        <p>Quisque convallis ligula non magna efficitur tincidunt.</p>
-      </article>
-    </>
-  )
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 export default function Home() {
 
   return (
     <React.Fragment>
-      <div className="mt-7 mx-auto " >
-        <div >
+      <div className="mt-7 block align-center justify-center" >
+        <div className="flex align-center justify-center">
           <ScrollLinked2 />
         </div>
         <div><ScrollTriggered /></div>
