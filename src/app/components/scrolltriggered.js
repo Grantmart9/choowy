@@ -1,6 +1,9 @@
 "use client"
 import React from "react";
 import { motion } from "motion/react"
+import TopSellers from "../royalCanin.jpeg"
+import Image from "next/image";
+import { Button } from "@mui/material";
 
 
 export default function ScrollTriggered() {
@@ -96,12 +99,12 @@ const card = {
 };
 
 const food = [
-    ["🍅", 340, 10],
-    ["🍊", 20, 40],
-    ["🍋", 60, 90],
-    ["🍐", 80, 120],
-    ["🍏", 100, 140],
-    ["🫐", 205, 245],
-    ["🍆", 260, 290],
-    ["🍇", 290, 320],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 340, 10],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 20, 40],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 60, 90],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 80, 120],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 100, 140],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 205, 245],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 260, 290],
+    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 290, 320],
 ];

@@ -10,19 +10,12 @@ import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Circles } from 'react-loader-spinner'
 import { SUPABASE_URL, API_KEY, TextColor, BackgroundColor, FontType } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
-import { interpolate } from "flubber";
-import {
-    animate,
-    motion,
-    useMotionValue,
-    useTransform, variant
-} from "motion/react";
+import { motion } from "motion/react";
 
 function LoadingThreeDotsJumping() {
     const dotVariants = {
@@ -247,7 +240,7 @@ const SupDataMap = ({
                         <Dialog
                             onClose={handleCloseProduct}
                             open={product}
-                            sx={{ bgcolor: "darkcyan" }}
+                            className={` bg-[url(./background.svg)] `}
                         >
                             <Box style={{ maxWidth: "400px", maxHeight: "1000px" }}>
                                 <Image
@@ -440,13 +433,13 @@ const Products = () => {
             <Snackbar
                 open={openSnackbar}
                 anchorOrigin={{ "vertical": 'bottom', "horizontal": 'right' }}
-                autoHideDuration={3000}
+                autoHideDuration={2000}
                 onClose={handleCloseSnackbar}
             >
                 <SnackbarContent
-                    className={"flex justify-center align-center mx-auto bg-amber-600"}
+                    className={"flex justify-center align-center mx-auto bg-cyan-300"}
                     message={
-                        <div style={{ color: TextColor }} className="text-center ">Added to your cart</div>
+                        <div style={{ color: TextColor, fontFamily: FontType }} className="text-center text-lg">Added to your cart</div>
                     }
                 />
             </Snackbar>
