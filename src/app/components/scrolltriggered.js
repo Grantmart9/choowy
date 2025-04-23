@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 
 
 export default function ScrollTriggered() {
+
     return (
         <div style={container}>
             {food.map(([emoji, hueA, hueB], i) => (
