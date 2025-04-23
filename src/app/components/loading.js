@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BackgroundColor } from "../supabase";
+import { LoaderColor } from "../supabase";
 import { motion } from "motion/react";
 
 export default function LoadingThreeDotsJumping() {
@@ -50,7 +50,7 @@ function StyleSheet() {
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                background-color: ${BackgroundColor};
+                background-color: ${LoaderColor};
                 will-change: transform;
             }
             `}

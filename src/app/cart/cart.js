@@ -2,7 +2,7 @@
 "use client"; // Add this line at the top of your component file
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, BackgroundColor } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, BackgroundColor, FontType, TextColor } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -57,24 +57,36 @@ const Cart = () => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
-                    <TableContainer className="mx-auto" sx={{ maxWidth: 1000 }} component={Paper}>
+                    <TableContainer className="mx-auto" sx={{ maxWidth: 1000, bgcolor: "rgba(128, 128, 128, 0.45)" }} component={Paper}>
                         <Table sx={{ maxWidth: 1000 }}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Product</TableCell>
-                                    <TableCell>Quantity</TableCell>
-                                    <TableCell>Cost ex Vat</TableCell>
+                                    <TableCell
+                                        className={`${TextColor}`}
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</TableCell>
+                                    <TableCell
+                                        className={`${TextColor}`}
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Quantity</TableCell>
+                                    <TableCell
+                                        className={`${TextColor}`}
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost Inc Vat</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {data.map((row, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>
+                                        <TableCell
+                                            className={`${TextColor}`}
+                                            style={{ fontFamily: FontType }}>
                                             {row.title}
                                         </TableCell>
-                                        <TableCell>{row.quantity}</TableCell>
-                                        <TableCell>R {row.cost_before_vat}</TableCell>
+                                        <TableCell
+                                            className={`${TextColor}`}
+                                            style={{ fontFamily: FontType }}>{row.quantity}</TableCell>
+                                        <TableCell
+                                            className={`${TextColor}`}
+                                            style={{ fontFamily: FontType }}>R {row.cost_after_vat}</TableCell>
                                         <TableCell><Button size="small" sx={{
                                             textTransform: "none", bgcolor: "transparent", color: "#9af5f5",
                                             '&:hover': {
@@ -91,7 +103,7 @@ const Cart = () => {
                                         Total:
                                     </TableCell>
                                     <TableCell style={{ fontWeight: 'bold' }}>
-                                        R {data.reduce((sum, row) => sum + row.cost_before_vat, 0).toFixed(2)}
+                                        R {data.reduce((sum, row) => sum + row.cost_after_vat, 0).toFixed(2)}
                                     </TableCell>
                                     <TableCell>
                                         <Button sx={{

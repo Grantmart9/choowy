@@ -28,7 +28,12 @@ import {
   FontType,
   NavigationTextSize,
   MainMenuList,
-  SubMenuList
+  SubMenuList,
+  TitleColor,
+  DrawerBackgroundColor,
+  IconButtonColor,
+  TopBarColor,
+  DrawerBackgroundHoverColor
 } from "./supabase";
 
 import { createClient } from "@supabase/supabase-js";
@@ -73,7 +78,7 @@ export default function RootLayout({ children }) {
         sx={{ textTransform: "none", padding: 0 }}
         href="/"
       >
-        <div style={{ backgroundColor: "rgba(245, 83, 2, 0.7)", width: "100%" }} >
+        <div style={{ backgroundColor: TitleColor, width: "100%" }} >
           <div
             style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "55px", rotate: "-7deg" }}
             className={`text-center justify-center ${TextColor}`}
@@ -82,7 +87,7 @@ export default function RootLayout({ children }) {
           </div>
         </div>
       </Button>
-      <div className="ml-1 mr-1" style={{ backgroundColor: "rgba(245, 83, 2, 0.45)" }} >
+      <div className="ml-1 mr-1" style={{ backgroundColor: DrawerBackgroundColor }} >
         {MainMenuList.map((list, index) => (
           <Accordion
             key={index}
@@ -100,7 +105,7 @@ export default function RootLayout({ children }) {
             <AccordionSummary
               sx={{
                 '&:hover': {
-                  backgroundColor: BackgroundColor,
+                  backgroundColor: DrawerBackgroundHoverColor,
 
                 }
               }}
@@ -121,7 +126,7 @@ export default function RootLayout({ children }) {
                       className={`${TextColor}`}
                       sx={{
                         '&:hover': {
-                          backgroundColor: BackgroundColor,
+                          backgroundColor: DrawerBackgroundHoverColor,
 
                         }
                       }}
@@ -139,7 +144,7 @@ export default function RootLayout({ children }) {
         ))}
       </div>
       <Divider />
-      <div className="ml-1 mr-1" style={{ backgroundColor: "rgba(245, 83, 2, 0.45)" }}>
+      <div className="ml-1 mr-1" style={{ backgroundColor: DrawerBackgroundColor }}>
         <List className="mt-10">
           {SubMenuList.map((menuItem, index) => (
             <ListItem key={index} disablePadding>
@@ -148,7 +153,7 @@ export default function RootLayout({ children }) {
                 sx={{
                   minWidth: 250,
                   '&:hover': {
-                    backgroundColor: BackgroundColor,
+                    backgroundColor: DrawerBackgroundHoverColor,
 
                   }
                 }}
@@ -165,7 +170,7 @@ export default function RootLayout({ children }) {
           sx={{
             minWidth: 250,
             '&:hover': {
-              backgroundColor: BackgroundColor,
+              backgroundColor: DrawerBackgroundHoverColor,
 
             }
           }}
@@ -186,14 +191,14 @@ export default function RootLayout({ children }) {
       >
         <div
           style={{ height: "44px" }}
-          className="fixed bg-black opacity-50 w-full z-30">
+          className={`fixed ${TopBarColor} opacity-50 w-full z-30`}>
         </div>
         <div className="z-50 fixed my-auto left-1" >
           <IconButton
             onClick={toggleDrawer(true)}
             size="medium">
             <MenuRoundedIcon
-              sx={{ color: "#b1fbfc" }}
+              sx={{ color: IconButtonColor }}
             />
           </IconButton>
         </div>
@@ -209,7 +214,7 @@ export default function RootLayout({ children }) {
           <IconButton
             size="medium" href="/cart">
             <ShoppingCartIcon
-              sx={{ color: "#b1fbfc" }}
+              sx={{ color: IconButtonColor }}
             />
           </IconButton>
         </div>

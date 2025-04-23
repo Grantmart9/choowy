@@ -2,7 +2,7 @@
 export const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkc2Vqc3lyZWNyZmZuanFldmZtIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODg4NTcxOTcsImV4cCI6MjAwNDQzMzE5N30.lQp4_X1_JxGAS3SlmFHgHs8TQs30F35ssfS-0oZOw-k";
 export const API_KEY_CLOUDCRAFT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhYndweXJybGtqdHBvaHN6cmhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIzMjI4NzQsImV4cCI6MjA1Nzg5ODg3NH0.gdePSQMQweGXneKFnLq6V3gU1UuilCvIwIIIBwZ-yBI";
 export const SUPABASE_URL = "https://sdsejsyrecrffnjqevfm.supabase.co";
-export const SUPABASE_URL_CLOUDCRAFT = "https://dabwpyrrlkjtpohszrhr.supabase.co" 
+export const SUPABASE_URL_CLOUDCRAFT = "https://dabwpyrrlkjtpohszrhr.supabase.co"
 
 export const MainMenuList = [
   {
@@ -55,9 +55,15 @@ export const SubMenuList = [
 ]
 
 export const AppName = "Choowy";
-export const BackgroundColor = "rgba(7, 247, 179, 0.7)"
+export const DrawerBackgroundHoverColor = "rgba(7, 247, 179, 0.7)"
 export const TextColorHover = "#0A4D68"
+export const TitleColor = "rgba(27, 51, 54, 0.75)"
+export const DrawerBackgroundColor = "rgba(27, 51, 54, 0.45)"
 export const TextColor = "text-amber-50"
+export const IconButtonColor = "#b1fbfc"
+export const TopBarColor = "bg-black"
 export const FontType = "Poetsen One, serif"
 export const NavigationBackgroundColor = "to-lime-400 from-cyan-500 via-pink-500"
 export const NavigationTextSize = "sm";
+export const LoaderColor = "rgba(181, 24, 100, 0.8)"
+export const ProductBackgroundColor = "rgba(27, 51, 54, 0.8)"

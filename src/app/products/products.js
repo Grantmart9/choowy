@@ -10,7 +10,7 @@ import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType, DrawerBackgroundColor, ProductBackgroundColor } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "../components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
@@ -161,7 +161,8 @@ const SupDataMap = ({
                         duration: 0.3,
                     }}
                 >
-                    <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)} className="block rounded-none bg-gradient-to-b from-transparent to-amber-700 via-tansparent shadow-sm shadow-gray-600 h-full w-full">
+                    <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)}
+                        className={`block rounded-none bg-gradient-to-b from-transparent ${ProductBackgroundColor} via-tansparent shadow-sm shadow-gray-600 h-full w-full`}>
                         <Image
                             alt="test"
                             style={{ maxHeight: "100px", width: "100%", top: 0 }}
