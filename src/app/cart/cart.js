@@ -13,6 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
 import { Button } from "@mui/material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 const Cart = () => {
@@ -55,7 +56,7 @@ const Cart = () => {
         <div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             {data.length > 0 ? (
-                <div className="sticky align-center justify-center rounded-md z-20 max-w-full mt-14">
+                <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
                     <TableContainer className="mx-auto" sx={{ maxWidth: 1000 }} component={Paper}>
                         <Table sx={{ maxWidth: 1000 }}>
                             <TableHead>
@@ -74,13 +75,13 @@ const Cart = () => {
                                         </TableCell>
                                         <TableCell>{row.quantity}</TableCell>
                                         <TableCell>R {row.cost_before_vat}</TableCell>
-                                        <TableCell><Button sx={{
-                                            textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
+                                        <TableCell><Button size="small" sx={{
+                                            textTransform: "none", bgcolor: "transparent", color: "#9af5f5",
                                             '&:hover': {
-                                                backgroundColor: BackgroundColor,
-                                                color: 'white',
+                                                backgroundColor: "transparent",
+                                                color: 'red',
                                             }
-                                        }}>Remove</Button></TableCell>
+                                        }}><DeleteOutlineIcon /></Button></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -94,9 +95,9 @@ const Cart = () => {
                                     </TableCell>
                                     <TableCell>
                                         <Button sx={{
-                                            textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
+                                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                             '&:hover': {
-                                                backgroundColor: BackgroundColor,
+                                                backgroundColor: "rgba(44, 192, 222,0.8)",
                                                 color: 'white',
                                             }
                                         }}>Checkout</Button>

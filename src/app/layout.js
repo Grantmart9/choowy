@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import AddIcon from '@mui/icons-material/Add';
+
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
   AppName,
@@ -29,8 +30,8 @@ import {
   MainMenuList,
   SubMenuList
 } from "./supabase";
-import { createClient } from "@supabase/supabase-js";
 
+import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -87,6 +88,14 @@ export default function RootLayout({ children }) {
             key={index}
             elevation={0}
             className="bg-transparent"
+            slotProps={{
+              transition: {
+                timeout: {
+                  enter: 900, // milliseconds for entering
+                  exit: 1100,   // milliseconds for exiting
+                },
+              },
+            }}
           >
             <AccordionSummary
               sx={{
@@ -189,7 +198,7 @@ export default function RootLayout({ children }) {
           </IconButton>
         </div>
         <Drawer
-          transitionDuration={900} // Matches the toggleDrawer delay
+          transitionDuration={{ enter: 900, exit: 1100 }}
           disableScrollLock={true}
           open={open}
           onClose={toggleDrawer(false)}

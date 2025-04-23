@@ -157,7 +157,7 @@ const SignUpDialog = ({
                 mass: 10,
                 duration: 2,
             }}
-            className="flex align-center justify-center" style={{ marginTop: "25vh" }}>
+            className="flex align-center justify-center" style={{ marginTop: "15vh" }}>
             <Box sx={{ minWidth: 400, backgroundColor: "rgba(128, 128, 128, 0.45)" }}>
                 <div className="grid grid-flow-row gap-2 rounded-lg shadow-md shadow-cyan-950 p-4">
                     <TextField
