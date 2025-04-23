@@ -5,7 +5,6 @@ import TopSellers from "../royalCanin.jpeg"
 import Image from "next/image";
 import { Button } from "@mui/material";
 
-
 export default function ScrollTriggered() {
 
     return (
@@ -21,18 +20,23 @@ function Card({ emoji, hueA, hueB, i }) {
     const background = `linear-gradient(306deg, ${hue(hueA)}, ${hue(hueB)})`;
 
     return (
+
         <motion.div
             className={`card-container-${i}`}
             style={cardContainer}
             initial="offscreen"
             whileInView="onscreen"
-            viewport={{ amount: 0.8 }}
+            viewport={{ amount: 1 }}
         >
-            <div style={{ ...splash, background }} />
-            <motion.div style={card} variants={cardVariants} className="card">
-                {emoji}
-            </motion.div>
+            <div style={{ ...splash, background, width: "100%" }} />
+            <Button disableRipple={true}>
+                <motion.div style={card} variants={cardVariants} className="card">
+                    {emoji}
+                </motion.div>
+            </Button>
         </motion.div>
+
+
     );
 }
 
@@ -82,7 +86,7 @@ const splash = {
     left: 0,
     right: 0,
     bottom: 0,
-    clipPath: `path("M 0 303.5 C 0 292.454 8.995 285.101 20 283.5 L 460 219.5 C 470.085 218.033 480 228.454 480 239.5 L 500 430 C 500 441.046 491.046 450 480 450 L 20 450 C 8.954 450 0 441.046 0 430 Z")`,
+    clipPath: `path("M 14 303.5 C 14 292.454 21.8 285.101 29 283.5 L 414 219.5 C 424 218.033 434 228.454 434 239.5 L 428 430 C 428 441.046 420 450 410 450 L 15 450 C 7.8 450 0 441.046 0 430 Z")`,
 };
 
 const card = {
@@ -100,12 +104,12 @@ const card = {
 };
 
 const food = [
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 340, 10],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 20, 40],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 60, 90],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 80, 120],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 100, 140],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 205, 245],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 260, 290],
-    [<Button><Image src={TopSellers} alt={"product"} /></Button>, 290, 320],
+    [<Image src={TopSellers} alt={"product"} />, 340, 10],
+    [<Image src={TopSellers} alt={"product"} />, 20, 40],
+    [<Image src={TopSellers} alt={"product"} />, 60, 90],
+    [<Image src={TopSellers} alt={"product"} />, 80, 120],
+    [<Image src={TopSellers} alt={"product"} />, 100, 140],
+    [<Image src={TopSellers} alt={"product"} />, 205, 245],
+    [<Image src={TopSellers} alt={"product"} />, 260, 290],
+    [<Image src={TopSellers} alt={"product"} />, 290, 320],
 ];

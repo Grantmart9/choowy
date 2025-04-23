@@ -145,6 +145,14 @@ const SupDataMap = ({
     productIndex,
     handleSnackbar }) => {
 
+    function truncateWords(text, wordLimit) {
+        const words = text.split(" ");
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(" ") + "...";
+        }
+        return text;
+    }
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Product, index) => (
@@ -162,16 +170,16 @@ const SupDataMap = ({
                     }}
                 >
                     <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)}
-                        className={`block rounded-none bg-gradient-to-b from-transparent ${ProductBackgroundColor} via-tansparent shadow-sm shadow-gray-600 h-full w-full`}>
+                        className={`block rounded-none bg-gradient-to-b from-gray-100 via-gray-200 to-gray-400 shadow-sm shadow-gray-600 h-full w-full`}>
                         <Image
                             alt="test"
                             style={{ maxHeight: "100px", width: "100%", top: 0 }}
                             src={`data:image/jpeg;base64,${Product.image}`}
                         />
-                        <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-lg font- my-auto justify-center p-2">
-                            {Product.title}
+                        <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-md font- my-auto justify-center p-2">
+                            {truncateWords(Product.title, 4)}
                         </div>
-                        <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-xl font-bold my-auto justify-end p-2">
+                        <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-lg font-bold my-auto justify-end p-2">
                             R {Product.cost_after_vat}
                         </div>
                     </Button>
