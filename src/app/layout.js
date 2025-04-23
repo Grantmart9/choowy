@@ -16,9 +16,9 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import AddIcon from '@mui/icons-material/Add';
 
 
 import {
@@ -97,7 +97,7 @@ export default function RootLayout({ children }) {
 
                 }
               }}
-              expandIcon={<ArrowDownwardIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
+              expandIcon={<AddIcon style={{ width: "15px", height: "15px" }} className={`${TextColor}`} />}
               aria-controls="panel1-content"
               id="panel1-header"
             >
