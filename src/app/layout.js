@@ -22,7 +22,7 @@ import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 
 import {
-  SUPABASE_URL, API_KEY,
+  SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
   AppName,
   BackgroundColor,
   TextColor,
@@ -34,7 +34,7 @@ import {
 
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(SUPABASE_URL, API_KEY);
+const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {

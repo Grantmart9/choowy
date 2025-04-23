@@ -10,12 +10,14 @@ import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
-import { SUPABASE_URL, API_KEY, TextColor, BackgroundColor, FontType } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "./components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import { motion } from "motion/react";
+
+const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 function LoadingThreeDotsJumping() {
     const dotVariants = {
@@ -71,8 +73,6 @@ function StyleSheet() {
         </style>
     );
 }
-
-const supabase = createClient(SUPABASE_URL, API_KEY);
 
 const SearchBar = ({
     handleFilter,
@@ -217,13 +217,13 @@ const SupDataMap = ({
                         <Image
                             alt="test"
                             style={{ maxHeight: "100px", width: "100%", top: 0 }}
-                            src={`data:image/jpeg;base64,${Product.person_logo}`}
+                            src={`data:image/jpeg;base64,${Product.image}`}
                         />
                         <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-lg font- my-auto justify-center p-2">
-                            {Product.service_title}
+                            {Product.title}
                         </div>
                         <div style={{ fontFamily: FontType, color: "whitesmoke", textTransform: "none" }} className="flex text-xl font-bold my-auto justify-end p-2">
-                            R {Product.price}
+                            R {Product.cost_after_vat}
                         </div>
                     </Button>
                     <motion.div
@@ -246,7 +246,7 @@ const SupDataMap = ({
                                 <Image
                                     alt="test"
                                     style={{ maxHeight: "300px", minWidth: "100%" }}
-                                    src={`data:image/jpeg;base64,${Data[productIndex].person_logo}`}
+                                    src={`data:image/jpeg;base64,${Data[productIndex].image}`}
                                 />
                                 <Rating
                                     style={{ color: "gold" }}
@@ -256,9 +256,9 @@ const SupDataMap = ({
                                     sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
                                 />
                                 <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
-                                    {Data[productIndex].service_title}
+                                    {Data[productIndex].title}
                                 </div>
-                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].service_description}</div>
+                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].description}</div>
                                 <div className="grid grid-cols-3">
                                     <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
                                     </div>
@@ -276,7 +276,7 @@ const SupDataMap = ({
                                         add to cart +
                                     </Button>
                                     <div className="flex text-cyan-950 text-lg font-medium align-center justify-end p-2">
-                                        R {Data[productIndex].price}
+                                        R {Data[productIndex].cost_after_vat}
                                     </div>
                                 </div>
                             </Box>
@@ -362,7 +362,7 @@ const Products = () => {
 
     // Memoized getInstruments function
     const getInstruments = useCallback(async () => {
-        let query = supabase.from("nextjs_services").select();
+        let query = supabase.from("products").select();
 
         // Filter by rating
         if (value && value[0] !== undefined && value[1] !== undefined) {
@@ -371,12 +371,12 @@ const Products = () => {
 
         // Filter by price
         if (value1 && value1[0] !== undefined && value1[1] !== undefined) {
-            query = query.gte("price", value1[0]).lte("price", value1[1]);
+            query = query.gte("cost_after_vat", value1[0]).lte("cost_after_vat", value1[1]);
         }
 
         // Add search query filter
         if (searchQuery) {
-            query = query.ilike("service_title", `%${searchQuery}%`);
+            query = query.ilike("title", `%${searchQuery}%`);
         }
 
         const { data } = await query;
