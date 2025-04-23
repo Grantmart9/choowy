@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Button from "@mui/material/Button";
 import { TextField, InputAdornment, Box } from "@mui/material";
-import { AccountCircle, Password } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 import { useRouter } from 'next/navigation'; // Change this to `next/navigation` for client-side navigation
 import KeyIcon from '@mui/icons-material/Key';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -270,26 +270,30 @@ const Login = () => {
 
     async function handleSignIn() {
         try {
-            // Perform sign-in
-            const { user, session, error } = await supabase.auth.signInWithPassword({
+            const response = await supabase.auth.signInWithPassword({
                 email: username,
                 password: password,
             });
-            // Check for errors during sign-in
+
+            localStorage.setItem("user_id", response.data.user.id)
+
+            // Access properties directly from the raw response
+            const { user, session, error } = response;
+
             if (error) {
                 console.error("Error during sign-in:", error.message);
-                return; // Stop execution if there is an error
+                return;
             }
-            // If session is present, set the session
+
             if (session) {
-                supabase.auth.setAuth(session.access_token);
+                await supabase.auth.setAuth(session.access_token);
             }
-            // Redirect to homepage after successful login
             router.push("/");
         } catch (err) {
             console.error("Error during sign-in:", err);
         }
     }
+
 
     async function handleSignUpSubmit() {
         const { data, error } = await supabase.auth.signUp({

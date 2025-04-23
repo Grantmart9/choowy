@@ -12,7 +12,7 @@ import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
 import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType } from "../supabase";
 import Button from "@mui/material/Button";
-import Ripple from "./components/Ripple";
+import Ripple from "../components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import { motion } from "motion/react";
@@ -144,6 +144,7 @@ const SupDataMap = ({
     product,
     productIndex,
     handleSnackbar }) => {
+
     return (
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
             {Data.map((Product, index) => (
@@ -210,7 +211,14 @@ const SupDataMap = ({
                                     <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
                                     </div>
                                     <Button
-                                        onClick={handleSnackbar}
+                                        onClick={() => handleSnackbar({
+                                            "user_id": localStorage.getItem("user_id"),
+                                            "product_id": Data[productIndex].product_id,
+                                            "title": Data[productIndex].title,
+                                            "cost_before_vat": Data[productIndex].cost_before_vat,
+                                            "cost_after_vat": Data[productIndex].cost_after_vat,
+                                            "quantity": 1,
+                                        })}
                                         sx={{
                                             textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
                                             '&:hover': {
@@ -230,11 +238,11 @@ const SupDataMap = ({
                         </Dialog>
                     </motion.div>
                 </motion.div>
-            ))}
-        </div>
+            ))
+            }
+        </div >
     );
 };
-
 
 const Products = () => {
     const [Data, setData] = useState([]);
@@ -246,6 +254,8 @@ const Products = () => {
     const [product, setProduct] = useState(false);
     const [productIndex, setProductIndex] = useState(0);
     const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+
 
     const handleFilter = () => {
         setOpen(true);
@@ -296,9 +306,7 @@ const Products = () => {
         setValue2([1, 100]);
     };
 
-    const handleSnackBar = () => {
-        setOpenSnackbar(true) && setOpen(false);
-    };
+
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -306,6 +314,27 @@ const Products = () => {
         setOpenSnackbar(false);
         setProduct(false);
     };
+    const handleSnackBar = (sellected) => {
+        setOpenSnackbar(true) && setOpen(false);
+        addToCart(sellected)
+    };
+
+    async function addToCart(sellected) {
+
+        try {
+            // Insert data into the "cart" table
+            const { data, error } = await supabase.from('cart').insert([sellected]);
+
+            if (error) {
+                console.error("Error inserting into cart:", error.message);
+                return;
+            }
+
+            console.log("Cart item added successfully:", data);
+        } catch (err) {
+            console.error("Unexpected error:", err);
+        }
+    }
 
     // Memoized getInstruments function
     const getInstruments = useCallback(async () => {
@@ -329,6 +358,7 @@ const Products = () => {
         const { data } = await query;
         setData(data);
     }, [value, value1, searchQuery]);
+
 
     useEffect(() => {
         getInstruments();

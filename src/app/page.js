@@ -6,6 +6,7 @@ import { FontType, SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT } from "./supabas
 import { createClient } from "@supabase/supabase-js";
 import LoadingThreeDotsJumping from "./components/loading";
 
+
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 export default function Home() {

@@ -19,8 +19,6 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import AddIcon from '@mui/icons-material/Add';
-
-
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
   AppName,
@@ -31,8 +29,8 @@ import {
   MainMenuList,
   SubMenuList
 } from "./supabase";
-
 import { createClient } from "@supabase/supabase-js";
+
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 const montserrat = Montserrat({ subsets: ["latin"] });
