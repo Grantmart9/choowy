@@ -145,6 +145,7 @@ const SupDataMap = ({
     productIndex,
     handleSnackbar }) => {
 
+    // Trancatuate if title is more than 4 words //
     function truncateWords(text, wordLimit) {
         const words = text.split(" ");
         if (words.length > wordLimit) {
@@ -170,17 +171,26 @@ const SupDataMap = ({
                     }}
                 >
                     <Button sx={{ padding: 0 }} onClick={(event) => handleProduct(event, index)}
-                        className={`block rounded-none bg-gradient-to-b from-gray-100 via-gray-200 to-gray-400 shadow-sm shadow-gray-600 h-full w-full`}>
+                        className={`block rounded-none bg-[url(./background2.svg)] bg-repeat bg-cover bg-fixed shadow-sm shadow-gray-600 h-full w-full`}>
                         <Image
                             alt="test"
                             style={{ maxHeight: "100px", width: "100%", top: 0 }}
                             src={`data:image/jpeg;base64,${Product.image}`}
                         />
-                        <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-md font- my-auto justify-center p-2">
-                            {truncateWords(Product.title, 4)}
+                        <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-xs my-auto justify-center p-2">
+                            {truncateWords(Product.title, 5)}
                         </div>
-                        <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-lg font-bold my-auto justify-end p-2">
-                            R {Product.cost_after_vat}
+                        <div className="grid grid-flow-col">
+                            <div className="flex align-center justify-center">
+                                <Rating
+                                    style={{ color: "gold" }}
+                                    name="Avg rating"
+                                    value={Data[productIndex].rating}
+                                    sx={{ alignItems: "center", justifyItems: "center", fontSize: "14px" }}
+                                /></div>
+                            <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-md font-bold my-auto justify-end p-2">
+                                {"R "}{Product.cost_after_vat}
+                            </div>
                         </div>
                     </Button>
                     <motion.div

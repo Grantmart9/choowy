@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
       >
         <div style={{ backgroundColor: TitleColor, width: "100%" }} >
           <div
-            style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "55px", rotate: "-7deg" }}
+            style={{ fontFamily: "cursive", fontWeight: "bolder", fontStyle: "italic", fontSize: "63px", rotate: "-7deg" }}
             className={`text-center justify-center ${TextColor}`}
           >
             {AppName}

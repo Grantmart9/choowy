@@ -3,57 +3,54 @@ import React from "react";
 import { LoaderColor } from "../supabase";
 import { motion } from "motion/react";
 
-export default function LoadingThreeDotsJumping() {
-    const dotVariants = {
-        jump: {
-            y: -30,
-            transition: {
-                duration: 0.8,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut",
-            },
-        },
-    };
+function LoadingThreeDotsJumping() {
+    const dotCount = 20; // Number of dots
+    const radius = 77; // Radius of the circle in pixels
+    const centerX = 5; // X-coordinate of the circle center
+    const centerY = 5; // Y-coordinate of the circle center
+
+    // Generate dot positions based on circle geometry
+    const dots = Array.from({ length: dotCount }).map((_, index) => {
+        const angle = (index / dotCount) * 2 * Math.PI; // Angle in radians
+        const x = centerX + radius * Math.cos(angle); // X-position
+        const y = centerY + radius * Math.sin(angle); // Y-position
+        return { x, y };
+    });
 
     return (
-        <motion.div
-            animate="jump"
-            transition={{ staggerChildren: -0.2, staggerDirection: -1 }}
-            className="container"
+        <div
+            className="flex"
+            style={{
+                position: "relative",
+                width: radius * 2 + 50, // Circle container size
+                height: radius * 2 + 50,
+
+            }}
         >
-            <motion.div className="dot" variants={dotVariants} />
-            <motion.div className="dot" variants={dotVariants} />
-            <motion.div className="dot" variants={dotVariants} />
-            <motion.div className="dot" variants={dotVariants} />
-            <motion.div className="dot" variants={dotVariants} />
-            <StyleSheet />
-        </motion.div>
-    );
-}
+            {dots.map((dot, i) => (
+                <motion.div
+                    key={i}
+                    initial={{ backgroundColor: "rgba(252, 111, 3)" }}
+                    animate={{ backgroundColor: "rgba(152, 252, 3)" }}
+                    transition={{
+                        duration: 0.17,
+                        repeat: Infinity,
+                        delay: i * 0.015,
+                        ease: "circInOut",
+                    }}
+                    style={{
+                        position: "absolute",
+                        width: 20,
+                        height: 20,
+                        borderRadius: "50%",
 
-/**
- * ==============   Styles   ================
- */
-function StyleSheet() {
-    return (
-        <style>
-            {`
-            .container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .dot {
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background-color: ${LoaderColor};
-                will-change: transform;
-            }
-            `}
-        </style>
+                        top: `${dot.y + radius}px`,
+                        left: `${dot.x + radius}px`,
+                    }}
+                />
+            ))}
+        </div>
     );
-}
+};
+
+export default LoadingThreeDotsJumping;

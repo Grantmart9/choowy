@@ -14,11 +14,21 @@ import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
 import { Button } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
+import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+
+    function truncateWords(text, wordLimit) {
+        const words = text.split(" ");
+        if (words.length > wordLimit) {
+            return words.slice(0, wordLimit).join(" ") + "...";
+        }
+        return text;
+    }
 
     // Memoized function to fetch cart data
     const fetchCartData = useCallback(async () => {
@@ -57,8 +67,8 @@ const Cart = () => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
-                    <TableContainer className="mx-auto" sx={{ maxWidth: 1000, bgcolor: "rgba(128, 128, 128, 0.45)" }} component={Paper}>
-                        <Table sx={{ maxWidth: 1000 }}>
+                    <TableContainer className="mx-auto" sx={{ maxWidth: 1000, bgcolor: "rgba(128, 128, 128)" }} component={Paper}>
+                        <Table sx={{ maxWidth: 1000 }} size="small">
                             <TableHead>
                                 <TableRow>
                                     <TableCell
@@ -69,7 +79,7 @@ const Cart = () => {
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Quantity</TableCell>
                                     <TableCell
                                         className={`${TextColor}`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost Inc Vat</TableCell>
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
@@ -77,23 +87,27 @@ const Cart = () => {
                                 {data.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell
-                                            className={`${TextColor}`}
+                                            className={`${TextColor} text-sm`}
                                             style={{ fontFamily: FontType }}>
-                                            {row.title}
+                                            {truncateWords(row.title, 5)}
                                         </TableCell>
                                         <TableCell
-                                            className={`${TextColor}`}
-                                            style={{ fontFamily: FontType }}>{row.quantity}</TableCell>
+                                            className={`${TextColor} text-sm`}
+                                            style={{ fontFamily: FontType }}><RemoveCircleOutlinedIcon />{"  "}{row.quantity}{"  "}<AddCircleOutlinedIcon /></TableCell>
                                         <TableCell
-                                            className={`${TextColor}`}
+                                            className={`${TextColor} text-sm`}
                                             style={{ fontFamily: FontType }}>R {row.cost_after_vat}</TableCell>
-                                        <TableCell><Button size="small" sx={{
-                                            textTransform: "none", bgcolor: "transparent", color: "#9af5f5",
-                                            '&:hover': {
-                                                backgroundColor: "transparent",
-                                                color: 'red',
-                                            }
-                                        }}><DeleteOutlineIcon /></Button></TableCell>
+                                        <TableCell>
+                                            <Button size="small" sx={{
+                                                textTransform: "none", bgcolor: "transparent", color: "#9af5f5",
+                                                '&:hover': {
+                                                    backgroundColor: "transparent",
+                                                    color: 'red',
+                                                }
+                                            }}>
+                                                <DeleteOutlineIcon />
+                                            </Button>
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -106,13 +120,15 @@ const Cart = () => {
                                         R {data.reduce((sum, row) => sum + row.cost_after_vat, 0).toFixed(2)}
                                     </TableCell>
                                     <TableCell>
-                                        <Button sx={{
-                                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                            '&:hover': {
-                                                backgroundColor: "rgba(44, 192, 222,0.8)",
-                                                color: 'white',
-                                            }
-                                        }}>Checkout</Button>
+                                        <Button
+                                            size="small"
+                                            sx={{
+                                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                                '&:hover': {
+                                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                                    color: 'white',
+                                                }
+                                            }}>Checkout</Button>
                                     </TableCell>
                                 </TableRow>
                             </TableFooter>

@@ -1,84 +1,85 @@
 "use client"
 import React from "react";
 import {
-    animate,
-    motion,
-    useMotionValue,
-    useMotionValueEvent,
-    useScroll,
+  animate,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
 } from "motion/react"
 import { useRef } from "react"
+import Image from "next/image";
+import TopRated from "../royalCanin.jpeg"
 
 export default function ScrollLinked2() {
-    const ref = useRef(null);
-    const { scrollXProgress } = useScroll({ container: ref });
-    const maskImage = useScrollOverflowMask(scrollXProgress);
-  
-    return (
-      <div id="example">
-        <motion.ul className="mx-auto" ref={ref} style={{ maskImage }}>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-          <li style={{ background: "rgba(176, 12, 12, 0.35)" }}></li>
-        </motion.ul>
-        <StyleSheet />
-      </div>
-    );
-  }
-  
-  const left = `0%`;
-  const right = `100%`;
-  const leftInset = `20%`;
-  const rightInset = `80%`;
-  const transparent = `#0000`;
-  const opaque = `#000`;
-  
-  function useScrollOverflowMask(scrollXProgress) {
-    const maskImage = useMotionValue(
-      `linear-gradient(90deg, ${opaque}, ${opaque} ${left}, ${opaque} ${rightInset}, ${transparent})`
-    );
-  
-    useMotionValueEvent(scrollXProgress, "change", (value) => {
-      if (value === 0) {
-        animate(
-          maskImage,
-          `linear-gradient(90deg, ${opaque}, ${opaque} ${left}, ${opaque} ${rightInset}, ${transparent})`
-        );
-      } else if (value === 1) {
-        animate(
-          maskImage,
-          `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${right}, ${opaque})`
-        );
-      } else if (
-        scrollXProgress.getPrevious() === 0 ||
-        scrollXProgress.getPrevious() === 1
-      ) {
-        animate(
-          maskImage,
-          `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`
-        );
-      }
-    });
-  
-    return maskImage;
-  }
-  
-  /**
-  * ==============   Styles   ================
-  */
-  
-  function StyleSheet() {
-    return (
-      <style>{`
+  const ref = useRef(null);
+  const { scrollXProgress } = useScroll({ container: ref });
+  const maskImage = useScrollOverflowMask(scrollXProgress);
+
+  return (
+    <div id="example">
+      <motion.ul className="bg-gradient-to-r from-lime-300 via-lime-200 to-lime-50 w-full rounded-none mx-auto p-1" ref={ref} style={{ maskImage }}>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+        <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
+      </motion.ul>
+      <StyleSheet />
+    </div>
+  );
+}
+
+const left = `0%`;
+const right = `100%`;
+const leftInset = `20%`;
+const rightInset = `80%`;
+const transparent = `#0000`;
+const opaque = `#000`;
+
+function useScrollOverflowMask(scrollXProgress) {
+  const maskImage = useMotionValue(
+    `linear-gradient(90deg, ${opaque}, ${opaque} ${left}, ${opaque} ${rightInset}, ${transparent})`
+  );
+
+  useMotionValueEvent(scrollXProgress, "change", (value) => {
+    if (value === 0) {
+      animate(
+        maskImage,
+        `linear-gradient(90deg, ${opaque}, ${opaque} ${left}, ${opaque} ${rightInset}, ${transparent})`
+      );
+    } else if (value === 1) {
+      animate(
+        maskImage,
+        `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${right}, ${opaque})`
+      );
+    } else if (
+      scrollXProgress.getPrevious() === 0 ||
+      scrollXProgress.getPrevious() === 1
+    ) {
+      animate(
+        maskImage,
+        `linear-gradient(90deg, ${transparent}, ${opaque} ${leftInset}, ${opaque} ${rightInset}, ${transparent})`
+      );
+    }
+  });
+
+  return maskImage;
+}
+
+/**
+* ==============   Styles   ================
+*/
+
+function StyleSheet() {
+  return (
+    <style>{`
             #example {
               width: 100vw;
               max-width: 100vw;
@@ -139,6 +140,6 @@ export default function ScrollLinked2() {
             }
   
     `}
-      </style>
-    );
-  }
+    </style>
+  );
+}
