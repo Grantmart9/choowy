@@ -10,7 +10,7 @@ import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType, DrawerBackgroundColor, ProductBackgroundColor } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType, DrawerBackgroundColor, ProductBackgroundColor, DrawerBackgroundHoverColor } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "../components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
@@ -225,7 +225,7 @@ const SupDataMap = ({
                                 <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
                                     {Data[productIndex].title}
                                 </div>
-                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-2">{Data[productIndex].description}</div>
+                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{Data[productIndex].description}</div>
                                 <div className="grid grid-cols-3">
                                     <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
                                     </div>
@@ -241,8 +241,7 @@ const SupDataMap = ({
                                         sx={{
                                             textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
                                             '&:hover': {
-                                                backgroundColor: BackgroundColor,
-                                                color: 'white',
+                                                backgroundColor:DrawerBackgroundHoverColor ,
                                             }
                                         }}
                                         className="text-cyan-950 justify-center my-auto text-sm"

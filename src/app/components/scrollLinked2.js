@@ -18,7 +18,7 @@ export default function ScrollLinked2() {
 
   return (
     <div id="example">
-      <motion.ul className="bg-gradient-to-r from-lime-300 via-lime-200 to-lime-50 w-full rounded-none mx-auto p-1" ref={ref} style={{ maskImage }}>
+      <motion.ul className="bg-transparent w-full" ref={ref} style={{ maskImage }}>
         <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
         <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>
         <li className={`bg-[url(./background2.svg)] bg-repeat bg-cover`}><Image src={TopRated} alt={"product"} className="flex justity-center mx-auto my-auto" style={{ maxHeight: "120px", maxWidth: "120px" }} /></li>

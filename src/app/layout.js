@@ -19,6 +19,9 @@ import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import AddIcon from '@mui/icons-material/Add';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
@@ -177,6 +180,11 @@ export default function RootLayout({ children }) {
         >
           <div style={{ fontFamily: FontType }} className={`${TextColor} text-${NavigationTextSize}`}>Logout</div>
         </ListItemButton>
+      </div>
+      <div className="grid grid-cols-3 gap-1 mt-5 w-full">
+        <IconButton><InstagramIcon className="flex align-center mx-auto" sx={{ fontSize: "30px", color: "whitesmoke" }} /></IconButton>
+        <IconButton><FacebookIcon className="flex align-center mx-auto" sx={{ fontSize: "30px", color: "whitesmoke" }} /></IconButton>
+        <IconButton><WhatsAppIcon className="flex align-center mx-auto" sx={{ fontSize: "30px", color: "whitesmoke" }} /></IconButton>
       </div>
     </Box>
   );

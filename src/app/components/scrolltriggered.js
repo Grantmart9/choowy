@@ -30,7 +30,7 @@ function Card({ emoji, hueA, hueB, i }) {
         >
             <div style={{ ...splash, background, width: "100%" }} />
             <Button disableRipple={true}>
-                <motion.div style={card} variants={cardVariants} className="card">
+                <motion.div className="bg-[url(./background2.svg)] bg-repeat bg-cover p-1" style={card} variants={cardVariants} className="card">
                     {emoji}
                 </motion.div>
             </Button>
