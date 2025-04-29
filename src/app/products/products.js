@@ -1,7 +1,7 @@
 
 "use client"; // Add this line at the top of your component file
 import React, { useState, useEffect, useCallback } from "react";
-import { ListItem, TextField, Typography } from "@mui/material";
+import { IconButton, ListItem, TextField, Typography } from "@mui/material";
 import Rating from '@mui/material/Rating';
 import Image from "next/image";
 import { createClient } from "@supabase/supabase-js";
@@ -17,9 +17,9 @@ import Snackbar from "@mui/material/Snackbar";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import { motion } from "motion/react";
 import LoadingThreeDotsJumping from "../components/loading";
+import CloseIcon from '@mui/icons-material/Close';
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
-
 
 const SearchBar = ({
     handleFilter,
@@ -187,29 +187,29 @@ const SupDataMap = ({
                                     name="Avg rating"
                                     value={Data[productIndex].rating}
                                     sx={{ alignItems: "center", justifyItems: "center", fontSize: "14px" }}
-                                /></div>
+                                />
+                            </div>
                             <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-md font-bold my-auto justify-end p-2">
                                 {"R "}{Product.cost_after_vat}
                             </div>
                         </div>
                     </Button>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{
-                            delay: 1, // Add staggered delay based on index
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 55,
-                            mass: 10,
-                            duration: 1,
-                        }}>
-                        <Dialog
-                            onClose={handleCloseProduct}
-                            open={product}
-                            className={` bg-[url(./background.svg)] `}
-                        >
-                            <Box style={{ maxWidth: "400px", maxHeight: "1000px" }}>
+                    <Dialog
+                        onClose={handleCloseProduct}
+                        open={product}
+                        className={` bg-[url(./background.svg)] `}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 100,
+                                damping: 15,
+                                mass: 10,
+                                duration: 1.2,
+                            }}>
+                            <Box style={{ maxWidth: "400px", maxHeight: "1000px" }} className={` bg-[url(./background2.svg)] `}>
                                 <Image
                                     alt="test"
                                     style={{ maxHeight: "300px", minWidth: "100%" }}
@@ -222,6 +222,9 @@ const SupDataMap = ({
                                     size="medium"
                                     sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
                                 />
+                                <IconButton onClick={handleCloseProduct} sx={{ position: "absolute", top: 8, left: 5, alignItems: "center", justifyItems: "center", }}>
+                                    <CloseIcon sx={{ fontSize: "30px" }} />
+                                </IconButton>
                                 <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
                                     {Data[productIndex].title}
                                 </div>
@@ -241,7 +244,7 @@ const SupDataMap = ({
                                         sx={{
                                             textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
                                             '&:hover': {
-                                                backgroundColor:DrawerBackgroundHoverColor ,
+                                                backgroundColor: DrawerBackgroundHoverColor,
                                             }
                                         }}
                                         className="text-cyan-950 justify-center my-auto text-sm"
@@ -253,8 +256,8 @@ const SupDataMap = ({
                                     </div>
                                 </div>
                             </Box>
-                        </Dialog>
-                    </motion.div>
+                        </motion.div>
+                    </Dialog>
                 </motion.div>
             ))
             }
@@ -272,8 +275,6 @@ const Products = () => {
     const [product, setProduct] = useState(false);
     const [productIndex, setProductIndex] = useState(0);
     const [openSnackbar, setOpenSnackbar] = React.useState(false);
-
-
 
     const handleFilter = () => {
         setOpen(true);
