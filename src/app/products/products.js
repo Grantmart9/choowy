@@ -10,7 +10,7 @@ import Slider from '@mui/material/Slider';
 import List from '@mui/material/List';
 import Dialog from '@mui/material/Dialog';
 import ClearIcon from '@mui/icons-material/Clear';
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, BackgroundColor, FontType, DrawerBackgroundColor, ProductBackgroundColor, DrawerBackgroundHoverColor } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, TextColor, FontType, DrawerBackgroundHoverColor } from "../supabase";
 import Button from "@mui/material/Button";
 import Ripple from "../components/Ripple";
 import Snackbar from "@mui/material/Snackbar";
@@ -18,6 +18,8 @@ import SnackbarContent from "@mui/material/SnackbarContent";
 import { motion } from "motion/react";
 import LoadingThreeDotsJumping from "../components/loading";
 import CloseIcon from '@mui/icons-material/Close';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -33,6 +35,7 @@ const SearchBar = ({
     searchQuery,
     handleSearchChange,
     handleClearSearch,
+    handleClearFilter
 
 }) => {
 
@@ -62,7 +65,7 @@ const SearchBar = ({
                     }}
                     onClick={handleFilter}
                 >
-                    <span style={{ opacity: 1, color: "#b1fbfc", fontFamily: FontType }}>Filter<Ripple color={"#1fecf9"} duration={2000}></Ripple></span> {/* Ensure text is fully opaque */}
+                    <span style={{ opacity: 1, fontFamily: FontType }} className={`${TextColor}`}>Filter<Ripple color={"#1fecf9"} duration={2000}></Ripple></span> {/* Ensure text is fully opaque */}
                 </Button>
                 <div
                     style={{
@@ -78,7 +81,7 @@ const SearchBar = ({
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         onChange={handleSearchChange}
-                        sx={{ input: { color: 'whitesmoke', maxHeight: "7px" } }}
+                        sx={{ input: { color: 'whitesmoke', maxHeight: "7px" }, outline: { color: "transparent" } }}
                     />
                 </div>
                 <Button
@@ -90,8 +93,8 @@ const SearchBar = ({
                         background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                     }}
                     className="rounded-l-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100">
-                    <span style={{ opacity: 1, color: "#b1fbfc" }} >
-                        <ClearIcon size="small" />
+                    <span style={{ opacity: 1 }} >
+                        <ClearIcon className={`${TextColor}`} size="small" />
                         <Ripple color={"#1fecf9"} duration={2000}></Ripple>
                     </span>
                 </Button>
@@ -99,10 +102,11 @@ const SearchBar = ({
             <Dialog
                 onClose={handleClose}
                 open={open}
+                style={{ backgroundColor: "rgba(128, 128, 128, 0.25)" }}
             >
                 <List
                     className="p-10"
-                    style={{ backgroundColor: "rgba(128, 128, 128, 0.25)" }}>
+                >
                     <ListItem sx={{ minWidth: "200pt" }}>
                         <Typography className="text-lime-600 whitespace-nowrap">Rating </Typography>
                         <Slider
@@ -118,7 +122,7 @@ const SearchBar = ({
                         />
                     </ListItem>
                     <ListItem sx={{ minWidth: "200pt" }}>
-                        <Typography className="text-lime-600 whitespace-nowrap">Price Range </Typography>
+                        <Typography className="text-lime-600 whitespace-nowrap">Max Price </Typography>
                         <Slider
                             className="text-lime-600 ml-4"
                             getAriaLabel={() => 'Price range'}
@@ -127,11 +131,27 @@ const SearchBar = ({
                             valueLabelDisplay="auto"
                             getAriaValueText={valuetext}
                             max={3000}
-                            step={100}
-                            min={100}
+                            step={500}
+                            min={0}
                         />
                     </ListItem>
                 </List>
+                <div className="grid grid-cols-2 gap-2 p-2">
+                    <Button onClick={handleClearFilter} sx={{
+                        textTransform: "none", bgcolor: DrawerBackgroundHoverColor, color: "white",
+                        '&:hover': {
+                            backgroundColor: "rgba(128, 128, 128, 0.40)",
+                            color: "whitesmoke"
+                        }
+                    }}>Clear</Button>
+                    <Button sx={{
+                        textTransform: "none", bgcolor: DrawerBackgroundHoverColor, color: "white",
+                        '&:hover': {
+                            backgroundColor: "rgba(128, 128, 128, 0.40)",
+                            color: "whitesmoke"
+                        }
+                    }}>Apply</Button>
+                </div>
             </Dialog>
         </div>
     );
@@ -144,6 +164,13 @@ const SupDataMap = ({
     product,
     productIndex,
     handleSnackbar }) => {
+    const [quantity, setQuantity] = useState(0);
+
+    const handleAddQuantity = () => { setQuantity(quantity + 1) }
+    const handleSubtractQuantity = () => {
+        if (quantity <= 0) { setQuantity(0) }
+        else { setQuantity(quantity - 1) }
+    }
 
     // Trancatuate if title is more than 4 words //
     function truncateWords(text, wordLimit) {
@@ -220,41 +247,59 @@ const SupDataMap = ({
                                     name="Avg rating"
                                     value={Data[productIndex].rating}
                                     size="medium"
-                                    sx={{ position: "absolute", top: 8, right: 5, alignItems: "center", justifyItems: "center" }}
+                                    sx={{ position: "absolute", top: 4, left: 5, alignItems: "center", justifyItems: "center" }}
                                 />
-                                <IconButton onClick={handleCloseProduct} sx={{ position: "absolute", top: 8, left: 5, alignItems: "center", justifyItems: "center", }}>
+                                <IconButton onClick={handleCloseProduct} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
                                     <CloseIcon sx={{ fontSize: "30px" }} />
                                 </IconButton>
                                 <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
                                     {Data[productIndex].title}
                                 </div>
                                 <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{Data[productIndex].description}</div>
-                                <div className="grid grid-cols-3">
-                                    <div className="flex text-cyan-950 text-lg font-light my-auto justify-end p-2">
-                                    </div>
-                                    <Button
-                                        onClick={() => handleSnackbar({
-                                            "user_id": localStorage.getItem("user_id"),
-                                            "product_id": Data[productIndex].product_id,
-                                            "title": Data[productIndex].title,
-                                            "cost_before_vat": Data[productIndex].cost_before_vat,
-                                            "cost_after_vat": Data[productIndex].cost_after_vat,
-                                            "quantity": 1,
-                                        })}
-                                        sx={{
-                                            textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
-                                            '&:hover': {
-                                                backgroundColor: DrawerBackgroundHoverColor,
-                                            }
-                                        }}
-                                        className="text-cyan-950 justify-center my-auto text-sm"
-                                        size="small">
-                                        add to cart +
-                                    </Button>
-                                    <div className="flex text-cyan-950 text-lg font-medium align-center justify-end p-2">
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{
+                                        delay: 0.3,
+                                        type: "tween",
+                                        stiffness: 20,
+                                        damping: 15,
+                                        mass: 10,
+                                        duration: 1,
+                                    }}
+                                    className="grid grid-flow-col pb-3">
+                                    <div className="flex text-cyan-950 text-lg font-medium align-center justify-center p-2">
                                         R {Data[productIndex].cost_after_vat}
                                     </div>
-                                </div>
+                                    <div
+                                        className="grid grid-cols-3 my-auto">
+                                        <IconButton onClick={handleSubtractQuantity} className="my-auto mx-auto" size="small"><RemoveCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
+                                        <div className="text-center justify-center my-auto">{quantity}</div>
+                                        <IconButton onClick={handleAddQuantity} className="my-auto mx-auto" size="small"><AddCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
+                                    </div>
+                                    <div
+                                        className="mx-auto my-auto">
+                                        <Button
+                                            onClick={() => handleSnackbar({
+                                                "user_id": localStorage.getItem("user_id"),
+                                                "product_id": Data[productIndex].product_id,
+                                                "title": Data[productIndex].title,
+                                                "cost_before_vat": Data[productIndex].cost_before_vat,
+                                                "cost_after_vat": Data[productIndex].cost_after_vat,
+                                                "quantity": quantity,
+                                            })}
+                                            sx={{
+                                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                                '&:hover': {
+                                                    backgroundColor: DrawerBackgroundHoverColor,
+                                                }
+                                            }}
+                                            className="text-cyan-950 text-sm"
+                                            size="small">
+                                            add to cart +
+                                        </Button>
+                                    </div>
+                                </motion.div>
                             </Box>
                         </motion.div>
                     </Dialog>
@@ -269,7 +314,7 @@ const Products = () => {
     const [Data, setData] = useState([]);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState([1, 5]); // Rating range
-    const [value1, setValue1] = useState([100, 3000]); // Price range
+    const [value1, setValue1] = useState([3000]); // Price range
     const [value2, setValue2] = useState([1, 100]); // Distance range
     const [searchQuery, setSearchQuery] = useState("");
     const [product, setProduct] = useState(false);
@@ -321,10 +366,9 @@ const Products = () => {
 
     const handleClearFilter = () => {
         setValue([1, 5]);
-        setValue1([100, 3000]);
+        setValue1([3000]);
         setValue2([1, 100]);
     };
-
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
@@ -365,8 +409,8 @@ const Products = () => {
         }
 
         // Filter by price
-        if (value1 && value1[0] !== undefined && value1[1] !== undefined) {
-            query = query.gte("cost_after_vat", value1[0]).lte("cost_after_vat", value1[1]);
+        if (value1 && value1 !== undefined && value1 !== undefined) {
+            query = query.lte("cost_after_vat", value1);
         }
 
         // Add search query filter
@@ -442,6 +486,5 @@ const Products = () => {
         </React.Fragment >
     );
 };
-
 
 export default Products;

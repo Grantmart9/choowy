@@ -206,7 +206,8 @@ export default function RootLayout({ children }) {
             onClick={toggleDrawer(true)}
             size="medium">
             <MenuRoundedIcon
-              sx={{ color: IconButtonColor }}
+              className={`${TextColor}`}
+
             />
           </IconButton>
         </div>
@@ -222,7 +223,7 @@ export default function RootLayout({ children }) {
           <IconButton
             size="medium" href="/cart">
             <ShoppingCartIcon
-              sx={{ color: IconButtonColor }}
+              className={`${TextColor}`}
             />
           </IconButton>
         </div>

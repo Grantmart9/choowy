@@ -1,6 +1,6 @@
 
 import React from "react";
-import { LoaderColor } from "../supabase";
+import { DrawerBackgroundHoverColor } from "../supabase";
 import { motion } from "motion/react";
 
 function LoadingThreeDotsJumping() {
@@ -30,8 +30,8 @@ function LoadingThreeDotsJumping() {
             {dots.map((dot, i) => (
                 <motion.div
                     key={i}
-                    initial={{ backgroundColor: "rgba(252, 111, 3)" }}
-                    animate={{ backgroundColor: "rgba(152, 252, 3)" }}
+                    initial={{ backgroundColor: "rgba(75, 250, 148)" }}
+                    animate={{ backgroundColor: DrawerBackgroundHoverColor }}
                     transition={{
                         duration: 0.17,
                         repeat: Infinity,
