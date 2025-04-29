@@ -67,18 +67,18 @@ const Cart = () => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
-                    <TableContainer className="mx-auto" sx={{ maxWidth: 1000, bgcolor: "rgba(128, 128, 128)" }} component={Paper}>
+                    <TableContainer className={`mx-auto bg-[url(./background3.svg)]`} sx={{ maxWidth: 1000 }} component={Paper}>
                         <Table sx={{ maxWidth: 1000 }} size="small">
                             <TableHead>
                                 <TableRow>
                                     <TableCell
-                                        className={`${TextColor}`}
+                                        className={`text-cyan-950`}
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</TableCell>
                                     <TableCell
-                                        className={`${TextColor}`}
+                                        className={`text-cyan-950`}
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Quantity</TableCell>
                                     <TableCell
-                                        className={`${TextColor}`}
+                                        className={`text-cyan-950`}
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>
@@ -87,19 +87,22 @@ const Cart = () => {
                                 {data.map((row, index) => (
                                     <TableRow key={index}>
                                         <TableCell
-                                            className={`${TextColor} text-sm`}
+                                            className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>
                                             {truncateWords(row.title, 5)}
                                         </TableCell>
                                         <TableCell
-                                            className={`${TextColor} text-sm`}
-                                            style={{ fontFamily: FontType }}><RemoveCircleOutlinedIcon />{"  "}{row.quantity}{"  "}<AddCircleOutlinedIcon /></TableCell>
+                                            className={`text-cyan-950 text-sm`}
+                                            style={{ fontFamily: FontType }}>
+                                            <RemoveCircleOutlinedIcon />{row.quantity}{"  "}
+                                            <AddCircleOutlinedIcon />
+                                        </TableCell>
                                         <TableCell
-                                            className={`${TextColor} text-sm`}
-                                            style={{ fontFamily: FontType }}>R {row.cost_after_vat}</TableCell>
+                                            className={`text-cyan-950 text-sm`}
+                                            style={{ fontFamily: FontType }}>R {row.cost_after_vat * row.quantity}</TableCell>
                                         <TableCell>
-                                            <Button size="small" sx={{
-                                                textTransform: "none", bgcolor: "transparent", color: "#9af5f5",
+                                            <Button className={`text-cyan-950`} size="small" sx={{
+                                                textTransform: "none", bgcolor: "transparent",
                                                 '&:hover': {
                                                     backgroundColor: "transparent",
                                                     color: 'red',
@@ -113,11 +116,11 @@ const Cart = () => {
                             </TableBody>
                             <TableFooter>
                                 <TableRow>
-                                    <TableCell colSpan={2} align="right" style={{ fontWeight: 'bold' }}>
+                                    <TableCell colSpan={2} align="right" style={{ fontWeight: 'bold' }} className="text-cyan-950">
                                         Total:
                                     </TableCell>
-                                    <TableCell style={{ fontWeight: 'bold' }}>
-                                        R {data.reduce((sum, row) => sum + row.cost_after_vat, 0).toFixed(2)}
+                                    <TableCell style={{ fontWeight: 'bold' }} className="text-cyan-950">
+                                        R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}
                                     </TableCell>
                                     <TableCell>
                                         <Button
