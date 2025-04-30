@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
-import { Button, IconButton } from "@mui/material";
+import { Button, Dialog, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
@@ -21,6 +21,9 @@ const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    const [checkout, setCheckout] = useState(false);
+
+    const handleCheckout = () => { setCheckout(true) }
 
     function truncateWords(text, wordLimit) {
         const words = text.split(" ");
@@ -174,6 +177,7 @@ const Cart = () => {
                                     </TableCell>
                                     <TableCell>
                                         <Button
+                                            onClick={handleCheckout}
                                             size="small"
                                             sx={{
                                                 textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
@@ -181,12 +185,29 @@ const Cart = () => {
                                                     backgroundColor: "rgba(44, 192, 222,0.8)",
                                                     color: 'white',
                                                 }
-                                            }}>Checkout</Button>
+                                            }}>Checkout
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             </TableFooter>
                         </Table>
                     </TableContainer>
+                    <Dialog
+                        onClose={handleCheckout}
+                        open={checkout}
+                        className={` bg-[url(./background.svg)] mx-auto my-auto `}>
+                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline`}>Confirm your deliver address and contact details</div>
+                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Delivery Address:</text> 12 Bossie Street, Japan</div>
+                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Cell:</text> 0749382928</div>
+                        <Button
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                '&:hover': {
+                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                    color: 'white',
+                                }
+                            }}>Confirm</Button>
+                    </Dialog>
                 </div>
             ) : (
                 <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
