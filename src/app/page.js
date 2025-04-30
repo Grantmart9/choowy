@@ -25,25 +25,26 @@ export default function Home() {
   return (
     <React.Fragment>
       <div className="mt-12 block align-center justify-center" >
-        <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Sellers</div>
         {Data.length === 0 ?
           <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Sellers</div>
             <div
               className="mx-auto">
               <LoadingThreeDotsJumping />
             </div>
           </div> : <ScrollTriggered Data={Data} />}
-        <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Rated</div>
+
         {Data.length === 0 ?
           <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Rated</div>
             <div
               className="mx-auto">
               <LoadingThreeDotsJumping />
             </div>
           </div> : <ScrollTriggered Data={Data} />}
-        <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">New Arivals</div>
         {Data.length === 0 ?
           <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">New Arivals</div>
             <div
               className="mx-auto">
               <LoadingThreeDotsJumping />

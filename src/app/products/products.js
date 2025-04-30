@@ -226,81 +226,84 @@ const SupDataMap = ({
                         open={product}
                         className={` bg-[url(./background.svg)] `}
                     >
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{
-                                type: "spring",
-                                stiffness: 100,
-                                damping: 15,
-                                mass: 10,
-                                duration: 1.2,
-                            }}>
-                            <Box style={{ maxWidth: "400px", maxHeight: "1000px" }} className={` bg-[url(./background2.svg)] `}>
+                        <Box style={{ maxWidth: "400px", maxHeight: "1000px" }} className={` bg-[url(./background2.svg)] `}>
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 200,
+                                    damping: 75,
+                                    mass: 8,
+                                    duration: 1,
+                                }}>
                                 <Image
                                     alt="test"
                                     style={{ maxHeight: "300px", minWidth: "100%" }}
                                     src={`data:image/jpeg;base64,${Data[productIndex].image}`}
                                 />
-                                <Rating
-                                    style={{ color: "gold" }}
-                                    name="Avg rating"
-                                    value={Data[productIndex].rating}
-                                    size="medium"
-                                    sx={{ position: "absolute", top: 4, left: 5, alignItems: "center", justifyItems: "center" }}
-                                />
-                                <IconButton onClick={handleCloseProduct} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
-                                    <CloseIcon sx={{ fontSize: "30px" }} />
-                                </IconButton>
-                                <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
-                                    {Data[productIndex].title}
-                                </div>
+                            </motion.div>
+                            <Rating
+                                style={{ color: "gold" }}
+                                name="Avg rating"
+                                value={Data[productIndex].rating}
+                                size="medium"
+                                sx={{ position: "absolute", top: 4, left: 5, alignItems: "center", justifyItems: "center" }}
+                            />
+                            <IconButton onClick={handleCloseProduct} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+                                <CloseIcon sx={{ fontSize: "30px" }} />
+                            </IconButton>
+                            <div className="flex transform-none text-cyan-950 font-sans text-md my-auto justify-center p-2">
+                                {Data[productIndex].title}
+                            </div>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 20,
+                                    damping: 15,
+                                    mass: 10,
+                                    duration: 1,
+                                }}>
                                 <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{Data[productIndex].description}</div>
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{
-                                        type: "tween",
-                                        stiffness: 20,
-                                        damping: 15,
-                                        mass: 10,
-                                        duration: 1,
-                                    }}
-                                    className="grid grid-flow-col pb-3">
-                                    <div className="flex text-cyan-950 text-lg font-medium align-center justify-center p-2">
-                                        R {Data[productIndex].cost_after_vat}
-                                    </div>
-                                    <div
-                                        className="grid grid-cols-3 my-auto">
-                                        <IconButton onClick={handleSubtractQuantity} className="my-auto mx-auto" size="small"><RemoveCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
-                                        <div className="text-center justify-center my-auto">{quantity}</div>
-                                        <IconButton onClick={handleAddQuantity} className="my-auto mx-auto" size="small"><AddCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
-                                    </div>
-                                    <div
-                                        className="mx-auto my-auto">
-                                        <Button
-                                            onClick={() => handleSnackbar({
-                                                "user_id": localStorage.getItem("user_id"),
-                                                "product_id": Data[productIndex].product_id,
-                                                "title": Data[productIndex].title,
-                                                "cost_before_vat": Data[productIndex].cost_before_vat,
-                                                "cost_after_vat": Data[productIndex].cost_after_vat,
-                                                "quantity": quantity,
-                                            })}
-                                            sx={{
-                                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
-                                                '&:hover': {
-                                                    backgroundColor: DrawerBackgroundHoverColor,
-                                                }
-                                            }}
-                                            className="text-cyan-950 text-sm"
-                                            size="small">
-                                            add to cart +
-                                        </Button>
-                                    </div>
-                                </motion.div>
-                            </Box>
-                        </motion.div>
+                            </motion.div>
+                            <div
+
+                                className="grid grid-flow-col pb-3">
+                                <div className="flex text-cyan-950 text-lg font-medium align-center justify-center p-2">
+                                    R {Data[productIndex].cost_after_vat}
+                                </div>
+                                <div
+                                    className="grid grid-cols-3 my-auto">
+                                    <IconButton onClick={handleSubtractQuantity} className="my-auto mx-auto" size="small"><RemoveCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
+                                    <div className="text-center justify-center my-auto">{quantity}</div>
+                                    <IconButton onClick={handleAddQuantity} className="my-auto mx-auto" size="small"><AddCircleOutlineOutlinedIcon className="text-cyan-950" /></IconButton>
+                                </div>
+                                <div
+                                    className="mx-auto my-auto">
+                                    <Button
+                                        onClick={() => handleSnackbar({
+                                            "user_id": localStorage.getItem("user_id"),
+                                            "product_id": Data[productIndex].product_id,
+                                            "title": Data[productIndex].title,
+                                            "cost_before_vat": Data[productIndex].cost_before_vat,
+                                            "cost_after_vat": Data[productIndex].cost_after_vat,
+                                            "quantity": quantity,
+                                        })}
+                                        sx={{
+                                            textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
+                                            '&:hover': {
+                                                backgroundColor: DrawerBackgroundHoverColor,
+                                            }
+                                        }}
+                                        className="text-cyan-950 text-sm"
+                                        size="small">
+                                        add to cart +
+                                    </Button>
+                                </div>
+                            </div>
+                        </Box>
                     </Dialog>
                 </motion.div>
             ))
@@ -421,7 +424,6 @@ const Products = () => {
         setData(data);
     }, [value, value1, searchQuery]);
 
-
     useEffect(() => {
         getInstruments();
     }, [getInstruments]);
@@ -476,9 +478,9 @@ const Products = () => {
                 onClose={handleCloseSnackbar}
             >
                 <SnackbarContent
-                    className={"flex justify-center align-center mx-auto bg-cyan-300"}
+                    className={"flex justify-center align-center mx-auto bg-lime-400"}
                     message={
-                        <div style={{ color: TextColor, fontFamily: FontType }} className="text-center text-lg">Added to your cart</div>
+                        <div style={{ fontFamily: FontType }} className="text-center text-lg text-cyan-950">Added to your cart</div>
                     }
                 />
             </Snackbar>
