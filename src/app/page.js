@@ -27,29 +27,37 @@ export default function Home() {
       <div className="mt-12 block align-center justify-center" >
         {Data.length === 0 ?
           <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+            <div
+              className="mx-auto">
+              <LoadingThreeDotsJumping />
+            </div>
+          </div> :
+          <>
             <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Sellers</div>
+            <ScrollTriggered Data={Data} />
+          </>}
+        {Data.length === 0 ?
+          <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
             <div
               className="mx-auto">
               <LoadingThreeDotsJumping />
             </div>
-          </div> : <ScrollTriggered Data={Data} />}
-
-        {Data.length === 0 ?
-          <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+          </div> :
+          <>
             <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Rated</div>
-            <div
-              className="mx-auto">
-              <LoadingThreeDotsJumping />
-            </div>
-          </div> : <ScrollTriggered Data={Data} />}
+            <ScrollTriggered Data={Data} />
+          </>}
         {Data.length === 0 ?
           <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
-            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">New Arivals</div>
             <div
               className="mx-auto">
               <LoadingThreeDotsJumping />
             </div>
-          </div> : <ScrollTriggered Data={Data} />}
+          </div> :
+          <>
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">New Arivals</div>
+            <ScrollTriggered Data={Data} />
+          </>}
       </div>
     </React.Fragment>
   );
