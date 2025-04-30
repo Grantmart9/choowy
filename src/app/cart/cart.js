@@ -1,8 +1,7 @@
-
 "use client"; // Add this line at the top of your component file
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, BackgroundColor, FontType, TextColor } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,10 +11,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 const Cart = () => {
@@ -48,17 +48,53 @@ const Cart = () => {
             }
 
             setData(data); // Update state with the fetched data
-
         } catch (err) {
             setError(err.message);
             console.error("Error fetching cart data:", err);
         }
     }, []);
 
+    const deleteCartItem = useCallback(async (id) => {
+        try {
+            const { error } = await supabase
+                .from("cart")
+                .delete()
+                .eq("id", id);
+
+            if (error) throw error;
+
+            // Update the data after deletion
+            setData((prevData) => prevData.filter((item) => item.id !== id));
+        } catch (err) {
+            setError(err.message);
+            console.error("Error deleting cart item:", err);
+        }
+    }, []);
+
+    const updateQuantity = useCallback(async (id, newQuantity) => {
+        try {
+            const { error } = await supabase
+                .from("cart")
+                .update({ quantity: newQuantity })
+                .eq("id", id);
+
+            if (error) throw error;
+
+            // Update local state
+            setData((prevData) =>
+                prevData.map((item) =>
+                    item.id === id ? { ...item, quantity: newQuantity } : item
+                )
+            );
+        } catch (err) {
+            setError(err.message);
+            console.error("Error updating quantity:", err);
+        }
+    }, []);
+
     // Fetch cart data when the component mounts
     useEffect(() => {
         fetchCartData();
-
     }, [fetchCartData]);
 
     // Render cart data or an error message
@@ -76,11 +112,13 @@ const Cart = () => {
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</TableCell>
                                     <TableCell
                                         className={`text-cyan-950`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Quantity</TableCell>
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }} align="center">Quantity</TableCell>
                                     <TableCell
                                         className={`text-cyan-950`}
                                         style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell
+                                        className={`text-cyan-950`}
+                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -92,22 +130,34 @@ const Cart = () => {
                                             {truncateWords(row.title, 5)}
                                         </TableCell>
                                         <TableCell
+                                            align="left"
                                             className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>
-                                            <RemoveCircleOutlinedIcon />{row.quantity}{"  "}
-                                            <AddCircleOutlinedIcon />
+                                            <div className={`grid grid-cols-3 gap-2`}>
+                                                <IconButton onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
+                                                    <RemoveCircleOutlinedIcon />
+                                                </IconButton>
+                                                <div className="text-center justify-center my-auto">{row.quantity}</div>
+                                                <IconButton onClick={() => updateQuantity(row.id, row.quantity + 1)}>
+                                                    <AddCircleOutlinedIcon />
+                                                </IconButton>
+                                            </div>
                                         </TableCell>
                                         <TableCell
                                             className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>R {row.cost_after_vat * row.quantity}</TableCell>
                                         <TableCell>
-                                            <Button className={`text-cyan-950`} size="small" sx={{
-                                                textTransform: "none", bgcolor: "transparent",
-                                                '&:hover': {
-                                                    backgroundColor: "transparent",
-                                                    color: 'red',
-                                                }
-                                            }}>
+                                            <Button
+                                                className={`text-cyan-950`}
+                                                size="small"
+                                                onClick={() => deleteCartItem(row.id)}
+                                                sx={{
+                                                    textTransform: "none", bgcolor: "transparent",
+                                                    '&:hover': {
+                                                        backgroundColor: "transparent",
+                                                        color: 'red',
+                                                    }
+                                                }}>
                                                 <DeleteOutlineIcon />
                                             </Button>
                                         </TableCell>
