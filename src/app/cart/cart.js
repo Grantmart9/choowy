@@ -197,7 +197,7 @@ const Cart = () => {
                         onClose={handleCheckout}
                         open={checkout}
                         className={` bg-[url(./background.svg)] mx-auto my-auto `}>
-                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline`}>Confirm your deliver address and contact details</div>
+                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline`}>Please confirm your delivery address and contact details</div>
                         <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Delivery Address:</text> 12 Bossie Street, Japan</div>
                         <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Cell:</text> 0749382928</div>
                         <Button
