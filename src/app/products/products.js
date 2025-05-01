@@ -290,6 +290,7 @@ const SupDataMap = ({
                                             "cost_before_vat": Data[productIndex].cost_before_vat,
                                             "cost_after_vat": Data[productIndex].cost_after_vat,
                                             "quantity": quantity,
+                                            "image": Data[productIndex].image,
                                         })}
                                         sx={{
                                             textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.40)", color: "#9af5f5",
@@ -382,6 +383,7 @@ const Products = () => {
     const handleSnackBar = (sellected) => {
         setOpenSnackbar(true) && setOpen(false);
         addToCart(sellected)
+        console.log(sellected)
     };
 
     async function addToCart(sellected) {

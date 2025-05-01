@@ -15,6 +15,7 @@ import { Button, Dialog, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+import Image from "next/image";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -130,7 +131,7 @@ const Cart = () => {
                                         <TableCell
                                             className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>
-                                            {truncateWords(row.title, 5)}
+                                            <Image src={`data:image/jpeg;base64,${row.image}`} alt={"product"}></Image>
                                         </TableCell>
                                         <TableCell
                                             align="left"
@@ -206,7 +207,9 @@ const Cart = () => {
                                     backgroundColor: "rgba(44, 192, 222,0.8)",
                                     color: 'white',
                                 }
-                            }}>Confirm</Button>
+                            }}>
+                            Confirm
+                        </Button>
                     </Dialog>
                 </div>
             ) : (
