@@ -266,7 +266,7 @@ const SupDataMap = ({
                                     mass: 10,
                                     duration: 1,
                                 }}>
-                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{Data[productIndex].description}</div>
+                                <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{truncateWords(Data[productIndex].description, 50)}</div>
                             </motion.div>
                             <div
 
