@@ -23,6 +23,7 @@ const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [checkout, setCheckout] = useState(false);
+    const [paying, setPaying] = useState(false);
 
     const handleCheckout = () => { setCheckout(true) }
 
@@ -96,6 +97,8 @@ const Cart = () => {
         }
     }, []);
 
+    const proceedToPay = () => { setCheckout(false); setPaying(true); }
+
     // Fetch cart data when the component mounts
     useEffect(() => {
         fetchCartData();
@@ -107,7 +110,7 @@ const Cart = () => {
             {error && <p style={{ color: "red" }}>{error}</p>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
-                    <TableContainer className={`mx-auto bg-[url(./background3.svg)]`} sx={{ maxWidth: 1000 }} component={Paper}>
+                    <TableContainer className={`mx-auto bg-[url(./background4.svg)]`} sx={{ maxWidth: 1000 }} component={Paper}>
                         <Table sx={{ maxWidth: 1000 }} size="small">
                             <TableHead>
                                 <TableRow>
@@ -138,11 +141,29 @@ const Cart = () => {
                                             className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>
                                             <div className={`grid grid-cols-3 gap-2`}>
-                                                <IconButton onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
+                                                <IconButton
+                                                    sx={{
+                                                        textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                                        '&:hover': {
+                                                            backgroundColor: "rgba(44, 192, 222,0.8)",
+                                                            color: 'white',
+                                                        }
+                                                    }}
+                                                    className="mx-auto"
+                                                    onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
                                                     <RemoveCircleOutlinedIcon />
                                                 </IconButton>
-                                                <div className="text-center justify-center my-auto">{row.quantity}</div>
-                                                <IconButton onClick={() => updateQuantity(row.id, row.quantity + 1)}>
+                                                <div className="text-center justify-center my-auto mx-auto">{row.quantity}</div>
+                                                <IconButton
+                                                    sx={{
+                                                        textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                                        '&:hover': {
+                                                            backgroundColor: "rgba(44, 192, 222,0.8)",
+                                                            color: 'white',
+                                                        }
+                                                    }}
+                                                    className="mx-auto"
+                                                    onClick={() => updateQuantity(row.id, row.quantity + 1)}>
                                                     <AddCircleOutlinedIcon />
                                                 </IconButton>
                                             </div>
@@ -202,6 +223,7 @@ const Cart = () => {
                         <div className={`${FontType} text-cyan-950 text-md text-center mx-auto p-2`}><text className="font-bold">Cell:</text> 0749382928</div>
                         <div className="grid grid-cols-2 gap-2 p-2">
                             <Button
+                                onClick={proceedToPay}
                                 sx={{
                                     textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                     '&:hover': {
@@ -215,12 +237,58 @@ const Cart = () => {
                                 sx={{
                                     textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                     '&:hover': {
-                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        backgroundColor: "rgba(217, 4, 4,0.5)",
                                         color: 'white',
                                     }
                                 }}>
                                 Incorrect
                             </Button>
+                        </div>
+                        <div className="mx-auto mb-2">
+                            <Button
+                                onClick={() => setCheckout(false)}
+                                sx={{
+
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(136, 143, 138,0.5)",
+                                        color: 'white',
+                                    }
+                                }}>Cancel
+                            </Button>
+                        </div>
+                    </Dialog>
+                    <Dialog onClose={proceedToPay} open={paying}>
+                        <div className="grid grid-flow-row gap-1">
+                            <div className="p-2">Sellect Payment option</div>
+                            <Button
+                                className="p-2 mx-2"
+                                sx={{
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        color: 'white',
+                                    }
+                                }}>EFT</Button>
+                            <Button
+                                className="p-2 mx-2"
+                                sx={{
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        color: 'white',
+                                    }
+                                }}>Payfast</Button>
+                            <Button
+                                onClick={() => setPaying(false)}
+                                className="p-2 mx-2 mb-2"
+                                sx={{
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        color: 'white',
+                                    }
+                                }}>Cancel</Button>
                         </div>
                     </Dialog>
                 </div>
