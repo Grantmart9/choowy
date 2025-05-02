@@ -164,7 +164,7 @@ const SupDataMap = ({
     product,
     productIndex,
     handleSnackbar }) => {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     const handleAddQuantity = () => { setQuantity(quantity + 1) }
     const handleSubtractQuantity = () => {
