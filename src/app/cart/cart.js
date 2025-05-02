@@ -131,7 +131,7 @@ const Cart = () => {
                                         <TableCell
                                             className={`text-cyan-950 text-sm`}
                                             style={{ fontFamily: FontType }}>
-                                            <Image src={`data:image/jpeg;base64,${row.image}`} alt={"product"}></Image>
+                                            <Image style={{ maxHeight: "60px" }} src={`data:image/jpeg;base64,${row.image}`} alt={"product"}></Image>
                                         </TableCell>
                                         <TableCell
                                             align="left"
@@ -197,19 +197,31 @@ const Cart = () => {
                         onClose={handleCheckout}
                         open={checkout}
                         className={` bg-[url(./background.svg)] mx-auto my-auto `}>
-                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline`}>Please confirm your delivery address and contact details</div>
-                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Delivery Address:</text> 12 Bossie Street, Japan</div>
-                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto`}><text className="font-bold">Cell:</text> 0749382928</div>
-                        <Button
-                            sx={{
-                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                '&:hover': {
-                                    backgroundColor: "rgba(44, 192, 222,0.8)",
-                                    color: 'white',
-                                }
-                            }}>
-                            Confirm
-                        </Button>
+                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline p-2`}>Please confirm your delivery address and contact details</div>
+                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto p-2`}><text className="font-bold">Delivery Address:</text> 12 Bossie Street, Japan</div>
+                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto p-2`}><text className="font-bold">Cell:</text> 0749382928</div>
+                        <div className="grid grid-cols-2 gap-2 p-2">
+                            <Button
+                                sx={{
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        color: 'white',
+                                    }
+                                }}>
+                                Correct
+                            </Button>
+                            <Button
+                                sx={{
+                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                    '&:hover': {
+                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        color: 'white',
+                                    }
+                                }}>
+                                Incorrect
+                            </Button>
+                        </div>
                     </Dialog>
                 </div>
             ) : (
