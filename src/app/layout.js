@@ -22,6 +22,7 @@ import AddIcon from '@mui/icons-material/Add';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
@@ -219,6 +220,11 @@ export default function RootLayout({ children }) {
         >
           {DrawerList}
         </Drawer>
+        <div className="z-50 fixed my-auto right-10">
+          <IconButton size="medium">
+            <LocationOnIcon className={`${TextColor}`} />
+          </IconButton>
+        </div>
         <div className="z-50 fixed my-auto right-1">
           <IconButton
             size="medium" href="/cart">

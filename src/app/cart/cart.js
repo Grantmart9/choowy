@@ -24,16 +24,11 @@ const Cart = () => {
     const [error, setError] = useState(null);
     const [checkout, setCheckout] = useState(false);
     const [paying, setPaying] = useState(false);
+    const [eft, setEft] = useState(false);
 
     const handleCheckout = () => { setCheckout(true) }
-
-    function truncateWords(text, wordLimit) {
-        const words = text.split(" ");
-        if (words.length > wordLimit) {
-            return words.slice(0, wordLimit).join(" ") + "...";
-        }
-        return text;
-    }
+    const proceedToPay = () => { setCheckout(false); setPaying(true); }
+    const handleEFT = () => { setEft(true) }
 
     // Memoized function to fetch cart data
     const fetchCartData = useCallback(async () => {
@@ -96,8 +91,6 @@ const Cart = () => {
             console.error("Error updating quantity:", err);
         }
     }, []);
-
-    const proceedToPay = () => { setCheckout(false); setPaying(true); }
 
     // Fetch cart data when the component mounts
     useEffect(() => {
@@ -216,52 +209,11 @@ const Cart = () => {
                     </TableContainer>
                     <Dialog
                         onClose={handleCheckout}
-                        open={checkout}
-                        className={` bg-[url(./background.svg)] mx-auto my-auto `}>
-                        <div className={`${FontType} text-cyan-950 text-lg text-center mx-auto font-bold underline p-2`}>Please confirm your delivery address and contact details</div>
-                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto p-2`}><text className="font-bold">Delivery Address:</text> 12 Bossie Street, Japan</div>
-                        <div className={`${FontType} text-cyan-950 text-md text-center mx-auto p-2`}><text className="font-bold">Cell:</text> 0749382928</div>
-                        <div className="grid grid-cols-2 gap-2 p-2">
-                            <Button
-                                onClick={proceedToPay}
-                                sx={{
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(44, 192, 222,0.8)",
-                                        color: 'white',
-                                    }
-                                }}>
-                                Correct
-                            </Button>
-                            <Button
-                                sx={{
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(217, 4, 4,0.5)",
-                                        color: 'white',
-                                    }
-                                }}>
-                                Incorrect
-                            </Button>
-                        </div>
-                        <div className="mx-auto mb-2">
-                            <Button
-                                onClick={() => setCheckout(false)}
-                                sx={{
-
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(136, 143, 138,0.5)",
-                                        color: 'white',
-                                    }
-                                }}>Cancel
-                            </Button>
-                        </div>
-                    </Dialog>
-                    <Dialog onClose={proceedToPay} open={paying}>
+                        open={checkout}>
                         <div className="grid grid-flow-row gap-1">
                             <div className="p-2">Sellect Payment option</div>
                             <Button
+                                onClick={handleEFT}
                                 className="p-2 mx-2"
                                 sx={{
                                     textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
@@ -280,15 +232,26 @@ const Cart = () => {
                                     }
                                 }}>Payfast</Button>
                             <Button
-                                onClick={() => setPaying(false)}
+                                onClick={() => setCheckout(false)}
                                 className="p-2 mx-2 mb-2"
                                 sx={{
                                     textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                     '&:hover': {
-                                        backgroundColor: "rgba(44, 192, 222,0.8)",
+                                        backgroundColor: "rgba(136, 143, 138,0.5)",
                                         color: 'white',
                                     }
                                 }}>Cancel</Button>
+                        </div>
+                    </Dialog>
+                    <Dialog onClose={handleEFT} open={eft}>
+                        <div className="grid grid-flow-row gap-1">
+                            <div className={`p-2 text-lg font-bold ${FontType}`}>Your Reference: 827382</div>
+                            <div className="p-2">Bank: Standard Bank</div>
+                            <div className="p-2">Account Number: 128372839</div>
+                            <div className="p-2">Branch Code: 1239</div>
+                            <div className="p-2">Purchase cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
+                            <div className="p-2">Delivery Cost: R 152,43</div>
+                            <div className="p-2">Total cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)} + R {152.43}= R{(data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0) + 152.43).toFixed(2)}</div>
                         </div>
                     </Dialog>
                 </div>
