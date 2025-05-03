@@ -1,5 +1,5 @@
 "use client";
-import { ThemeProvider } from "@mui/material";
+import { Dialog, ThemeProvider } from "@mui/material";
 import { Montserrat } from "next/font/google";
 import React, { useState } from "react";
 import theme from "./themeprovider";
@@ -27,7 +27,6 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
   AppName,
-  BackgroundColor,
   TextColor,
   FontType,
   NavigationTextSize,
@@ -35,12 +34,12 @@ import {
   SubMenuList,
   TitleColor,
   DrawerBackgroundColor,
-  IconButtonColor,
   TopBarColor,
   DrawerBackgroundHoverColor
 } from "./supabase";
 
 import { createClient } from "@supabase/supabase-js";
+import MapComponent from "./googlemaps";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -48,6 +47,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
 
   const [open, setOpen] = useState(false);
+  const [LocationSwitch, setLocationSwitch] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -65,6 +65,8 @@ export default function RootLayout({ children }) {
       window.location.href = "/login"; // Or use your preferred method to redirect
     }
   };
+
+  const handleLocation = () => { setLocationSwitch(true) }
 
   const DrawerList = (
     <Box
@@ -222,7 +224,7 @@ export default function RootLayout({ children }) {
         </Drawer>
         <div className="z-50 fixed my-auto right-10">
           <IconButton size="medium">
-            <LocationOnIcon className={`${TextColor}`} />
+            <LocationOnIcon onClick={handleLocation} className={`${TextColor}`} />
           </IconButton>
         </div>
         <div className="z-50 fixed my-auto right-1">
@@ -234,6 +236,7 @@ export default function RootLayout({ children }) {
           </IconButton>
         </div>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <Dialog onClose={handleLocation} open={LocationSwitch}><MapComponent /></Dialog>
       </body>
     </html>
   );

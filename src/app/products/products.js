@@ -53,7 +53,7 @@ const SearchBar = ({
                     mass: 5,
                     duration: 0.5,
                 }}
-                className="inline-flex ml-14 sm:ml-2 sm:mr-2 mr-14"
+                className="inline-flex ml-14 sm:ml-2 sm:mr-2 mr-20"
             >
                 <Button
                     size="small"

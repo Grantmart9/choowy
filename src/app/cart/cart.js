@@ -135,6 +135,7 @@ const Cart = () => {
                                             style={{ fontFamily: FontType }}>
                                             <div className={`grid grid-cols-3 gap-2`}>
                                                 <IconButton
+                                                    size="small"
                                                     sx={{
                                                         textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                                         '&:hover': {
@@ -146,8 +147,9 @@ const Cart = () => {
                                                     onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
                                                     <RemoveCircleOutlinedIcon />
                                                 </IconButton>
-                                                <div className="text-center justify-center my-auto mx-auto">{row.quantity}</div>
+                                                <div className="text-center my-auto mx-auto">{row.quantity}</div>
                                                 <IconButton
+                                                    size="small"
                                                     sx={{
                                                         textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                                                         '&:hover': {

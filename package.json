@@ -34,6 +34,7 @@
     "@nivo/line": "^0.88.0",
     "@nivo/pie": "^0.88.0",
     "@nivo/tooltip": "^0.88.0",
+    "@react-google-maps/api": "^2.20.6",
     "@react-hook/media-query": "^1.1.1",
     "@react-hook/resize-observer": "^2.0.2",
     "@smakss/react-scroll-direction": "^4.2.0",
