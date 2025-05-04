@@ -23,6 +23,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { createClient } from "@supabase/supabase-js";
 
 import {
   SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT,
@@ -35,19 +36,18 @@ import {
   TitleColor,
   DrawerBackgroundColor,
   TopBarColor,
-  DrawerBackgroundHoverColor
+  DrawerBackgroundHoverColor,
 } from "./supabase";
 
-import { createClient } from "@supabase/supabase-js";
-import MapComponent from "./googlemaps";
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
-const montserrat = Montserrat({ subsets: ["latin"] });
+
 
 export default function RootLayout({ children }) {
 
   const [open, setOpen] = useState(false);
-  const [LocationSwitch, setLocationSwitch] = useState(false);
+  const [LocationSellected, setLocationSellected] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -65,8 +65,91 @@ export default function RootLayout({ children }) {
       window.location.href = "/login"; // Or use your preferred method to redirect
     }
   };
+  const handleLocation = () => { setLocationSellected(true) }
 
-  const handleLocation = () => { setLocationSwitch(true) }
+  function DistanceCalculator() {
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [distance, setDistance] = useState(null);
+    const [error, setError] = useState(null);
+
+    const GOOGLE_API_KEY = 'AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM';
+
+    const calculateDistance = async () => {
+      if (!origin || !destination) {
+        setError('Both origin and destination are required.');
+        return;
+      }
+    
+      try {
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // CORS proxy URL
+        const googleApiUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(
+          origin
+        )}&destinations=${encodeURIComponent(destination)}&key=${GOOGLE_API_KEY}`;
+        
+        const response = await fetch(`${corsProxy}${googleApiUrl}`);
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch data from the Google API.');
+        }
+    
+        const data = await response.json();
+    
+        if (data.status === 'OK' && data.rows[0].elements[0].status === 'OK') {
+          const distanceText = data.rows[0].elements[0].distance.text;
+          setDistance(distanceText);
+          setError(null);
+        } else {
+          throw new Error(data.error_message || 'Unable to calculate distance.');
+        }
+      } catch (err) {
+        setError(err.message);
+        setDistance(null);
+      }
+    };
+    
+
+    return (
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Distance Calculator</h1>
+        <div className="mb-4">
+          <label className="block mb-2">Origin:</label>
+          <input
+            type="text"
+            value={origin}
+            onChange={(e) => setOrigin(e.target.value)}
+            className="border rounded p-2 w-full"
+            placeholder="Enter origin address"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2">Destination:</label>
+          <input
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            className="border rounded p-2 w-full"
+            placeholder="Enter destination address"
+          />
+        </div>
+        <button
+          onClick={calculateDistance}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Calculate Distance
+        </button>
+        {distance && (
+          <p className="mt-4 text-green-500">
+            Distance: <strong>{distance}</strong>
+          </p>
+        )}
+        {error && <p className="mt-4 text-red-500">Error: {error}</p>}
+      </div>
+    );
+  }
+
+
+
 
   const DrawerList = (
     <Box
@@ -236,7 +319,9 @@ export default function RootLayout({ children }) {
           </IconButton>
         </div>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        <Dialog onClose={handleLocation} open={LocationSwitch}><MapComponent /></Dialog>
+        <Dialog onClose={handleLocation} open={LocationSellected}>
+          <DistanceCalculator />
+        </Dialog>
       </body>
     </html>
   );
