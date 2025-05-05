@@ -24,6 +24,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { createClient } from "@supabase/supabase-js";
+import CloseIcon from '@mui/icons-material/Close';
 
 import {
   SUPABASE_URL_CLOUDCRAFT,
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
   const [LocationSellected, setLocationSellected] = useState(false);
   const [autocomplete, setAutocomplete] = useState(null);
   const [address, setAddress] = useState("");
+  const [storedAddress, setStoredAddress] = useState("");
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -68,15 +70,14 @@ export default function RootLayout({ children }) {
     if (autocomplete) {
       const place = autocomplete.getPlace();
       if (place && place.formatted_address) {
-        setAddress(place.formatted_address); // Store the selected address in state
-        localStorage.setItem("user_address", place.formatted_address); // Store the address in local storage
+        setAddress(place.formatted_address); // Store the selected address
+        localStorage.setItem("user_address", place.formatted_address)
         console.log("Selected Address:", place.formatted_address);
       } else {
         console.error("No formatted address found");
       }
     }
   };
-
 
   const DrawerList = (
     <Box
@@ -201,11 +202,13 @@ export default function RootLayout({ children }) {
   );
 
   useEffect(() => {
-    const savedAddress = localStorage.getItem("user_address");
-    if (savedAddress) {
-      setAddress(savedAddress); // Update the state with the saved address
+    // Check if window is defined (client-side)
+    if (typeof window !== "undefined") {
+      const address = localStorage.getItem("user_address");
+      setStoredAddress(address || "No address selected yet");
     }
   }, []);
+
 
   return (
     <html lang="en" className="flex h-full items-center justify-center">
@@ -222,7 +225,8 @@ export default function RootLayout({ children }) {
         <div
           style={{ height: "44px" }}
           className={`fixed ${TopBarColor} opacity-50 w-full z-30`}
-        ></div>
+        >
+        </div>
 
         {/* Left Drawer Toggle */}
         <div className="z-50 fixed my-auto left-1">
@@ -255,6 +259,9 @@ export default function RootLayout({ children }) {
           onClose={() => setLocationSellected(false)}
           open={LocationSellected}
         >
+          <IconButton onClick={() => setLocationSellected(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+            <CloseIcon sx={{ fontSize: "30px" }} />
+          </IconButton>
           <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
             <div
               className="bg-[url(./background4.svg)]"
@@ -263,8 +270,9 @@ export default function RootLayout({ children }) {
               <style>
                 {`
         .pac-container {
-          z-index: 2000 !important; /* Bring autocomplete suggestions to the foreground */
-        }
+    touch-action: auto !important; /* Allow default touch interactions */
+    z-index: 2000 !important;     /* Ensure the dropdown is above other elements */
+  }
       `}
               </style>
               <Autocomplete
@@ -277,6 +285,7 @@ export default function RootLayout({ children }) {
                   fullWidth
                   size="small"
                   autoFocus
+                  className="mt-6"
                   sx={{
                     "& .MuiInputLabel-root": {
                       color: "green", // Customize the label color
@@ -298,7 +307,7 @@ export default function RootLayout({ children }) {
                   }}
                 />
               </Autocomplete>
-              <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
+              <div style={{ marginTop: "20px", fontSize: "12px" }}>{storedAddress}</div>
             </div>
           </LoadScript>
         </Dialog>
