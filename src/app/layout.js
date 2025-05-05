@@ -1,6 +1,6 @@
 "use client";
 import { Dialog, ThemeProvider, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import theme from "./themeprovider";
 import "./globals.css";
@@ -68,13 +68,15 @@ export default function RootLayout({ children }) {
     if (autocomplete) {
       const place = autocomplete.getPlace();
       if (place && place.formatted_address) {
-        setAddress(place.formatted_address); // Store the selected address
+        setAddress(place.formatted_address); // Store the selected address in state
+        localStorage.setItem("user_address", place.formatted_address); // Store the address in local storage
         console.log("Selected Address:", place.formatted_address);
       } else {
         console.error("No formatted address found");
       }
     }
   };
+
 
   const DrawerList = (
     <Box
@@ -198,6 +200,12 @@ export default function RootLayout({ children }) {
     </Box>
   );
 
+  useEffect(() => {
+    const savedAddress = localStorage.getItem("user_address");
+    if (savedAddress) {
+      setAddress(savedAddress); // Update the state with the saved address
+    }
+  }, []);
 
   return (
     <html lang="en" className="flex h-full items-center justify-center">
