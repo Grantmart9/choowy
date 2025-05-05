@@ -205,7 +205,7 @@ const SupDataMap = ({
                             src={`data:image/jpeg;base64,${Product.image}`}
                         />
                         <div style={{ fontFamily: FontType, color: "black", textTransform: "none" }} className="flex text-xs my-auto justify-center p-2">
-                            {truncateWords(Product.title, 5)}
+                            {truncateWords(Product.title, 6)}
                         </div>
                         <div className="grid grid-flow-col">
                             <div className="flex align-center justify-center">
@@ -269,7 +269,6 @@ const SupDataMap = ({
                                 <div className="flex text-cyan-950 text-sm font-light my-auto justify-center p-4">{truncateWords(Data[productIndex].description, 50)}</div>
                             </motion.div>
                             <div
-
                                 className="grid grid-flow-col pb-3">
                                 <div className="flex text-cyan-950 text-lg font-medium align-center justify-center p-2">
                                     R {Data[productIndex].cost_after_vat}

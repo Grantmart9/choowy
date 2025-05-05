@@ -42,6 +42,7 @@
     "@syncfusion/ej2-react-heatmap": "^28.2.3",
     "@tailwindcss/postcss": "^4.0.3",
     "@themesberg/react-bootstrap": "^1.4.1",
+    "@vis.gl/react-google-maps": "^1.5.2",
     "apexcharts": "^4.4.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",

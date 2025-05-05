@@ -36,9 +36,7 @@ const LoginDialog = ({
             }}
             className="flex align-center justify-center" style={{ marginTop: "25vh" }}>
             <Box sx={{ maxWidth: 400 }}>
-                <div className="grid grid-flow-row gap-2 rounded-lg p-4 shadow-md shadow-cyan-950" style={{
-                    background: "rgba(128, 128, 128, 0.8)", // Set the background with 15% opacity
-                }}>
+                <div className="grid grid-flow-row gap-2 rounded-lg p-4 shadow-md shadow-cyan-950 bg-[url(./background4.svg)]">
                     <TextField
                         id="input-with-icon-textfield"
                         label="email"
@@ -158,8 +156,8 @@ const SignUpDialog = ({
                 duration: 2,
             }}
             className="flex align-center justify-center" style={{ marginTop: "15vh" }}>
-            <Box sx={{ minWidth: 400, backgroundColor: "rgba(128, 128, 128, 0.8)" }}>
-                <div className="grid grid-flow-row gap-2 rounded-lg shadow-md shadow-cyan-950 p-4">
+            <Box sx={{ minWidth: 400 }}>
+                <div className="grid grid-flow-row gap-2 rounded-lg shadow-md shadow-cyan-950 p-4 bg-[url(./background4.svg)]">
                     <TextField
                         id="input-with-icon-textfield"
                         label="First Name"
