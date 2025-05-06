@@ -1,7 +1,7 @@
 "use client"; // Add this line at the top of your component file
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, max_delivery_cost, our_delivery_rate, third_party_delivery_rate } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,6 +16,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import Image from "next/image";
+import { Address } from "../supabase";
+import { max } from "moment";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -23,11 +25,12 @@ const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [checkout, setCheckout] = useState(false);
-    const [paying, setPaying] = useState(false);
     const [eft, setEft] = useState(false);
+    const [payment, setPayment] = useState(false);
+    const [distance, setDistance] = useState();
 
     const handleCheckout = () => { setCheckout(true) }
-    const proceedToPay = () => { setCheckout(false); setPaying(true); }
+    const handlePayment = () => { setPayment(true) }
     const handleEFT = () => { setEft(true) }
 
     const BankingDetails = ({ handleEFT, eft, data }) => {
@@ -45,13 +48,13 @@ const Cart = () => {
             </Dialog>)
     }
 
-    const PurchaseStatement = ({ handleCheckout, checkout, data }) => {
+    const PaymentOption = ({ handlePayment, payment }) => {
         return (
             <Dialog
-                onClose={handleCheckout}
-                open={checkout}>
+                onClose={handlePayment}
+                open={payment}>
                 <div className="grid grid-flow-row gap-1">
-                    <div className="p-2">Sellect Payment option</div>
+                    <div className="p-2">Payment option</div>
                     <Button
                         onClick={handleEFT}
                         className="p-2 mx-2"
@@ -76,7 +79,7 @@ const Cart = () => {
                         Payfast
                     </Button>
                     <Button
-                        onClick={() => setCheckout(false)}
+                        onClick={() => setPayment(false)}
                         className="p-2 mx-2 mb-2"
                         sx={{
                             textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
@@ -88,7 +91,59 @@ const Cart = () => {
                         Cancel
                     </Button>
                 </div>
-            </Dialog>)
+            </Dialog>
+        )
+    }
+
+    const PurchaseStatement = ({ handleCheckout, checkout, data, handlePayment, distance }) => {
+
+        let TotalDeliveryCost = Math.min(350, Number(distance) * delivery_rate);
+
+        let DeliveryCostReceivedThirdParty = Number(distance) * third_party_delivery_rate;
+        let DeliveryCostReceived = TotalDeliveryCost - DeliveryCostReceivedThirdParty
+
+        console.log({ "Distance:": distance, "Our money:": DeliveryCostReceived, "Uber money:": DeliveryCostReceivedThirdParty })
+        let TotalPurchaseCost = data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0);
+        let TotalPayable = TotalDeliveryCost + TotalPurchaseCost
+
+        return (
+            <Dialog
+                onClose={handleCheckout}
+                open={checkout}>
+                <div className={`grid grid-flow-row gap-1 p-3 bg-[url(./background4.svg)]`}>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xl font-bold ${FontType} text-cyan-950`}>Order Summary</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-ligh ${FontType} text-cyan-950`}>Purchase total: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost}</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-lg font-bold ${FontType} text-cyan-950`}>Total Payable: R {TotalPayable.toFixed(2)}</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")}</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293</div>
+                    <Button
+                        onClick={() => { setCheckout(false); setPayment(true) }}
+                        className="p-2 mx-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(44, 192, 222,0.8)",
+                                color: 'white',
+                            }
+                        }}>
+                        Proceed to payment
+                    </Button>
+                    <Button
+                        onClick={() => setCheckout(false)}
+                        className="p-2 mx-2 mb-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(44, 192, 222,0.8)",
+                                color: 'white',
+                            }
+                        }}>
+                        Cancel
+                    </Button>
+                </div>
+            </Dialog>
+        )
     }
 
     const CartTable = ({ data }) => {
@@ -105,7 +160,7 @@ const Cart = () => {
                                 style={{ fontWeight: 'bold', fontFamily: FontType }} align="center">Quantity</TableCell>
                             <TableCell
                                 className={`text-cyan-950`}
-                                style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>Total Cost (inc Vat)</TableCell>
                             <TableCell
                                 className={`text-cyan-950`}
                                 style={{ fontWeight: 'bold', fontFamily: FontType }}>Actions</TableCell>
@@ -155,7 +210,7 @@ const Cart = () => {
                                 </TableCell>
                                 <TableCell
                                     className={`text-cyan-950 text-sm`}
-                                    style={{ fontFamily: FontType }}>R {row.cost_after_vat * row.quantity}</TableCell>
+                                    style={{ fontFamily: FontType }}>R {(row.cost_after_vat * row.quantity).toFixed(2)}</TableCell>
                                 <TableCell>
                                     <Button
                                         className={`text-cyan-950`}
@@ -264,9 +319,46 @@ const Cart = () => {
         }
     }, []);
 
+    const calculateDrivingDistance = async () => {
+        const API_KEY = "AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM";
+        const warehouseAddress = Address;
+        const userAddress = localStorage.getItem("user_address");
+
+        try {
+            const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
+                userAddress
+            )}&destinations=${encodeURIComponent(warehouseAddress)}&key=${API_KEY}&mode=driving`;
+
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+
+            const response = await fetch(proxyUrl);
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch distance");
+            }
+            const proxyData = await response.json();
+            const data = JSON.parse(proxyData.contents);
+
+            if (
+                data.rows &&
+                data.rows[0].elements &&
+                data.rows[0].elements[0].distance
+            ) {
+                const distance = data.rows[0].elements[0].distance.value; // Distance in meters
+                const distanceText = data.rows[0].elements[0].distance.text; // Human-readable distance
+                setDistance(distance / 1000)
+                return { distance, distanceText };
+            }
+            throw new Error("Invalid response from Distance Matrix API");
+        } catch (error) {
+            console.error("Error calculating driving distance:", error.message);
+        }
+    };
+
     // Fetch cart data when the component mounts
     useEffect(() => {
         fetchCartData();
+        calculateDrivingDistance();
     }, [fetchCartData]);
 
     // Render cart data or an error message
@@ -279,8 +371,9 @@ const Cart = () => {
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
                     <CartTable data={data} />
-                    <PurchaseStatement handleCheckout={handleCheckout} checkout={checkout} data={data} />
+                    <PurchaseStatement distance={distance} handleCheckout={handleCheckout} checkout={checkout} data={data} />
                     <BankingDetails handleEFT={handleEFT} eft={eft} data={data} />
+                    <PaymentOption handlePayment={handlePayment} payment={payment} />
                 </div>
             ) : (
                 <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">

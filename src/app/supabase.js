@@ -56,6 +56,15 @@ export const SubMenuList = [
 ]
 
 export const AppName = "Choowy";
+export const Address = "19 Ralph Crescent, kuilsriver"
+export const phone_number = "+27 61 417 0615"
+
+export const third_party_delivery_rate = 5.75 // R/km
+export const our_delivery_rate = 4
+export const delivery_rate = our_delivery_rate + third_party_delivery_rate; // R/km
+export const max_delivery_cost = 350; // R
+export const max_distance_from_warehouse = 50; // in km if the the distance exceeds this ammount, same day delivery does not apply
+
 export const DrawerBackgroundHoverColor = "rgba(7, 247, 179, 0.7)"
 export const TextColorHover = "#0A4D68"
 export const TitleColor = "rgba(27, 51, 54, 0.75)"
