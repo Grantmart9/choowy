@@ -30,6 +30,178 @@ const Cart = () => {
     const proceedToPay = () => { setCheckout(false); setPaying(true); }
     const handleEFT = () => { setEft(true) }
 
+    const BankingDetails = ({ handleEFT, eft, data }) => {
+        return (
+            <Dialog onClose={handleEFT} open={eft} >
+                <div className="grid grid-flow-row gap-1">
+                    <div className={`p-2 text-lg font-bold ${FontType}`}>Your Reference: 827382</div>
+                    <div className="p-2">Bank: Standard Bank</div>
+                    <div className="p-2">Account Number: 128372839</div>
+                    <div className="p-2">Branch Code: 1239</div>
+                    <div className="p-2">Purchase cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
+                    <div className="p-2">Delivery Cost: R 152,43</div>
+                    <div className="p-2">Total cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)} + R {152.43}= R{(data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0) + 152.43).toFixed(2)}</div>
+                </div>
+            </Dialog>)
+    }
+
+    const PurchaseStatement = ({ handleCheckout, checkout, data }) => {
+        return (
+            <Dialog
+                onClose={handleCheckout}
+                open={checkout}>
+                <div className="grid grid-flow-row gap-1">
+                    <div className="p-2">Sellect Payment option</div>
+                    <Button
+                        onClick={handleEFT}
+                        className="p-2 mx-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(44, 192, 222,0.8)",
+                                color: 'white',
+                            }
+                        }}>
+                        EFT
+                    </Button>
+                    <Button
+                        className="p-2 mx-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(44, 192, 222,0.8)",
+                                color: 'white',
+                            }
+                        }}>
+                        Payfast
+                    </Button>
+                    <Button
+                        onClick={() => setCheckout(false)}
+                        className="p-2 mx-2 mb-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(136, 143, 138,0.5)",
+                                color: 'white',
+                            }
+                        }}>
+                        Cancel
+                    </Button>
+                </div>
+            </Dialog>)
+    }
+
+    const CartTable = ({ data }) => {
+        return (
+            <TableContainer className={`mx-auto bg-[url(./background4.svg)]`} sx={{ maxWidth: 1000 }} component={Paper}>
+                <Table sx={{ maxWidth: 1000 }} size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell
+                                className={`text-cyan-950`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</TableCell>
+                            <TableCell
+                                className={`text-cyan-950`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }} align="center">Quantity</TableCell>
+                            <TableCell
+                                className={`text-cyan-950`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
+                            <TableCell
+                                className={`text-cyan-950`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {data.map((row, index) => (
+                            <TableRow key={index}>
+                                <TableCell
+                                    className={`text-cyan-950 text-sm`}
+                                    style={{ fontFamily: FontType }}>
+                                    <Image style={{ maxHeight: "60px" }} src={`data:image/jpeg;base64,${row.image}`} alt={"product"}></Image>
+                                </TableCell>
+                                <TableCell
+                                    align="left"
+                                    className={`text-cyan-950 text-sm`}
+                                    style={{ fontFamily: FontType }}>
+                                    <div className={`grid grid-cols-3 gap-2`}>
+                                        <IconButton
+                                            size="small"
+                                            sx={{
+                                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                                '&:hover': {
+                                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                                    color: 'white',
+                                                }
+                                            }}
+                                            className="mx-auto"
+                                            onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
+                                            <RemoveCircleOutlinedIcon />
+                                        </IconButton>
+                                        <div className="text-center my-auto mx-auto">{row.quantity}</div>
+                                        <IconButton
+                                            size="small"
+                                            sx={{
+                                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                                '&:hover': {
+                                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                                    color: 'white',
+                                                }
+                                            }}
+                                            className="mx-auto"
+                                            onClick={() => updateQuantity(row.id, row.quantity + 1)}>
+                                            <AddCircleOutlinedIcon />
+                                        </IconButton>
+                                    </div>
+                                </TableCell>
+                                <TableCell
+                                    className={`text-cyan-950 text-sm`}
+                                    style={{ fontFamily: FontType }}>R {row.cost_after_vat * row.quantity}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        className={`text-cyan-950`}
+                                        size="small"
+                                        onClick={() => deleteCartItem(row.id)}
+                                        sx={{
+                                            textTransform: "none", bgcolor: "transparent",
+                                            '&:hover': {
+                                                backgroundColor: "transparent",
+                                                color: 'red',
+                                            }
+                                        }}>
+                                        <DeleteOutlineIcon />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={2} align="right" style={{ fontWeight: 'bold' }} className="text-cyan-950">
+                                Total:
+                            </TableCell>
+                            <TableCell style={{ fontWeight: 'bold' }} className="text-cyan-950">
+                                R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                                <Button
+                                    onClick={handleCheckout}
+                                    size="small"
+                                    sx={{
+                                        textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                        '&:hover': {
+                                            backgroundColor: "rgba(44, 192, 222,0.8)",
+                                            color: 'white',
+                                        }
+                                    }}>Checkout
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>
+                </Table>
+            </TableContainer>
+        )
+    }
+
     // Memoized function to fetch cart data
     const fetchCartData = useCallback(async () => {
         try {
@@ -100,162 +272,15 @@ const Cart = () => {
     // Render cart data or an error message
     return (
         <div>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error &&
+                <div className="flex align-center justify-center h-full">
+                    <p style={{ color: "whitesmoke" }}>No cart found. Make sure you are logged in.</p>
+                </div>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
-                    <TableContainer className={`mx-auto bg-[url(./background4.svg)]`} sx={{ maxWidth: 1000 }} component={Paper}>
-                        <Table sx={{ maxWidth: 1000 }} size="small">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell
-                                        className={`text-cyan-950`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</TableCell>
-                                    <TableCell
-                                        className={`text-cyan-950`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }} align="center">Quantity</TableCell>
-                                    <TableCell
-                                        className={`text-cyan-950`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Cost</TableCell>
-                                    <TableCell
-                                        className={`text-cyan-950`}
-                                        style={{ fontWeight: 'bold', fontFamily: FontType }}>Actions</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {data.map((row, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell
-                                            className={`text-cyan-950 text-sm`}
-                                            style={{ fontFamily: FontType }}>
-                                            <Image style={{ maxHeight: "60px" }} src={`data:image/jpeg;base64,${row.image}`} alt={"product"}></Image>
-                                        </TableCell>
-                                        <TableCell
-                                            align="left"
-                                            className={`text-cyan-950 text-sm`}
-                                            style={{ fontFamily: FontType }}>
-                                            <div className={`grid grid-cols-3 gap-2`}>
-                                                <IconButton
-                                                    size="small"
-                                                    sx={{
-                                                        textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                                        '&:hover': {
-                                                            backgroundColor: "rgba(44, 192, 222,0.8)",
-                                                            color: 'white',
-                                                        }
-                                                    }}
-                                                    className="mx-auto"
-                                                    onClick={() => updateQuantity(row.id, Math.max(row.quantity - 1, 1))}>
-                                                    <RemoveCircleOutlinedIcon />
-                                                </IconButton>
-                                                <div className="text-center my-auto mx-auto">{row.quantity}</div>
-                                                <IconButton
-                                                    size="small"
-                                                    sx={{
-                                                        textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                                        '&:hover': {
-                                                            backgroundColor: "rgba(44, 192, 222,0.8)",
-                                                            color: 'white',
-                                                        }
-                                                    }}
-                                                    className="mx-auto"
-                                                    onClick={() => updateQuantity(row.id, row.quantity + 1)}>
-                                                    <AddCircleOutlinedIcon />
-                                                </IconButton>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell
-                                            className={`text-cyan-950 text-sm`}
-                                            style={{ fontFamily: FontType }}>R {row.cost_after_vat * row.quantity}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                className={`text-cyan-950`}
-                                                size="small"
-                                                onClick={() => deleteCartItem(row.id)}
-                                                sx={{
-                                                    textTransform: "none", bgcolor: "transparent",
-                                                    '&:hover': {
-                                                        backgroundColor: "transparent",
-                                                        color: 'red',
-                                                    }
-                                                }}>
-                                                <DeleteOutlineIcon />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TableCell colSpan={2} align="right" style={{ fontWeight: 'bold' }} className="text-cyan-950">
-                                        Total:
-                                    </TableCell>
-                                    <TableCell style={{ fontWeight: 'bold' }} className="text-cyan-950">
-                                        R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button
-                                            onClick={handleCheckout}
-                                            size="small"
-                                            sx={{
-                                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                                '&:hover': {
-                                                    backgroundColor: "rgba(44, 192, 222,0.8)",
-                                                    color: 'white',
-                                                }
-                                            }}>Checkout
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
-                    <Dialog
-                        onClose={handleCheckout}
-                        open={checkout}>
-                        <div className="grid grid-flow-row gap-1">
-                            <div className="p-2">Sellect Payment option</div>
-                            <Button
-                                onClick={handleEFT}
-                                className="p-2 mx-2"
-                                sx={{
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(44, 192, 222,0.8)",
-                                        color: 'white',
-                                    }
-                                }}>EFT</Button>
-                            <Button
-                                className="p-2 mx-2"
-                                sx={{
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(44, 192, 222,0.8)",
-                                        color: 'white',
-                                    }
-                                }}>Payfast</Button>
-                            <Button
-                                onClick={() => setCheckout(false)}
-                                className="p-2 mx-2 mb-2"
-                                sx={{
-                                    textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                                    '&:hover': {
-                                        backgroundColor: "rgba(136, 143, 138,0.5)",
-                                        color: 'white',
-                                    }
-                                }}>Cancel</Button>
-                        </div>
-                    </Dialog>
-                    <Dialog onClose={handleEFT} open={eft}>
-                        <div className="grid grid-flow-row gap-1">
-                            <div className={`p-2 text-lg font-bold ${FontType}`}>Your Reference: 827382</div>
-                            <div className="p-2">Bank: Standard Bank</div>
-                            <div className="p-2">Account Number: 128372839</div>
-                            <div className="p-2">Branch Code: 1239</div>
-                            <div className="p-2">Purchase cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
-                            <div className="p-2">Delivery Cost: R 152,43</div>
-                            <div className="p-2">Total cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)} + R {152.43}= R{(data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0) + 152.43).toFixed(2)}</div>
-                        </div>
-                    </Dialog>
+                    <CartTable data={data} />
+                    <PurchaseStatement handleCheckout={handleCheckout} checkout={checkout} data={data} />
+                    <BankingDetails handleEFT={handleEFT} eft={eft} data={data} />
                 </div>
             ) : (
                 <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">

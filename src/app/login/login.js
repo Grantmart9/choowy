@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'; // Change this to `next/navigation`
 import KeyIcon from '@mui/icons-material/Key';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/Visibilityoff';
-import { SUPABASE_URL, API_KEY, BackgroundColor } from "../supabase";
+import { SUPABASE_URL, API_KEY, BackgroundColor, DrawerBackgroundColor } from "../supabase";
 import * as motion from "motion/react-client"
 import validator from "validator";
 
@@ -46,13 +46,13 @@ const LoginDialog = ({
                         style={{
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
-                        sx={{ input: { color: 'lime' }, label: { color: 'whitesmoke' } }}
+                        sx={{ input: { color: 'lime' }, label: { color: DrawerBackgroundColor } }}
                         variant="outlined"
                         slotProps={{
                             input: {
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <AccountCircle sx={{ color: "whitesmoke" }} />
+                                        <AccountCircle sx={{ color: DrawerBackgroundColor }} />
                                     </InputAdornment>
                                 ),
                             },
@@ -68,24 +68,24 @@ const LoginDialog = ({
                             background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                         }}
                         type={open ? "password" : "text"}
-                        sx={{ input: { color: 'lime' }, label: { color: 'whitesmoke' } }}
+                        sx={{ input: { color: 'lime' }, label: { color: DrawerBackgroundColor } }}
                         variant="outlined"
                         slotProps={{
                             input: {
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <KeyIcon sx={{ color: "whitesmoke" }} />
+                                        <KeyIcon sx={{ color: DrawerBackgroundColor }} />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
                                     <div>
                                         {open ? (
                                             <InputAdornment position="end">
-                                                <Button onClick={showPassword}><VisibilityIcon sx={{ color: "whitesmoke", bgcolor: "transparent" }} /></Button>
+                                                <Button onClick={showPassword}><VisibilityIcon sx={{ color: DrawerBackgroundColor, bgcolor: "transparent" }} /></Button>
                                             </InputAdornment>
                                         ) : (
                                             <InputAdornment position="end">
-                                                <Button onClick={showPassword}><VisibilityOffIcon sx={{ color: "whitesmoke", bgcolor: "transparent" }} /></Button>
+                                                <Button onClick={showPassword}><VisibilityOffIcon sx={{ color: DrawerBackgroundColor, bgcolor: "transparent" }} /></Button>
                                             </InputAdornment>
                                         )}
                                     </div>
@@ -99,7 +99,7 @@ const LoginDialog = ({
                             onClick={handleSignIn}
                             fullWidth={false}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: DrawerBackgroundColor, color: "whitesmoke",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -114,7 +114,7 @@ const LoginDialog = ({
                             fullWidth={false}
                             onClick={handleSignUp}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.8)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: DrawerBackgroundColor, color: "whitesmoke",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -163,7 +163,6 @@ const SignUpDialog = ({
                         label="First Name"
                         size="small"
                         onChange={handleFirstName}
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
@@ -171,21 +170,18 @@ const SignUpDialog = ({
                         label="Last Name"
                         size="small"
                         onChange={handleLastName}
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
                         id="input-with-icon-textfield"
                         label="Cell"
                         size="small"
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
                         id="input-with-icon-textfield"
                         label="Address"
                         size="small"
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
@@ -193,7 +189,6 @@ const SignUpDialog = ({
                         label="email"
                         size="small"
                         onChange={handleEmail}
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
@@ -201,7 +196,6 @@ const SignUpDialog = ({
                         label="Password"
                         size="small"
                         onChange={handlePasswordEdit}
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                     />
                     <TextField
@@ -209,7 +203,6 @@ const SignUpDialog = ({
                         label="Confirm Password"
                         onChange={handleConfirmPassword}
                         size="small"
-                        sx={{ borderColor: "116d80" }}
                         variant="standard"
                         color={ConfirmPassword === password ? "success" : "error"}
                     />
@@ -220,7 +213,7 @@ const SignUpDialog = ({
                             fullWidth={false}
                             onClick={handleSignUpSubmit}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "whitesmoke",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
@@ -234,7 +227,7 @@ const SignUpDialog = ({
                             fullWidth={false}
                             onClick={handleSignUpBack}
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "#9af5f5",
+                                textTransform: "none", bgcolor: "rgba(128, 128, 128, 0.80)", color: "whitesmoke",
                                 '&:hover': {
                                     backgroundColor: BackgroundColor,
                                     color: 'white',
