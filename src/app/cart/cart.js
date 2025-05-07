@@ -1,5 +1,5 @@
 "use client"; // Add this line at the top of your component file
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, max_delivery_cost, our_delivery_rate, third_party_delivery_rate } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
@@ -11,13 +11,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
-import { Button, Dialog, IconButton } from "@mui/material";
+import { Button, Checkbox, Dialog, IconButton, Input } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import Image from "next/image";
 import { Address } from "../supabase";
-import { max } from "moment";
+import { CheckBox } from "@mui/icons-material";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -96,6 +96,8 @@ const Cart = () => {
     }
 
     const PurchaseStatement = ({ handleCheckout, checkout, data, handlePayment, distance }) => {
+        const [address_confirmed, setAddressConfirmed] = useState();
+        const [cell_confirmed, setCellConfirmed] = useState();
 
         let TotalDeliveryCost = Math.min(350, Number(distance) * delivery_rate);
 
@@ -115,20 +117,33 @@ const Cart = () => {
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-ligh ${FontType} text-cyan-950`}>Purchase total: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-lg font-bold ${FontType} text-cyan-950`}>Total Payable: R {TotalPayable.toFixed(2)}</div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")}</div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293</div>
-                    <Button
-                        onClick={() => { setCheckout(false); setPayment(true) }}
-                        className="p-2 mx-2"
-                        sx={{
-                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                            '&:hover': {
-                                backgroundColor: "rgba(44, 192, 222,0.8)",
-                                color: 'white',
-                            }
-                        }}>
-                        Proceed to payment
-                    </Button>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")} <Checkbox required onClick={() => setAddressConfirmed(true)} value={address_confirmed} /></div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293 <Checkbox required onClick={() => setCellConfirmed(true)} value={cell_confirmed} /></div>
+                    {address_confirmed && cell_confirmed ?
+                        <Button
+                            onClick={() => { setCheckout(false); setPayment(true) }}
+                            className="p-2 mx-2"
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                '&:hover': {
+                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                    color: 'white',
+                                }
+                            }}>
+                            Proceed to payment
+                        </Button> : <Button
+                            onClick={() => { setCheckout(false); setPayment(true) }}
+                            disabled="true"
+                            className="p-2 mx-2"
+                            sx={{
+                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                '&:hover': {
+                                    backgroundColor: "rgba(44, 192, 222,0.3)",
+                                    color: 'white',
+                                }
+                            }}>
+                            Proceed to payment
+                        </Button>}
                     <Button
                         onClick={() => setCheckout(false)}
                         className="p-2 mx-2 mb-2"
@@ -371,7 +386,11 @@ const Cart = () => {
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
                     <CartTable data={data} />
-                    <PurchaseStatement distance={distance} handleCheckout={handleCheckout} checkout={checkout} data={data} />
+                    <PurchaseStatement
+                        distance={distance}
+                        handleCheckout={handleCheckout}
+                        checkout={checkout} data={data}
+                    />
                     <BankingDetails handleEFT={handleEFT} eft={eft} data={data} />
                     <PaymentOption handlePayment={handlePayment} payment={payment} />
                 </div>
