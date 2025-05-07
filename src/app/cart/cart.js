@@ -17,6 +17,7 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import Image from "next/image";
 import { Address } from "../supabase";
+import CloseIcon from '@mui/icons-material/Close';
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -28,7 +29,6 @@ const Cart = () => {
     const [checkout, setCheckout] = useState(false);
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
-
 
     const handleCheckout = () => { setCheckout(true) }
     const handlePayment = () => { setPayment(true) }
@@ -65,7 +65,7 @@ const Cart = () => {
                 onClose={handlePayment}
                 open={payment}>
                 <div className="grid grid-flow-row gap-1">
-                    <div style={{ fontFamily: FontType }} className="p-2 text-cyan-950">Select a payment option</div>
+                    <div style={{ fontFamily: FontType }} className="p-2 mt-8 text-cyan-950">Select a payment option</div>
                     <Button
                         onClick={() => { setPayment(false); setEft(true) }}
                         className="p-2 mx-2"
@@ -79,7 +79,7 @@ const Cart = () => {
                         EFT
                     </Button>
                     <Button
-                        className="p-2 mx-2"
+                        className="p-2 mx-2 mb-2"
                         sx={{
                             textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
                             '&:hover': {
@@ -89,18 +89,9 @@ const Cart = () => {
                         }}>
                         Payfast
                     </Button>
-                    <Button
-                        onClick={() => setPayment(false)}
-                        className="p-2 mx-2 mb-2"
-                        sx={{
-                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                            '&:hover': {
-                                backgroundColor: "rgba(136, 143, 138,0.5)",
-                                color: 'white',
-                            }
-                        }}>
-                        Cancel
-                    </Button>
+                    <IconButton onClick={() => setPayment(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+                        <CloseIcon sx={{ fontSize: "30px" }} />
+                    </IconButton>
                 </div>
             </Dialog >
         )
@@ -119,6 +110,39 @@ const Cart = () => {
         let TotalPurchaseCost = data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0);
         let TotalPayable = TotalDeliveryCost + TotalPurchaseCost
 
+        const handleOrder = async () => {
+            try {
+                const user_id = localStorage.getItem("user_id"); // Assuming you store the user's ID in localStorage
+                const delivery_address = localStorage.getItem("user_address"); // Assuming the address is stored in localStorage
+                const date_created = new Date().toISOString();
+                const status = "Pending Payment"; // Default status for the order
+
+                // Prepare the rows to insert into the table
+                const orderRows = data.map(item => ({
+                    product_id: item.id,
+                    cost_after_vat: item.cost_after_vat,
+                    date_created,
+                    status,
+                    user_id,
+                    quantity: item.quantity,
+                    delivery_address, // Include the delivery address
+                }));
+
+                const { error } = await supabase
+                    .from('orders')
+                    .insert(orderRows);
+
+                if (error) {
+                    console.error("Error inserting orders:", error.message);
+                    alert("There was an issue placing your order. Please try again.");
+                }
+            } catch (error) {
+                console.error("Unexpected error:", error);
+                alert("An unexpected error occurred. Please try again.");
+            }
+        };
+
+
         return (
             <Dialog
                 onClose={handleCheckout}
@@ -126,18 +150,18 @@ const Cart = () => {
                 <div className={`grid grid-flow-row gap-1 p-3 bg-[url(./background4.svg)]`}>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xl font-bold ${FontType} text-cyan-950`}>Order Summary</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-ligh ${FontType} text-cyan-950`}>Purchase total: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost}</div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost.toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-lg font-bold ${FontType} text-cyan-950`}>Total Payable: R {TotalPayable.toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")} <Checkbox required onClick={() => setAddressConfirmed(true)} value={address_confirmed} /></div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293 <Checkbox required onClick={() => setCellConfirmed(true)} value={cell_confirmed} /></div>
                     {address_confirmed && cell_confirmed ?
                         <Button
-                            onClick={() => { setCheckout(false); setPayment(true) }}
-                            className="p-2 mx-2"
+                            onClick={() => { setCheckout(false); setPayment(true); handleOrder(); }}
+                            className="p-2 mx-auto"
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white", maxWidth: "300px",
                                 '&:hover': {
-                                    backgroundColor: "rgba(44, 192, 222,0.8)",
+                                    backgroundColor: "rgba(44, 192, 222,0.8)", maxWidth: "300px",
                                     color: 'white',
                                 }
                             }}>
@@ -145,28 +169,19 @@ const Cart = () => {
                         </Button> : <Button
                             onClick={() => { setCheckout(false); setPayment(true) }}
                             disabled="true"
-                            className="p-2 mx-2"
+                            className="p-2 mx-auto"
                             sx={{
-                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
+                                textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white", maxWidth: "300px",
                                 '&:hover': {
-                                    backgroundColor: "rgba(44, 192, 222,0.3)",
+                                    backgroundColor: "rgba(44, 192, 222,0.3)", maxWidth: "300px",
                                     color: 'white',
                                 }
                             }}>
                             Proceed to payment
                         </Button>}
-                    <Button
-                        onClick={() => setCheckout(false)}
-                        className="p-2 mx-2 mb-2"
-                        sx={{
-                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
-                            '&:hover': {
-                                backgroundColor: "rgba(44, 192, 222,0.8)",
-                                color: 'white',
-                            }
-                        }}>
-                        Cancel
-                    </Button>
+                    <IconButton onClick={() => setCheckout(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+                        <CloseIcon sx={{ fontSize: "30px" }} />
+                    </IconButton>
                 </div>
             </Dialog>
         )
