@@ -17,33 +17,44 @@ import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import Image from "next/image";
 import { Address } from "../supabase";
-import { CheckBox } from "@mui/icons-material";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
+    const [distance, setDistance] = useState();
+
     const [checkout, setCheckout] = useState(false);
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
-    const [distance, setDistance] = useState();
+
 
     const handleCheckout = () => { setCheckout(true) }
     const handlePayment = () => { setPayment(true) }
     const handleEFT = () => { setEft(true) }
 
-    const BankingDetails = ({ handleEFT, eft, data }) => {
+    const BankingDetails = ({ handleEFT, eft }) => {
         return (
-            <Dialog onClose={handleEFT} open={eft} >
+            <Dialog
+                onClose={handleEFT}
+                open={eft} >
                 <div className="grid grid-flow-row gap-1">
-                    <div className={`p-2 text-lg font-bold ${FontType}`}>Your Reference: 827382</div>
-                    <div className="p-2">Bank: Standard Bank</div>
-                    <div className="p-2">Account Number: 128372839</div>
-                    <div className="p-2">Branch Code: 1239</div>
-                    <div className="p-2">Purchase cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
-                    <div className="p-2">Delivery Cost: R 152,43</div>
-                    <div className="p-2">Total cost: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)} + R {152.43}= R{(data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0) + 152.43).toFixed(2)}</div>
+                    <div className={`p-2 text-lg text-center font-bold ${FontType}`}>Thank you for ordering</div>
+                    <div className={`p-2 text-center text-sm ${FontType}`}>Payment details have been sent to your email. Your order will be placed as soon as we receive payment.</div>
+                    <div className={`p-2 text-center text-sm ${FontType}`}>For updates on your order please visit the Order section.</div>
+                    <Button
+                        onClick={() => { setEft(false) }}
+                        className="p-2 mx-auto mb-2"
+                        sx={{
+                            textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white", maxWidth: "100px",
+                            '&:hover': {
+                                backgroundColor: "rgba(44, 192, 222,0.8)", maxWidth: "100px",
+                                color: 'white',
+                            }
+                        }}>
+                        Done
+                    </Button>
                 </div>
             </Dialog>)
     }
@@ -54,9 +65,9 @@ const Cart = () => {
                 onClose={handlePayment}
                 open={payment}>
                 <div className="grid grid-flow-row gap-1">
-                    <div className="p-2">Payment option</div>
+                    <div style={{ fontFamily: FontType }} className="p-2 text-cyan-950">Select a payment option</div>
                     <Button
-                        onClick={handleEFT}
+                        onClick={() => { setPayment(false); setEft(true) }}
                         className="p-2 mx-2"
                         sx={{
                             textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white",
@@ -91,7 +102,7 @@ const Cart = () => {
                         Cancel
                     </Button>
                 </div>
-            </Dialog>
+            </Dialog >
         )
     }
 
