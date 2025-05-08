@@ -32,7 +32,7 @@ export default function Home() {
             </div>
           </div> :
           <>
-            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Sellers</div>
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left text-2xl ml-2">Top Sellers</div>
             <ScrollTriggered Data={Data} />
           </>}
         {Data.length === 0 ?
@@ -43,7 +43,7 @@ export default function Home() {
             </div>
           </div> :
           <>
-            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">Top Rated</div>
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left text-2xl  ml-2">Top Rated</div>
             <ScrollTriggered Data={Data} />
           </>}
         {Data.length === 0 ?
@@ -54,7 +54,7 @@ export default function Home() {
             </div>
           </div> :
           <>
-            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left  ml-2">New Arivals</div>
+            <div style={{ fontFamily: FontType, color: "whitesmoke" }} className="text-left text-2xl  ml-2">New Arivals</div>
             <ScrollTriggered Data={Data} />
           </>}
       </div>
