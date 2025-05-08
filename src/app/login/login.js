@@ -8,11 +8,11 @@ import { useRouter } from 'next/navigation'; // Change this to `next/navigation`
 import KeyIcon from '@mui/icons-material/Key';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/Visibilityoff';
-import { SUPABASE_URL, API_KEY, BackgroundColor, DrawerBackgroundColor } from "../supabase";
+import { BackgroundColor, DrawerBackgroundColor, SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT } from "../supabase";
 import * as motion from "motion/react-client"
 import validator from "validator";
 
-const supabase = createClient(SUPABASE_URL, API_KEY);
+const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 const LoginDialog = ({
     handleUsername,
@@ -140,6 +140,7 @@ const SignUpDialog = ({
     handleSignUpSubmit,
     ErrorMessage,
     password,
+    handleCell,
     ConfirmPassword }) => {
     var Error_description = ErrorMessage.code
 
@@ -174,6 +175,7 @@ const SignUpDialog = ({
                     />
                     <TextField
                         id="input-with-icon-textfield"
+                        onChange={handleCell}
                         label="Cell"
                         size="small"
                         variant="standard"
@@ -251,6 +253,7 @@ const Login = () => {
     const [SignUpPassword, setSignUpPassword] = useState("");
     const [ConfirmPassword, setConfirmPassword] = useState("");
     const [Email, setEmail] = useState("");
+    const [cell, setCell] = useState("");
     const [auth, setAuth] = useState(true);
     const [ErrorMessage, setErrorMessage] = useState("");
     const [FirstName, setFirstName] = useState("");
@@ -285,17 +288,19 @@ const Login = () => {
         }
     }
 
-
     async function handleSignUpSubmit() {
         const { data, error } = await supabase.auth.signUp({
             email: Email,
             password: SignUpPassword,
             options: {
-                emailRedirectTo: '/',
+                emailRedirectTo: 'https://192.168.8.196:3017',
+                data: { phone: cell },
             },
         })
+        if (data) { router.push("/"); };
         if (error) {
             setErrorMessage(error)
+            console.log(error)
         }
     }
 
@@ -316,6 +321,14 @@ const Login = () => {
             console.log("not valid email")
         }
     };
+    const handleCell = (e) => {
+        setCell(e.target.value);
+        if (validator.isMobilePhone(cell)) {
+            console.log("valid email")
+        } else {
+            console.log("not valid email")
+        }
+    }
 
     const handleLastName = (e) => { setLastName(e.target.value); };
     const handleFirstName = (e) => { setFirstName(e.target.value); };
@@ -344,6 +357,7 @@ const Login = () => {
                     ErrorMessage={ErrorMessage}
                     password={password}
                     ConfirmPassword={ConfirmPassword}
+                    handleCell={handleCell}
                 />
             }
         </React.Fragment>

@@ -307,7 +307,7 @@ export default function RootLayout({ children }) {
                   }}
                 />
               </Autocomplete>
-              <div style={{ marginTop: "20px", fontSize: "12px" }}>{storedAddress}</div>
+              <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
             </div>
           </LoadScript>
         </Dialog>
