@@ -1,7 +1,7 @@
 "use client"; // Add this line at the top of your component file
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, max_delivery_cost, our_delivery_rate, third_party_delivery_rate } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, third_party_delivery_rate } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
-import { Button, Checkbox, Dialog, IconButton, Input } from "@mui/material";
+import { Button, Checkbox, Dialog, IconButton } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
@@ -65,7 +65,7 @@ const Cart = () => {
                 onClose={handlePayment}
                 open={payment}>
                 <div className="grid grid-flow-row gap-1">
-                    <div style={{ fontFamily: FontType }} className="p-2 mt-8 text-cyan-950">Select a payment option</div>
+                    <div style={{ fontFamily: FontType }} className="p-2 text-cyan-950">Select a payment option</div>
                     <Button
                         onClick={() => { setPayment(false); setEft(true) }}
                         className="p-2 mx-2"
@@ -89,9 +89,6 @@ const Cart = () => {
                         }}>
                         Payfast
                     </Button>
-                    <IconButton onClick={() => setPayment(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
-                        <CloseIcon sx={{ fontSize: "30px" }} />
-                    </IconButton>
                 </div>
             </Dialog >
         )
@@ -105,8 +102,8 @@ const Cart = () => {
 
         let DeliveryCostReceivedThirdParty = Number(distance) * third_party_delivery_rate;
         let DeliveryCostReceived = TotalDeliveryCost - DeliveryCostReceivedThirdParty
-
         console.log({ "Distance:": distance, "Our money:": DeliveryCostReceived, "Uber money:": DeliveryCostReceivedThirdParty })
+
         let TotalPurchaseCost = data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0);
         let TotalPayable = TotalDeliveryCost + TotalPurchaseCost
 
@@ -149,11 +146,34 @@ const Cart = () => {
                 open={checkout}>
                 <div className={`grid grid-flow-row gap-1 p-3 bg-[url(./background4.svg)]`}>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xl font-bold ${FontType} text-cyan-950`}>Order Summary</div>
+                    <div className="grid grid-cols-3">
+                        <div
+                            className={`text-cyan-950 text-center`}
+                            style={{ fontWeight: 'bold', fontFamily: FontType }}>Product</div>
+                        <div
+                            className={`text-cyan-950 text-center`}
+                            style={{ fontWeight: 'bold', fontFamily: FontType }}>Quantity</div>
+                        <div
+                            className={`text-cyan-950 text-center`}
+                            style={{ fontWeight: 'bold', fontFamily: FontType }}>Total cost</div>
+                    </div>
+                    <div className="grid grid-flow-row">{data.map((product, index) =>
+                        <div className="grid grid-cols-3" key={index}>
+                            <Image style={{ maxHeight: "60px" }} className="mx-auto my-auto" src={`data:image/jpeg;base64,${product.image}`} alt={"product"}>
+                            </Image>
+                            <div
+                                className={`text-cyan-950 text-center my-auto`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>{product.quantity}</div>
+                            <div
+                                className={`text-cyan-950 text-center my-auto`}
+                                style={{ fontWeight: 'bold', fontFamily: FontType }}>R {(product.cost_after_vat * product.quantity).toFixed(2)}</div>
+                        </div>)}
+                    </div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-ligh ${FontType} text-cyan-950`}>Purchase total: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost.toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-lg font-bold ${FontType} text-cyan-950`}>Total Payable: R {TotalPayable.toFixed(2)}</div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")} <Checkbox required onClick={() => setAddressConfirmed(true)} value={address_confirmed} /></div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293 <Checkbox required onClick={() => setCellConfirmed(true)} value={cell_confirmed} /></div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")} <Checkbox required onClick={() => setAddressConfirmed(!address_confirmed)} value={address_confirmed} /></div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293 <Checkbox required onClick={() => setCellConfirmed(!cell_confirmed)} value={cell_confirmed} /></div>
                     {address_confirmed && cell_confirmed ?
                         <Button
                             onClick={() => { setCheckout(false); setPayment(true); handleOrder(); }}
