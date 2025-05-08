@@ -30,10 +30,6 @@ const Cart = () => {
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
 
-    const handleCheckout = () => { setCheckout(true) }
-    const handlePayment = () => { setPayment(true) }
-    const handleEFT = () => { setEft(true) }
-
     const BankingDetails = ({ handleEFT, eft }) => {
         return (
             <Dialog
@@ -317,6 +313,18 @@ const Cart = () => {
             </TableContainer>
         )
     }
+
+    /////////////////////
+    // State functions //
+    ////////////////////
+    const handleCheckout = () => { setCheckout(true) }
+    const handlePayment = () => { setPayment(true) }
+    const handleEFT = () => { setEft(true) }
+
+
+    //////////////////////////////
+    // Supabase query functions //
+    /////////////////////////////
 
     // Memoized function to fetch cart data
     const fetchCartData = useCallback(async () => {

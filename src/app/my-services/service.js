@@ -296,7 +296,6 @@ const Service = () => {
         getInstruments();
         async function getInstruments() {
             const user_details = JSON.parse(localStorage.getItem("sb-sdsejsyrecrffnjqevfm-auth-token"));
-
             const { data } = await
                 supabase
                     .from("nextjs_services")

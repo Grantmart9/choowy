@@ -43,7 +43,6 @@ function LoadingThreeDotsJumping() {
                         width: 20,
                         height: 20,
                         borderRadius: "50%",
-
                         top: `${dot.y + radius}px`,
                         left: `${dot.x + radius}px`,
                     }}
