@@ -28,10 +28,11 @@ const SearchBar = ({
     handleClose,
     handleChange,
     handleChange1,
-    valuetext,
+    handleChange2,
     open,
     value,
     value1,
+    value2,
     searchQuery,
     handleSearchChange,
     handleClearSearch,
@@ -115,7 +116,7 @@ const SearchBar = ({
                             value={value}
                             onChange={handleChange}
                             valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
+                            name="Rating"
                             max={5}
                             step={1}
                             min={1}
@@ -129,10 +130,16 @@ const SearchBar = ({
                             value={value1}
                             onChange={handleChange1}
                             valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
                             max={3000}
                             step={500}
                             min={0}
+                        />
+                    </ListItem>
+                    <ListItem sx={{ minWidth: "200pt" }}>
+                        <TextField
+                            label="Pet type"
+                            value={value2}
+                            onChange={handleChange2}
                         />
                     </ListItem>
                 </List>
@@ -143,7 +150,9 @@ const SearchBar = ({
                             backgroundColor: "rgba(128, 128, 128, 0.40)",
                             color: "whitesmoke"
                         }
-                    }}>Clear</Button>
+                    }}>
+                        Clear
+                    </Button>
                     <Button sx={{
                         textTransform: "none", bgcolor: DrawerBackgroundHoverColor, color: "white",
                         '&:hover': {
@@ -317,11 +326,11 @@ const Products = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState([1, 5]); // Rating range
     const [value1, setValue1] = useState([3000]); // Price range
-    const [value2, setValue2] = useState([1, 100]); // Distance range
+    const [value2, setValue2] = useState(""); // Distance range
     const [searchQuery, setSearchQuery] = useState("");
     const [product, setProduct] = useState(false);
     const [productIndex, setProductIndex] = useState(0);
-    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const handleFilter = () => {
         setOpen(true);
@@ -349,13 +358,10 @@ const Products = () => {
         setValue1(newValue);
     };
 
-    const handleChange2 = (event, newValue) => {
-        setValue2(newValue);
+    const handleChange2 = (event) => {
+        setValue2(event.target.value);
     };
 
-    const valuetext = (value) => {
-        return `${value}°C`;
-    };
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -369,7 +375,7 @@ const Products = () => {
     const handleClearFilter = () => {
         setValue([1, 5]);
         setValue1([3000]);
-        setValue2([1, 100]);
+        setValue2("");
     };
 
     const handleCloseSnackbar = (event, reason) => {
@@ -379,6 +385,7 @@ const Products = () => {
         setOpenSnackbar(false);
         setProduct(false);
     };
+
     const handleSnackBar = (sellected) => {
         setOpenSnackbar(true) && setOpen(false);
         addToCart(sellected)
@@ -415,6 +422,10 @@ const Products = () => {
         if (value1 && value1 !== undefined && value1 !== undefined) {
             query = query.lte("cost_after_vat", value1);
         }
+        // Filter by price
+        if (value2 && value2 !== undefined && value2 !== undefined) {
+            query = query.ilike("pet_type", `%${value2}%`);
+        }
 
         // Add search query filter
         if (searchQuery) {
@@ -423,7 +434,7 @@ const Products = () => {
 
         const { data } = await query;
         setData(data);
-    }, [value, value1, searchQuery]);
+    }, [value, value1, value2, searchQuery]);
 
     useEffect(() => {
         getInstruments();
@@ -438,7 +449,6 @@ const Products = () => {
                     handleChange={handleChange}
                     handleChange1={handleChange1}
                     handleChange2={handleChange2}
-                    valuetext={valuetext}
                     open={open}
                     value={value}
                     value1={value1}

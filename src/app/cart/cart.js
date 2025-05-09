@@ -25,7 +25,6 @@ const Cart = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [distance, setDistance] = useState();
-
     const [checkout, setCheckout] = useState(false);
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
@@ -40,7 +39,7 @@ const Cart = () => {
                     <div className={`p-2 text-center text-sm ${FontType}`}>Payment details have been sent to your email. Your order will be placed as soon as we receive payment.</div>
                     <div className={`p-2 text-center text-sm ${FontType}`}>For updates on your order please visit the Order section.</div>
                     <Button
-                        onClick={() => { setEft(false) }}
+                        onClick={() => { setEft(false); ClearCart() }}
                         className="p-2 mx-auto mb-2"
                         sx={{
                             textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white", maxWidth: "100px",
@@ -90,7 +89,7 @@ const Cart = () => {
         )
     }
 
-    const PurchaseStatement = ({ handleCheckout, checkout, data, handlePayment, distance }) => {
+    const PurchaseStatement = ({ handleCheckout, checkout, data, distance }) => {
         const [address_confirmed, setAddressConfirmed] = useState();
         const [cell_confirmed, setCellConfirmed] = useState();
 
@@ -110,15 +109,32 @@ const Cart = () => {
                 const date_created = new Date().toISOString();
                 const status = "Pending Payment"; // Default status for the order
 
+                const now = new Date();
+                const pad = (num) => num.toString().padStart(2, '0');
+                const day = pad(now.getDate());
+                const month = pad(now.getMonth() + 1); // Months are zero-based
+                const year = now.getFullYear();
+                const hours = pad(now.getHours());
+                const minutes = pad(now.getMinutes());
+                const seconds = pad(now.getSeconds());
+                const miliseconds = pad(now.getMilliseconds());
+
+                const order_id = `${day}${month}${year}${hours}${minutes}${seconds}${miliseconds}`;
+                const contact_person = "+27763442747"
+
                 // Prepare the rows to insert into the table
                 const orderRows = data.map(item => ({
+                    order_id: order_id,
                     product_id: item.id,
-                    cost_after_vat: item.cost_after_vat,
                     date_created,
                     status,
                     user_id,
                     quantity: item.quantity,
                     delivery_address, // Include the delivery address
+                    contact_person: contact_person,
+                    delivery_received: DeliveryCostReceived,
+                    delivery_received_thirdparty: DeliveryCostReceivedThirdParty,
+                    total_cost: item.cost_after_vat,
                 }));
 
                 const { error } = await supabase
@@ -134,7 +150,6 @@ const Cart = () => {
                 alert("An unexpected error occurred. Please try again.");
             }
         };
-
 
         return (
             <Dialog
@@ -366,6 +381,23 @@ const Cart = () => {
             console.error("Error deleting cart item:", err);
         }
     }, []);
+
+    const ClearCart = useCallback(async () => {
+        try {
+            const { error } = await supabase
+                .from("cart")
+                .delete()
+                .eq("user_id", localStorage.getItem("user_id"));
+
+            if (error) throw error;
+
+            // Update the data after deletion
+            fetchCartData()
+        } catch (err) {
+            setError(err.message);
+            console.error("Error deleting cart item:", err);
+        }
+    }, [fetchCartData]);
 
     const updateQuantity = useCallback(async (id, newQuantity) => {
         try {
