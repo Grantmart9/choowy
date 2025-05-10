@@ -18,6 +18,7 @@ import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
 import Image from "next/image";
 import { Address } from "../supabase";
 import CloseIcon from '@mui/icons-material/Close';
+import { useRouter } from 'next/navigation';
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -29,6 +30,8 @@ const Cart = () => {
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
 
+    const router = useRouter();
+
     const BankingDetails = ({ handleEFT, eft }) => {
         return (
             <Dialog
@@ -39,7 +42,7 @@ const Cart = () => {
                     <div className={`p-2 text-center text-sm ${FontType}`}>Payment details have been sent to your email. Your order will be placed as soon as we receive payment.</div>
                     <div className={`p-2 text-center text-sm ${FontType}`}>For updates on your order please visit the Order section.</div>
                     <Button
-                        onClick={() => { setEft(false); ClearCart() }}
+                        onClick={() => { setEft(false); ClearCart(); router.push("/orders") }}
                         className="p-2 mx-auto mb-2"
                         sx={{
                             textTransform: "none", bgcolor: "rgba(45, 194, 69, 0.8)", color: "white", maxWidth: "100px",
