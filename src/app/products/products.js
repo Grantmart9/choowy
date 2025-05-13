@@ -28,15 +28,15 @@ const SearchBar = ({
     handleClose,
     handleChange,
     handleChange1,
-    handleChange2,
+    fetchData,
     open,
     value,
     value1,
-    value2,
     searchQuery,
     handleSearchChange,
     handleClearSearch,
-    handleClearFilter
+    handleClearFilter,
+    switchOffFilter
 
 }) => {
 
@@ -54,6 +54,7 @@ const SearchBar = ({
                     mass: 5,
                     duration: 0.5,
                 }}
+                style={{ maxHeight: "30px" }}
                 className="inline-flex ml-14 sm:ml-2 sm:mr-2 mr-20"
             >
                 <Button
@@ -62,29 +63,24 @@ const SearchBar = ({
                     variant="text"
                     className="rounded-r-none shadow-r-none shadow-gray-800 shadow-xs transform-none text-gray-100 md:w-28"
                     style={{
-                        background: "rgba(128, 128, 128, 0.25)", padding: "3px" // Set the background with 15% opacity
+                        background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                     }}
                     onClick={handleFilter}
                 >
                     <span style={{ opacity: 1, fontFamily: FontType }} className={`${TextColor}`}>Filter<Ripple color={"#1fecf9"} duration={2000}></Ripple></span> {/* Ensure text is fully opaque */}
                 </Button>
-                <div
+                <TextField
+                    size="small"
+                    fullWidth={true}
+                    value={searchQuery}
+                    color="info"
+                    className="p-1 shadow-gray-800 shadow-xs text-center justify-center my-auto md:w-80"
                     style={{
                         background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
                     }}
-                    className="p-1 shadow-gray-800 shadow-xs text-center justify-center my-auto md:w-80">
-                    <TextField
-                        size="small"
-                        fullWidth={true}
-                        value={searchQuery}
-                        color="info"
-                        style={{
-                            background: "rgba(128, 128, 128, 0.25)", // Set the background with 15% opacity
-                        }}
-                        onChange={handleSearchChange}
-                        sx={{ input: { color: 'whitesmoke', maxHeight: "7px" }, outline: { color: "transparent" } }}
-                    />
-                </div>
+                    onChange={handleSearchChange}
+                    sx={{ input: { color: 'whitesmoke', maxHeight: "5px" }, outline: { color: "transparent" } }}
+                />
                 <Button
                     size="small"
                     sx={{ textTransform: "none" }}
@@ -135,13 +131,6 @@ const SearchBar = ({
                             min={0}
                         />
                     </ListItem>
-                    <ListItem sx={{ minWidth: "200pt" }}>
-                        <TextField
-                            label="Pet type"
-                            value={value2}
-                            onChange={handleChange2}
-                        />
-                    </ListItem>
                 </List>
                 <div className="grid grid-cols-2 gap-2 p-2">
                     <Button onClick={handleClearFilter} sx={{
@@ -153,13 +142,15 @@ const SearchBar = ({
                     }}>
                         Clear
                     </Button>
-                    <Button sx={{
-                        textTransform: "none", bgcolor: DrawerBackgroundHoverColor, color: "white",
-                        '&:hover': {
-                            backgroundColor: "rgba(128, 128, 128, 0.40)",
-                            color: "whitesmoke"
-                        }
-                    }}>Apply</Button>
+                    <Button
+                        onClick={() => { fetchData(); switchOffFilter() }}
+                        sx={{
+                            textTransform: "none", bgcolor: DrawerBackgroundHoverColor, color: "white",
+                            '&:hover': {
+                                backgroundColor: "rgba(128, 128, 128, 0.40)",
+                                color: "whitesmoke"
+                            }
+                        }}>Apply</Button>
                 </div>
             </Dialog>
         </div>
@@ -326,7 +317,6 @@ const Products = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState([1, 5]); // Rating range
     const [value1, setValue1] = useState([3000]); // Price range
-    const [value2, setValue2] = useState(""); // Distance range
     const [searchQuery, setSearchQuery] = useState("");
     const [product, setProduct] = useState(false);
     const [productIndex, setProductIndex] = useState(0);
@@ -358,10 +348,6 @@ const Products = () => {
         setValue1(newValue);
     };
 
-    const handleChange2 = (event) => {
-        setValue2(event.target.value);
-    };
-
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -375,7 +361,7 @@ const Products = () => {
     const handleClearFilter = () => {
         setValue([1, 5]);
         setValue1([3000]);
-        setValue2("");
+        setOpen(false);
     };
 
     const handleCloseSnackbar = (event, reason) => {
@@ -385,6 +371,8 @@ const Products = () => {
         setOpenSnackbar(false);
         setProduct(false);
     };
+
+    const switchOffFilter = () => { setOpen(false) }
 
     const handleSnackBar = (sellected) => {
         setOpenSnackbar(true) && setOpen(false);
@@ -422,10 +410,6 @@ const Products = () => {
         if (value1 && value1 !== undefined && value1 !== undefined) {
             query = query.lte("cost_after_vat", value1);
         }
-        // Filter by price
-        if (value2 && value2 !== undefined && value2 !== undefined) {
-            query = query.ilike("pet_type", `%${value2}%`);
-        }
 
         // Add search query filter
         if (searchQuery) {
@@ -434,7 +418,7 @@ const Products = () => {
 
         const { data } = await query;
         setData(data);
-    }, [value, value1, value2, searchQuery]);
+    }, [value, value1, searchQuery]);
 
     useEffect(() => {
         getInstruments();
@@ -448,15 +432,15 @@ const Products = () => {
                     handleClose={handleClose}
                     handleChange={handleChange}
                     handleChange1={handleChange1}
-                    handleChange2={handleChange2}
+                    fetchData={getInstruments}
                     open={open}
                     value={value}
                     value1={value1}
-                    value2={value2}
                     searchQuery={searchQuery}
                     handleSearchChange={handleSearchChange}
                     handleClearFilter={handleClearFilter}
                     handleClearSearch={handleClearSearch}
+                    switchOffFilter={switchOffFilter}
 
                 />
             </div>

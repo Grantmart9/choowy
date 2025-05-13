@@ -28,6 +28,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import {
   SUPABASE_URL_CLOUDCRAFT,
+  GOOGLE_MAPS_API_KEY,
   API_KEY_CLOUDCRAFT,
   AppName,
   TextColor,
@@ -41,7 +42,6 @@ import {
   DrawerBackgroundHoverColor,
 } from "./supabase";
 
-const GOOGLE_MAPS_API_KEY = "AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM";
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 export default function RootLayout({ children }) {
@@ -227,14 +227,11 @@ export default function RootLayout({ children }) {
           className={`fixed ${TopBarColor} opacity-50 w-full z-30`}
         >
         </div>
-
-        {/* Left Drawer Toggle */}
         <div className="z-50 fixed my-auto left-1">
           <IconButton onClick={toggleDrawer(true)} size="medium">
             <MenuRoundedIcon className={`${TextColor}`} />
           </IconButton>
         </div>
-        {/* Drawer */}
         <Drawer
           transitionDuration={{ enter: 900, exit: 1100 }}
           disableScrollLock={true}
@@ -259,56 +256,55 @@ export default function RootLayout({ children }) {
           onClose={() => setLocationSellected(false)}
           open={LocationSellected}
         >
-          <IconButton onClick={() => setLocationSellected(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+          <IconButton className="text-cyan-950" onClick={() => setLocationSellected(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
             <CloseIcon sx={{ fontSize: "30px" }} />
           </IconButton>
-          <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
-            <div
-              className="bg-[url(./background4.svg)]"
-              style={{ padding: "20px", minWidth: "300px" }}
+          <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}><div
+            className="bg-[url(./background4.svg)]"
+            style={{ padding: "20px", minWidth: "300px" }}
+          >
+            <style>
+              {`
+.pac-container {
+touch-action: auto !important; /* Allow default touch interactions */
+z-index: 2000 !important;     /* Ensure the dropdown is above other elements */
+}
+`}
+            </style>
+            <Autocomplete
+              onLoad={(auto) => setAutocomplete(auto)}
+              onPlaceChanged={handleSelect}
             >
-              <style>
-                {`
-        .pac-container {
-    touch-action: auto !important; /* Allow default touch interactions */
-    z-index: 2000 !important;     /* Ensure the dropdown is above other elements */
-  }
-      `}
-              </style>
-              <Autocomplete
-                onLoad={(auto) => setAutocomplete(auto)}
-                onPlaceChanged={handleSelect}
-              >
-                <TextField
-                  label="Delivery address"
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  autoFocus
-                  className="mt-6"
-                  sx={{
-                    "& .MuiInputLabel-root": {
-                      color: "green", // Customize the label color
+              <TextField
+                label="Delivery address"
+                variant="outlined"
+                fullWidth
+                size="small"
+                autoFocus
+                className="mt-7"
+                sx={{
+                  "& .MuiInputLabel-root": {
+                    color: "orange", // Customize the label color
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "orange", // Label color when focused
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "orange", // Border color
                     },
-                    "& .MuiInputLabel-root.Mui-focused": {
-                      color: "green", // Label color when focused
+                    "&:hover fieldset": {
+                      borderColor: "orange", // Border color on hover
                     },
-                    "& .MuiOutlinedInput-root": {
-                      "& fieldset": {
-                        borderColor: "green", // Border color
-                      },
-                      "&:hover fieldset": {
-                        borderColor: "green", // Border color on hover
-                      },
-                      "&.Mui-focused fieldset": {
-                        borderColor: "green", // Border color when focused
-                      },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "orange", // Border color when focused
                     },
-                  }}
-                />
-              </Autocomplete>
-              <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
-            </div>
+                  },
+                }}
+              />
+            </Autocomplete>
+            <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
+          </div>
           </LoadScript>
         </Dialog>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
