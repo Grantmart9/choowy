@@ -34,7 +34,6 @@ const Cart = () => {
     const [LocationSellected, setLocationSellected] = useState(false);
     const [autocomplete, setAutocomplete] = useState(null);
     const [address, setAddress] = useState("");
-    const [storedAddress, setStoredAddress] = useState("");
 
     const router = useRouter();
 
@@ -425,10 +424,10 @@ const Cart = () => {
         }
     }, []);
 
-    const calculateDrivingDistance = async () => {
+    const calculateDrivingDistance = useCallback(async () => {
         const API_KEY = "AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM";
         const warehouseAddress = Address;
-        const userAddress = localStorage.getItem("user_address");
+        const userAddress = address
 
         try {
             const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(
@@ -459,16 +458,15 @@ const Cart = () => {
         } catch (error) {
             console.error("Error calculating driving distance:", error.message);
         }
-    };
+    }, [address]);
+
     const handleSelect = () => {
         if (autocomplete) {
             const place = autocomplete.getPlace();
             if (place && place.formatted_address) {
                 setAddress(place.formatted_address); // Store the selected address
-                localStorage.setItem("user_address", place.formatted_address)
-                console.log("Selected Address:", place.formatted_address);
             } else {
-                console.error("No formatted address found");
+                console.error("No address found");
             }
         }
     };
@@ -477,12 +475,7 @@ const Cart = () => {
     useEffect(() => {
         fetchCartData();
         calculateDrivingDistance();
-        // Check if window is defined (client-side)
-        if (typeof window !== "undefined") {
-            const address = localStorage.getItem("user_address");
-            setStoredAddress(address || "No address selected yet");
-        }
-    }, [fetchCartData]);
+    }, [fetchCartData, calculateDrivingDistance]);
 
     // Render cart data or an error message
     return (
