@@ -1,7 +1,7 @@
 "use client"; // Add this line at the top of your component file
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, third_party_delivery_rate } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType, delivery_rate, third_party_delivery_rate, TextColor, NEXT_PUBLIC_GOOGLE_API_KEY } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from "@mui/material/TableFooter";
 import Paper from '@mui/material/Paper';
-import { Button, Checkbox, Dialog, IconButton } from "@mui/material";
+import { Button, Checkbox, Dialog, IconButton, TextField } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlinedIcon from '@mui/icons-material/AddCircleOutlined';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
@@ -19,6 +19,8 @@ import Image from "next/image";
 import { Address } from "../supabase";
 import CloseIcon from '@mui/icons-material/Close';
 import { useRouter } from 'next/navigation';
+import { LoadScript, Autocomplete } from "@react-google-maps/api";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
@@ -29,6 +31,10 @@ const Cart = () => {
     const [checkout, setCheckout] = useState(false);
     const [eft, setEft] = useState(false);
     const [payment, setPayment] = useState(false);
+    const [LocationSellected, setLocationSellected] = useState(false);
+    const [autocomplete, setAutocomplete] = useState(null);
+    const [address, setAddress] = useState("");
+    const [storedAddress, setStoredAddress] = useState("");
 
     const router = useRouter();
 
@@ -110,20 +116,16 @@ const Cart = () => {
                 const user_id = localStorage.getItem("user_id"); // Assuming you store the user's ID in localStorage
                 const delivery_address = localStorage.getItem("user_address"); // Assuming the address is stored in localStorage
                 const date_created = new Date().toISOString();
-                const status = "Pending Payment"; // Default status for the order
+                const status = "pending payment"; // Default status for the order
 
                 const now = new Date();
                 const pad = (num) => num.toString().padStart(2, '0');
                 const day = pad(now.getDate());
                 const month = pad(now.getMonth() + 1); // Months are zero-based
-                const year = now.getFullYear();
                 const hours = pad(now.getHours());
                 const minutes = pad(now.getMinutes());
-                const seconds = pad(now.getSeconds());
-                const miliseconds = pad(now.getMilliseconds());
-
-                const order_id = `${day}${month}${year}${hours}${minutes}${seconds}${miliseconds}`;
                 const contact_person = "+27763442747"
+                const order_id = `${contact_person.slice(-5)}${day}${month}${hours}${minutes}`;
 
                 // Prepare the rows to insert into the table
                 const orderRows = data.map(item => ({
@@ -458,22 +460,46 @@ const Cart = () => {
             console.error("Error calculating driving distance:", error.message);
         }
     };
+    const handleSelect = () => {
+        if (autocomplete) {
+            const place = autocomplete.getPlace();
+            if (place && place.formatted_address) {
+                setAddress(place.formatted_address); // Store the selected address
+                localStorage.setItem("user_address", place.formatted_address)
+                console.log("Selected Address:", place.formatted_address);
+            } else {
+                console.error("No formatted address found");
+            }
+        }
+    };
 
     // Fetch cart data when the component mounts
     useEffect(() => {
         fetchCartData();
         calculateDrivingDistance();
+        // Check if window is defined (client-side)
+        if (typeof window !== "undefined") {
+            const address = localStorage.getItem("user_address");
+            setStoredAddress(address || "No address selected yet");
+        }
     }, [fetchCartData]);
 
     // Render cart data or an error message
     return (
         <div>
+            <div className="z-50 absolute my-auto right-10 top-0">
+                <IconButton onClick={() => setLocationSellected(true)} size="medium">
+                    <LocationOnIcon className={`${TextColor}`} />
+                </IconButton>
+            </div>
             {error &&
                 <div className="flex align-center justify-center h-full">
                     <p style={{ color: "whitesmoke" }}>No cart found. Make sure you are logged in.</p>
                 </div>}
             {data.length > 0 ? (
                 <div className="sticky align-center justify-center rounded-md z-20 max-w-full mx-4 mt-14 pb-14">
+                    {/* Location and Cart Buttons */}
+
                     <CartTable data={data} />
                     <PurchaseStatement
                         distance={distance}
@@ -482,6 +508,62 @@ const Cart = () => {
                     />
                     <BankingDetails handleEFT={handleEFT} eft={eft} data={data} />
                     <PaymentOption handlePayment={handlePayment} payment={payment} />
+                    {/* Dialog for Google Maps Search */}
+                    <Dialog
+                        onClose={() => setLocationSellected(false)}
+                        open={LocationSellected}
+                    >
+                        <IconButton className="text-cyan-950" onClick={() => setLocationSellected(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
+                            <CloseIcon sx={{ fontSize: "30px" }} />
+                        </IconButton>
+                        <LoadScript googleMapsApiKey={NEXT_PUBLIC_GOOGLE_API_KEY} libraries={["places"]}><div
+                            className="bg-[url(./background4.svg)]"
+                            style={{ padding: "20px", minWidth: "300px" }}
+                        >
+                            <style>
+                                {`
+              .pac-container {
+              touch-action: auto !important; /* Allow default touch interactions */
+              z-index: 2000 !important;     /* Ensure the dropdown is above other elements */
+              }
+              `}
+                            </style>
+                            <Autocomplete
+                                onLoad={(auto) => setAutocomplete(auto)}
+                                onPlaceChanged={handleSelect}
+                            >
+                                <TextField
+                                    label="Delivery address"
+                                    variant="outlined"
+                                    fullWidth
+                                    size="small"
+                                    autoFocus
+                                    className="mt-7"
+                                    sx={{
+                                        "& .MuiInputLabel-root": {
+                                            color: "orange", // Customize the label color
+                                        },
+                                        "& .MuiInputLabel-root.Mui-focused": {
+                                            color: "orange", // Label color when focused
+                                        },
+                                        "& .MuiOutlinedInput-root": {
+                                            "& fieldset": {
+                                                borderColor: "orange", // Border color
+                                            },
+                                            "&:hover fieldset": {
+                                                borderColor: "orange", // Border color on hover
+                                            },
+                                            "&.Mui-focused fieldset": {
+                                                borderColor: "orange", // Border color when focused
+                                            },
+                                        },
+                                    }}
+                                />
+                            </Autocomplete>
+                            <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
+                        </div>
+                        </LoadScript>
+                    </Dialog>
                 </div>
             ) : (
                 <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">

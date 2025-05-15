@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useCallback, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT } from "../supabase";
+import { SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT, FontType } from "../supabase";
 import LoadingThreeDotsJumping from "../components/loading";
 import { Card } from "@mui/material";
 
@@ -73,6 +73,27 @@ const Orders = () => {
         }
     }, []);
 
+    const OrderStatus = ({ order }) => {
+        return (<div>
+            {order.status === "pending payment" ?
+                <div className={`mx-auto rounded-b-none w-full rounded-t-md bg-gradient-to-r from-red-600 to-red-800 via-red-950 p-2`}>
+                    <div className="text-xs rotate-0 text-white">{order.status}</div>
+                </div> : null}
+            {order.status === "order processed" ?
+                <div className={`mx-auto rounded-b-none w-full rounded-t-md bg-gradient-to-r from-orange-600 to-orange-800 via-orange-950 p-2`}>
+                    <div className="text-xs rotate-0 text-white">{order.status}</div>
+                </div> : null}
+            {order.status === "in transit" ?
+                <div className={`mx-auto rounded-b-none w-full rounded-t-md bg-gradient-to-r from-blue-600 to-blue-800 via-blue-950 p-2`}>
+                    <div className="text-xs rotate-0 text-white">{order.status}</div>
+                </div> : null}
+            {order.status === "delivered" ?
+                <div className={`mx-auto rounded-b-none w-full rounded-t-md bg-gradient-to-r from-green-600 to-green-800 via-green-950 p-2`}>
+                    <div className="text-xs rotate-0 text-white">{order.status}</div>
+                </div> : null}
+        </div>)
+    }
+
     // Fetch cart data when the component mounts
     useEffect(() => {
         fetchCartData();
@@ -80,20 +101,31 @@ const Orders = () => {
 
     return (
         <React.Fragment>
-            <div className=" mt-20 m-4 text-center text-white justify-center">
+            <div className="mt-20 m-4 text-center text-white justify-center">
                 {Data.length !== 0 ?
-                    <div >
-                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4 pb-5">
-                            {Data.map((order, index) => <Card className={`bg-[url(./background2.svg)]`} key={index}>
-                                <div className="grid grid-flow-row">
-                                    <div className="text-xs text-left text-cyan-950 px-2 font-bold">Order Date: {order.date_created}</div>
-                                    <div className="text-xs text-left text-cyan-950 px-2">Order Id: {order.order_id}</div>
-                                    <div className="text-xs text-left text-cyan-950 px-2">Status: {order.status}</div>
-                                </div>
-                            </Card>)
-                            }
-                        </div>
-                    </div> : <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 mx-4">
+                        {Data.map((order, index) =>
+                            <div>
+                                <OrderStatus order={order} />
+                                <Card
+                                    key={index}
+                                    className="grid grid-flow-row text-cyan-950 bg-[url(./background2.svg)] rounded-t-none rounded-b-md p-2"
+                                    style={{ fontFamily: FontType }}>
+                                    <div
+                                        className="text-xs px-2 text-nowrap mx-auto">
+                                        Order Id: {order.order_id}
+                                    </div>
+                                    <div
+                                        className="text-xs px-2 text-nowrap mx-auto">
+                                        Order Date: {order.date_created}
+                                    </div>
+
+                                </Card>
+                            </div>
+                        )
+                        }
+                    </div>
+                    : <div style={{ minWidth: "100vw", marginTop: "40vh" }} className="flex">
                         <div
                             className="mx-auto">
                             <LoadingThreeDotsJumping />

@@ -1,7 +1,6 @@
 "use client";
-import { Dialog, ThemeProvider, TextField } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { LoadScript, Autocomplete } from "@react-google-maps/api";
+import { ThemeProvider, } from "@mui/material";
+import React, { useState } from "react";
 import theme from "./themeprovider";
 import "./globals.css";
 import IconButton from "@mui/material/IconButton";
@@ -22,13 +21,11 @@ import AddIcon from "@mui/icons-material/Add";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { createClient } from "@supabase/supabase-js";
-import CloseIcon from '@mui/icons-material/Close';
+
 
 import {
   SUPABASE_URL_CLOUDCRAFT,
-  GOOGLE_MAPS_API_KEY,
   API_KEY_CLOUDCRAFT,
   AppName,
   TextColor,
@@ -46,10 +43,7 @@ const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 
 export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
-  const [LocationSellected, setLocationSellected] = useState(false);
-  const [autocomplete, setAutocomplete] = useState(null);
-  const [address, setAddress] = useState("");
-  const [storedAddress, setStoredAddress] = useState("");
+
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -66,18 +60,7 @@ export default function RootLayout({ children }) {
     }
   };
 
-  const handleSelect = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
-      if (place && place.formatted_address) {
-        setAddress(place.formatted_address); // Store the selected address
-        localStorage.setItem("user_address", place.formatted_address)
-        console.log("Selected Address:", place.formatted_address);
-      } else {
-        console.error("No formatted address found");
-      }
-    }
-  };
+
 
   const DrawerList = (
     <Box
@@ -201,15 +184,6 @@ export default function RootLayout({ children }) {
     </Box>
   );
 
-  useEffect(() => {
-    // Check if window is defined (client-side)
-    if (typeof window !== "undefined") {
-      const address = localStorage.getItem("user_address");
-      setStoredAddress(address || "No address selected yet");
-    }
-  }, []);
-
-
   return (
     <html lang="en" className="flex h-full items-center justify-center">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -221,7 +195,6 @@ export default function RootLayout({ children }) {
       <body
         className={`h-full w-full bg-[url(./background.svg)] bg-repeat bg-cover bg-fixed`}
       >
-        {/* Top Bar */}
         <div
           style={{ height: "44px" }}
           className={`fixed ${TopBarColor} opacity-50 w-full z-30`}
@@ -240,73 +213,13 @@ export default function RootLayout({ children }) {
         >
           {DrawerList}
         </Drawer>
-        {/* Location and Cart Buttons */}
-        <div className="z-50 fixed my-auto right-10">
-          <IconButton onClick={() => setLocationSellected(true)} size="medium">
-            <LocationOnIcon className={`${TextColor}`} />
-          </IconButton>
-        </div>
+
         <div className="z-50 fixed my-auto right-1">
           <IconButton size="medium" href="/cart">
             <ShoppingCartIcon className={`${TextColor}`} />
           </IconButton>
         </div>
-        {/* Dialog for Google Maps Search */}
-        <Dialog
-          onClose={() => setLocationSellected(false)}
-          open={LocationSellected}
-        >
-          <IconButton className="text-cyan-950" onClick={() => setLocationSellected(false)} sx={{ position: "absolute", top: 1, right: 1, alignItems: "center", justifyItems: "center", }}>
-            <CloseIcon sx={{ fontSize: "30px" }} />
-          </IconButton>
-          <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}><div
-            className="bg-[url(./background4.svg)]"
-            style={{ padding: "20px", minWidth: "300px" }}
-          >
-            <style>
-              {`
-.pac-container {
-touch-action: auto !important; /* Allow default touch interactions */
-z-index: 2000 !important;     /* Ensure the dropdown is above other elements */
-}
-`}
-            </style>
-            <Autocomplete
-              onLoad={(auto) => setAutocomplete(auto)}
-              onPlaceChanged={handleSelect}
-            >
-              <TextField
-                label="Delivery address"
-                variant="outlined"
-                fullWidth
-                size="small"
-                autoFocus
-                className="mt-7"
-                sx={{
-                  "& .MuiInputLabel-root": {
-                    color: "orange", // Customize the label color
-                  },
-                  "& .MuiInputLabel-root.Mui-focused": {
-                    color: "orange", // Label color when focused
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "orange", // Border color
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "orange", // Border color on hover
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "orange", // Border color when focused
-                    },
-                  },
-                }}
-              />
-            </Autocomplete>
-            <div style={{ marginTop: "20px", fontSize: "12px" }}>{address}</div>
-          </div>
-          </LoadScript>
-        </Dialog>
+
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>
     </html>
