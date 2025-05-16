@@ -401,6 +401,9 @@ const Products = () => {
     const getInstruments = useCallback(async () => {
         let query = supabase.from("products").select();
 
+        // Filter by category
+        query = query.ilike("category", localStorage.getItem("category"));
+
         // Filter by rating
         if (value && value[0] !== undefined && value[1] !== undefined) {
             query = query.gte("rating", value[0]).lte("rating", value[1]);
@@ -441,7 +444,6 @@ const Products = () => {
                     handleClearFilter={handleClearFilter}
                     handleClearSearch={handleClearSearch}
                     switchOffFilter={switchOffFilter}
-
                 />
             </div>
             <div className="block align-center justify-center mt-14" style={{ width: "100vw" }}>

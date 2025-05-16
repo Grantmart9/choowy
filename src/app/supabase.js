@@ -5,12 +5,13 @@ export const SUPABASE_URL = "https://sdsejsyrecrffnjqevfm.supabase.co";
 export const SUPABASE_URL_CLOUDCRAFT = "https://dabwpyrrlkjtpohszrhr.supabase.co"
 export const NEXT_PUBLIC_GOOGLE_API_KEY = "AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM"
 
+
 export const MainMenuList = [
   {
     "name": 'Food and Treats', "path": "/products", "data": "",
     "menu":
       [{ "name": 'Dry Food', "path": "/products" },
-      { "name": 'Wet Food', "path": "/my-services" },
+      { "name": 'Wet Food', "path": "/products" },
       { "name": 'Treats', "path": "/products" },
       { "name": 'Specialized Diets', "path": "/products" }]
   },
@@ -44,7 +45,6 @@ export const MainMenuList = [
   {
     "name": 'New Arrivals', "path": '/products', "menu":
       [{ "name": "Recently Added productss", "path": "/products" },
-
       ]
   },
 ]
@@ -58,12 +58,18 @@ export const SubMenuList = [
 export const AppName = "Choowy";
 export const Address = "19 Ralph Crescent, kuilsriver"
 export const phone_number = "+27 61 417 0615"
+export const email_address = "www.choowy@gmail.com"
+export const instagram_account = ""
+export const facebook_account = ""
+export const whatsapp_account = ""
 
 export const third_party_delivery_rate = 5.75 // R/km
 export const our_delivery_rate = 4
 export const delivery_rate = our_delivery_rate + third_party_delivery_rate; // R/km
 export const max_delivery_cost = 350; // R
+export const min_delivery_cost = 50;
 export const max_distance_from_warehouse = 50; // in km if the the distance exceeds this ammount, same day delivery does not apply
+export const min_distance_from_warehouse = 5; // personal delivery for distances less than this
 
 export const DrawerBackgroundHoverColor = "rgba(7, 247, 179, 0.7)"
 export const TextColorHover = "#0A4D68"

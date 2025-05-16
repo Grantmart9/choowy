@@ -22,8 +22,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { createClient } from "@supabase/supabase-js";
-
-
 import {
   SUPABASE_URL_CLOUDCRAFT,
   API_KEY_CLOUDCRAFT,
@@ -44,7 +42,6 @@ const supabase = createClient(SUPABASE_URL_CLOUDCRAFT, API_KEY_CLOUDCRAFT);
 export default function RootLayout({ children }) {
   const [open, setOpen] = useState(false);
 
-
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -59,8 +56,6 @@ export default function RootLayout({ children }) {
       window.location.href = "/login";
     }
   };
-
-
 
   const DrawerList = (
     <Box
@@ -132,7 +127,7 @@ export default function RootLayout({ children }) {
                       }}
                       key={subIndex}
                       href={submenubutton.path}
-                      onClick={toggleDrawer(false)} // Close drawer on click
+                      onClick={() => { toggleDrawer(false); localStorage.setItem("category", submenubutton.name) }} // Close drawer on click
                     >
                       <div style={{ fontFamily: FontType }} className={`text-${NavigationTextSize}`}>{submenubutton.name}</div>
                     </ListItemButton>
@@ -213,13 +208,11 @@ export default function RootLayout({ children }) {
         >
           {DrawerList}
         </Drawer>
-
         <div className="z-50 fixed my-auto right-1">
           <IconButton size="medium" href="/cart">
             <ShoppingCartIcon className={`${TextColor}`} />
           </IconButton>
         </div>
-
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </body>
     </html>

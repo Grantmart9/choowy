@@ -1,13 +1,12 @@
 import React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { NEXT_PUBLIC_GOOGLE_API_KEY } from "../supabase";
 
-const MapComponent = ({ center, markers }) => {
+const GoogleMapsComponent = ({ center, markers }) => {
   const mapContainerStyle = {
-    width: "100%",
+    width: "400px",
     height: "400px",
   };
-
-  const apiKey = "AIzaSyDFqp0PGp-vOy_BLx-ljnGZcUks9VbJgXM"; // Replace with your Google Maps API key
 
   const mapOptions = {
     disableDefaultUI: true,
@@ -16,13 +15,13 @@ const MapComponent = ({ center, markers }) => {
 
   return (
     <LoadScript
-      googleMapsApiKey={apiKey}
+      googleMapsApiKey={NEXT_PUBLIC_GOOGLE_API_KEY}
       onError={() => console.error("Failed to load Google Maps script")}
     >
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        center={center || { lat: 0, lng: 0 }}
-        zoom={12}
+        center={center || { lat: -33.916963, lng: 18.681193 }}
+        zoom={14}
         options={mapOptions}
       >
         {markers &&
@@ -37,7 +36,7 @@ const MapComponent = ({ center, markers }) => {
   );
 };
 
-export default MapComponent;
+export default GoogleMapsComponent;
 
 // Usage
 // <MapComponent center={{ lat: 37.7749, lng: -122.4194 }} markers={[{ lat: 37.7749, lng: -122.4194 }]} />

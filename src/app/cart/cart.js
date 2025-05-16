@@ -34,8 +34,11 @@ const Cart = () => {
     const [LocationSellected, setLocationSellected] = useState(false);
     const [autocomplete, setAutocomplete] = useState(null);
     const [address, setAddress] = useState("");
-
     const router = useRouter();
+
+    const handleCheckout = () => { setCheckout(true) }
+    const handlePayment = () => { setPayment(true) }
+    const handleEFT = () => { setEft(true) }
 
     const BankingDetails = ({ handleEFT, eft }) => {
         return (
@@ -116,7 +119,6 @@ const Cart = () => {
                 const delivery_address = localStorage.getItem("user_address"); // Assuming the address is stored in localStorage
                 const date_created = new Date().toISOString();
                 const status = "pending payment"; // Default status for the order
-
                 const now = new Date();
                 const pad = (num) => num.toString().padStart(2, '0');
                 const day = pad(now.getDate());
@@ -184,10 +186,11 @@ const Cart = () => {
                                 style={{ fontWeight: 'bold', fontFamily: FontType }}>R {(product.cost_after_vat * product.quantity).toFixed(2)}</div>
                         </div>)}
                     </div>
+                    {address.length === 0 && checkout === true ? setLocationSellected(true) && setCheckout(false) : null}
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-ligh ${FontType} text-cyan-950`}>Purchase total: R {data.reduce((sum, row) => sum + row.cost_after_vat * row.quantity, 0).toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-md font-light ${FontType} text-cyan-950`}>Delivery cost: R {TotalDeliveryCost.toFixed(2)}</div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-lg font-bold ${FontType} text-cyan-950`}>Total Payable: R {TotalPayable.toFixed(2)}</div>
-                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {localStorage.getItem("user_address")} <Checkbox required onClick={() => setAddressConfirmed(!address_confirmed)} value={address_confirmed} /></div>
+                    <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Delivery Address: {address} <Checkbox required onClick={() => setAddressConfirmed(!address_confirmed)} value={address_confirmed} /></div>
                     <div style={{ fontFamily: FontType }} className={`p-2 text-center mx-auto text-xs font-bold ${FontType} text-cyan-950`}>Cell: +27 86 783 8293 <Checkbox required onClick={() => setCellConfirmed(!cell_confirmed)} value={cell_confirmed} /></div>
                     {address_confirmed && cell_confirmed ?
                         <Button
@@ -332,18 +335,6 @@ const Cart = () => {
             </TableContainer>
         )
     }
-
-    /////////////////////
-    // State functions //
-    ////////////////////
-    const handleCheckout = () => { setCheckout(true) }
-    const handlePayment = () => { setPayment(true) }
-    const handleEFT = () => { setEft(true) }
-
-
-    //////////////////////////////
-    // Supabase query functions //
-    /////////////////////////////
 
     // Memoized function to fetch cart data
     const fetchCartData = useCallback(async () => {
@@ -534,20 +525,20 @@ const Cart = () => {
                                     className="mt-7"
                                     sx={{
                                         "& .MuiInputLabel-root": {
-                                            color: "orange", // Customize the label color
+                                            color: "green", // Customize the label color
                                         },
                                         "& .MuiInputLabel-root.Mui-focused": {
-                                            color: "orange", // Label color when focused
+                                            color: "green", // Label color when focused
                                         },
                                         "& .MuiOutlinedInput-root": {
                                             "& fieldset": {
-                                                borderColor: "orange", // Border color
+                                                borderColor: "green", // Border color
                                             },
                                             "&:hover fieldset": {
-                                                borderColor: "orange", // Border color on hover
+                                                borderColor: "green", // Border color on hover
                                             },
                                             "&.Mui-focused fieldset": {
-                                                borderColor: "orange", // Border color when focused
+                                                borderColor: "green", // Border color when focused
                                             },
                                         },
                                     }}
